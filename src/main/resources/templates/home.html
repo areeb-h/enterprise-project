@@ -1,12 +1,26 @@
+<!--homepage.html-->
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Enterprise Systems Development Project</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Homepage</title>
 </head>
 <body>
-<h1>Enterprise Systems Development Project</h1>
+<h2>Welcome to Homepage</h2>
+<p sec:authorize="hasRole('ROLE_ANONYMOUS')">PLEASE LOGIN</p>
 
-<p class="bg-blue-300">Click <a th:href="@{/dashboard}">here</a> to login.</p>
+<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+    <p><a th:href="@{|/login|}" th:text="'Log in'"></a></p>
+    <p><a th:href="@{|/register|}" th:text="'Register'"></a></p>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    <p>Logged as: <span sec:authentication="name"></span></p>
+    <p>Has role: <span sec:authentication="authorities"></span></p>
+    <p sec:authorize="hasAuthority('CUSTOMER')"><a th:href="@{|/customer/dashboard|}" th:text="'User Dashboard'"></a></p>
+    <p sec:authorize="hasAuthority('ADMIN')"><a th:href="@{|/admin/dashboard|}" th:text="'Admin Dashboard'"></a></p>
+    <p sec:authorize="hasAuthority('DRIVER')"><a th:href="@{|/driver/dashboard|}" th:text="'Driver Dashboard'"></a></p>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
 </body>
 </html>
