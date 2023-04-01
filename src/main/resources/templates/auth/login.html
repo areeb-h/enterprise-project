@@ -1,16 +1,36 @@
 <!--login.html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.tailwindcss.com"></script>
+
 <head>
   <title>Login</title>
 </head>
+
 <body>
-<form th:action="@{/login}" method="POST" class="form-signin">
-  <h3 th:text="Login"></h3>
-  <input type="text" name="email" th:placeholder="Email" /> <br /><br />
-  <input type="password" th:placeholder="Password" name="password" /> <br /><br />
-  <button type="Submit" th:text="Login"></button> | <a th:href="@{|/register|}" th:text="'Register'"></a><br />
-  <div th:if="${param.error}"><p>Email or Password is invalid.</p></div> <br />
-</form>
+  <div class="flex h-screen bg-gray-50">
+    <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
+      <form class="form-signin flex flex-col space-y-4" th:action="@{/login}" method="POST">
+        <h3 class="font-bold text-xl text-slate-800 mb-2" th:text="Login"></h3>
+        <div class="flex flex-col space-y-2">
+          <div class="space-y-2">
+            <p>Email</p>
+            <input class="bg-gray-50 rounded-md py-2 px-3 w-full" placeholder="you@example.com" type="text" name="email" />
+          </div>
+          <div class="space-y-2">
+            <p>Password</p>
+            <input class="bg-gray-50 rounded-md py-2 px-3 w-full" placeholder="password" type="password" name="password" />
+          </div>
+        </div>
+        <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit"
+            value="Login" /></button>
+        <p>Don't have an account yet? <a th:href="@{|/register|}" class="text-teal-600 hover:underline">Register now</a></p>
+        <div class="text-red-500 mb-2" th:if="${param.error}">
+          Email or Password is invalid.
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
+
 </html>
