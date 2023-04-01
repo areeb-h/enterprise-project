@@ -20,7 +20,7 @@ public class AuthController {
     UserService userService;
 
     //handle get call to login route
-    @RequestMapping(value = {"/login"},method = RequestMethod.GET)
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String login() {
         return "auth/login";
     }
@@ -54,6 +54,4 @@ public class AuthController {
 
         return "auth/login";
     }
-
-
 }

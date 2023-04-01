@@ -2,6 +2,9 @@ package com.example.enterpriseproject.service;
 
 import com.example.enterpriseproject.model.User;
 import com.example.enterpriseproject.repository.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,22 +20,22 @@ import java.util.Optional;
 @Service
 public class UserServiceImplementation implements UserService, UserDetailsService {
 
-    //access the userRepository methods to communicate with db
+    // access the userRepository methods to communicate with db
     @Autowired
     UserRepository userRepository;
 
-    //access bcryptpassword methods to encrypt password
+    // access bcryptpassword methods to encrypt password
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    //save user into db after encrypting password
+    // save user into db after encrypting password
     public void save(User user) {
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
     }
 
-    //check if username or email exists in db
+    // check if username or email exists in db
     @Override
     public List<Object> isUserPresent(User user) {
         boolean userExists = false;
@@ -41,23 +44,23 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
         Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
         if (existingUsername.isPresent()) {
-            userExists =true;
+            userExists = true;
             message = "This username is not available";
         }
         if (existingEmail.isPresent()) {
             userExists = true;
             message = "This email is not available";
         }
-        System.out.println("existingEmail.isPresent() - "+existingEmail.isPresent()+"exisitingUsername.isPresent() - "+existingUsername.isPresent());
+        System.out.println("existingEmail.isPresent() - " + existingEmail.isPresent()
+                + "exisitingUsername.isPresent() - " + existingUsername.isPresent());
         return Arrays.asList(userExists, message);
     }
-    //get a user by username from db
+
+    // get a user by username from db
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(
-                ()-> new UsernameNotFoundException(
-                        String.format("USER_NOT_FOUND", username)
-                ));
+                () -> new UsernameNotFoundException(
+                        String.format("USER_NOT_FOUND", username)));
     }
-
 }

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-// WILL HANDLE THE MAPPINGS FOR ONLY WHAT THE CUSTOMER CAN ACCESS
+// WILL HANDLE THE MAPPINGS FOR THE CUSTOMER
 
 @Controller
 public class CustomerController {

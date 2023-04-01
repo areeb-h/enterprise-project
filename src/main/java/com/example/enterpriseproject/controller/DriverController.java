@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class DriverController {
-
     @RequestMapping(value = {"/driver/dashboard"}, method = RequestMethod.GET)
     public String driverHome(){
         return "driver/dashboard";

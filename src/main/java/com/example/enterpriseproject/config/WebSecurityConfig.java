@@ -62,6 +62,15 @@ public class WebSecurityConfig {
                         .requestMatchers("/driver/**").hasAnyAuthority("DRIVER")
                         .anyRequest().authenticated()
                 )
+                /*.csrf().disable().formLogin()
+                        //all the users will be able to access login form
+                        .loginPage("/login")
+                        .permitAll()
+                        .failureUrl("/login?error=true")
+                        //if login is successfull this loginRoleHandler class will decide what happens next
+                        .successHandler(loginRoleHandler)
+                        .usernameParameter("username")
+                        .passwordParameter("password").and()*/
                 .csrf().disable().formLogin((form) -> form
                 //all the users will be able to access login form
                         .loginPage("/login")
