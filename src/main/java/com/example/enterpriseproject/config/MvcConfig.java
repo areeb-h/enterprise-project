@@ -10,8 +10,6 @@ public class MvcConfig implements WebMvcConfigurer {
     //register all the views that we do not map in controllers
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
-       // registry.addViewController("/customer/dashboard").setViewName("customer/dashboard");
-       // registry.addViewController("/customer/dashboard").setViewName("customer/dashboard");
         registry.addViewController("/access-denied").setViewName("access-denied");
     }
 }

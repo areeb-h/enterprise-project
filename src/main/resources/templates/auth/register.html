@@ -28,12 +28,14 @@
     <input type="password" th:field="*{password}" placeholder="*****"/>
   </label> <br/><br/>
 
-  <select th:field="*{role}" required>
+  <select id="userRole" th:field="*{role}" required>
     <option value="">Select</option>
     <option value="ADMIN">Admin</option>
-    <option value="CUSTOMER">Customer</option>
-    <option value="DRIVER">Driver</option>
-  </select> <br/><br/>
+    <option value="CUSTOMER" th:selected="${user.role == 'CUSTOMER'}">Customer</option>
+    <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
+  </select>
+  <input id="userEnabled" type="text" th:field="*{enabled}" th:disabled="${user.role == 'CUSTOMER' or user.role == 'DRIVER'}" />
+  <br/><br/>
   <button type="submit">Register</button> | <a th:href="@{|/login|}" th:text="'Log in'"></a>
   <span th:utext="${successMessage}"></span>
   <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
@@ -42,5 +44,23 @@
     </ul>
   </div>
 </form>
+<script th:inline="javascript">
+  // Get references to the select and input elements
+  var roleSelect = document.getElementById('userRole');
+  var enabledInput = document.getElementById('userEnabled');
+
+  // Add an event listener to the select element
+  roleSelect.addEventListener('change', function() {
+    // Get the selected option value
+    var selectedOption = roleSelect.value;
+
+    // Enable or disable the input field based on the selected option
+    if (selectedOption === 'CUSTOMER' || selectedOption === 'DRIVER') {
+      enabledInput.value = false;
+    } else {
+      enabledInput.value = true;
+    }
+  });
+</script>
 </body>
 </html>

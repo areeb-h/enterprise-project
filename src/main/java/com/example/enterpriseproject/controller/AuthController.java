@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -48,6 +50,12 @@ public class AuthController {
             model.addAttribute("successMessage", userPresentObj.get(1));
             return "auth/register";
         }
+
+        //set enabled to false if the role is "CUSTOMER"
+        if(user.getRole().equals("CUSTOMER")){
+            user.setEnabled(false);
+        }
+
         //save user to db
         userService.save(user);
         model.addAttribute("successMessage", "User registered successfully!");

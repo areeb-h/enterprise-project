@@ -131,4 +131,8 @@ public class User implements UserDetails {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public void setEnabled(boolean b) {
+        this.enabled = b;
+    }
 }
