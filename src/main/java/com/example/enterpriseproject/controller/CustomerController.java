@@ -1,13 +1,16 @@
 package com.example.enterpriseproject.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-//TODO:ALL THE MAPPINGS FOR WHAT THE CUSTOMER CAN ACCESS
+// WILL HANDLE THE MAPPINGS FOR ONLY WHAT THE CUSTOMER CAN ACCESS
+
+@Controller
 public class CustomerController {
 
     @RequestMapping(value = { "/customer/dashboard" }, method = RequestMethod.GET)
-    public String adminHome() {
+    public String customerHome() {
         return "customer/dashboard";
     }
 }
