@@ -124,15 +124,15 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public Role  getRole() {
+    public Role getRole() {
         return this.role;
     }
 
+    //set enabled to false if the role is "CUSTOMER"
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public void setEnabled(boolean b) {
-        this.enabled = b;
+        if (role == Role.CUSTOMER) {
+            enabled = false;
+        }
     }
 }
