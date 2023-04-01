@@ -19,7 +19,7 @@ public class AuthController {
     @Autowired
     UserService userService;
 
-    //handle get call to login wroute
+    //handle get call to login route
     @RequestMapping(value = {"/login"},method = RequestMethod.GET)
     public String login() {
         return "auth/login";
@@ -41,6 +41,7 @@ public class AuthController {
             model.addAttribute("bindingResult", bindingResult);
             return "auth/register";
         }
+
         //check if user is present
         List<Object> userPresentObj = userService.isUserPresent(user);
         if((Boolean) userPresentObj.get(0)){
