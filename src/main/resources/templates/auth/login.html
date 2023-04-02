@@ -28,6 +28,9 @@
         <div class="text-red-500 mb-2" th:if="${param.error}">
           Email or Password is invalid.
         </div>
+        <div class="text-green-500 mb-2" >
+          <span th:utext="${successMessage}"></span>
+        </div>
       </form>
     </div>
   </div>
