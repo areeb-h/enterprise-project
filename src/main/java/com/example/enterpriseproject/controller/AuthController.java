@@ -3,13 +3,15 @@ package com.example.enterpriseproject.controller;
 import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
 import com.example.enterpriseproject.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -58,6 +60,7 @@ public class AuthController {
         if (!(user.getRole() == Role.ADMIN)) {
             model.addAttribute("successMessage", user.getRole().toString()+" registered successfully! Please wait for an admin to activate your account");
         }
+
 
         return "auth/login";
     }

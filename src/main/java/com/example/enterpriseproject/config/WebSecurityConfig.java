@@ -96,8 +96,8 @@ public class WebSecurityConfig {
                 .sessionManagement()
                 //.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
-                .expiredUrl("/login?expired=true");
+                .maxSessionsPreventsLogin(false)
+                .expiredUrl("/login?expired");
 
         http.authenticationProvider(authenticationProvider());
         http.headers().frameOptions().sameOrigin();
