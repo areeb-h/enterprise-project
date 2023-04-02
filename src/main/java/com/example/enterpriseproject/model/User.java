@@ -131,7 +131,7 @@ public class User implements UserDetails {
     //set enabled to false if the role is "CUSTOMER"
     public void setRole(Role role) {
         this.role = role;
-        if (role == Role.CUSTOMER || role == Role.DRIVER) {
+        if (role == Role.CUSTOMER) {
             enabled = false;
         }
     }
