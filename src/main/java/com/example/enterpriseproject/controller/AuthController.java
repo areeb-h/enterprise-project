@@ -58,7 +58,9 @@ public class AuthController {
         // save user to db
         userService.save(user);
         model.addAttribute("successMessage", "User registered successfully!");
-
+        if (!(user.getRole() == Role.ADMIN)) {
+            model.addAttribute("successMessage", user.getRole().toString()+" registered successfully! Please wait for an admin to activate your account");
+        }
         return "auth/login";
     }
 }

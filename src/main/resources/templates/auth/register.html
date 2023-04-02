@@ -34,10 +34,8 @@
                     <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
                 </select>
             </div>
-
             <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit" value="Register"/></button>
             <p>Already have an account! <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
-            <span th:utext="${successMessage}"></span>
             <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
                 <ul th:each="data : ${bindingResult.getAllErrors()}">
                     <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
