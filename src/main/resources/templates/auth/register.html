@@ -14,23 +14,23 @@
 
             <div class="space-y-2 ">
                 <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="First Name"
-                       type="text" name="First Name" required/>
+                       type="text" th:field="*{firstName}" name="First Name" required/>
             </div>
             <div class="space-y-2 ">
                 <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Last Name"
-                       type="text" name="Last Name" required/>
+                       type="text" th:field="*{lastName}" name="Last Name" required/>
             </div>
             <div class="space-y-2 ">
                 <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="User Name"
-                       type="text" name="User Name" required/>
+                       type="text" th:field="*{username}" name="User Name" required/>
             </div>
             <div class="space-y-2 ">
                 <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Email"
-                       type="text" name="Email" required/>
+                       type="text" th:field="*{email}" name="Email" required/>
             </div>
             <div class="space-y-2 ">
                 <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Password"
-                       type="password" name="password" required/>
+                       type="password" th:field="*{password}" name="password" required/>
             </div>
             <br/><br/>
             <div class="flex justify-center">
