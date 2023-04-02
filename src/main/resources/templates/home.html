@@ -11,15 +11,13 @@
     <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
     <form class="form-Home flex flex-col space-y-5" th:action="@{/Home}" method="post">
 <h2 class="font-bold text-xl text-slate-800 mb-2">Welcome to Caber</h2>
-<p sec:authorize="hasRole('ROLE_ANONYMOUS')" class="mb-4 text-center">PLEASE LOGIN</p>
 
-<div sec:authorize="hasRole('ROLE_ANONYMOUS')" class="mb-4">
-    <button class="bg-teal-500 w-full hover:bg-teal-700 text-white font-semi-bold py-2 w-2/4 rounded"><input type="submit" value="Login" />
-    </button>
-</div>
-<div sec:authorize="hasRole('ROLE_ANONYMOUS')" class="mb-4">
-    <button class="bg-teal-500 w-full hover:bg-teal-700 text-white font-semi-bold py-2 w-2/4 rounded"><input type="submit" value="Register" />
-    </button>
+<div sec:authorize="hasRole('ROLE_ANONYMOUS')" class="flex flex-col space-y-4 text-white font-semi-bold text-center">
+    <p class="mb-4 text-center text-gray-900">PLEASE LOGIN</p>
+    <a href="/login" class="bg-teal-500 w-full hover:bg-teal-700 py-2 px-3 w-full rounded">Login
+    </a>
+    <a href="/register" class="bg-teal-500 w-full hover:bg-teal-700 py-2 px-3 w-full rounded">Register
+    </a>
 </div>
 
 <div sec:authorize="isAuthenticated()">
