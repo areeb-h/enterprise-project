@@ -1,47 +1,59 @@
 <!--register.html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.tailwindcss.com"></script>
+
 <head>
-  <title>Login</title>
+    <title>Sign-Up</title>
 </head>
 <body>
-<form th:action="@{/register}" th:object="${user}" method="post">
-  <h3>Registration</h3>
-  <label>
-    First Name:
-    <input type="text" th:field="*{firstName}" placeholder="First Name" />
-  </label> <br/><br/>
-  <label>
-    Last Name:
-    <input type="text" th:field="*{lastName}" placeholder="Last Name" />
-  </label> <br/><br/>
-  <label>
-    Username:
-    <input type="text" th:field="*{username}" placeholder="Username" />
-  </label> <br/><br/>
-  <label>
-    Email:
-    <input type="text" th:field="*{email}" placeholder="email" />
-  </label> <br/><br/>
-  <label>
-    Password:
-    <input type="password" th:field="*{password}" placeholder="*****"/>
-  </label> <br/><br/>
+<div class="flex h-screen bg-gray-50">
+    <div class="m-auto p-20 shadow-md rounded-md bg-white content-center">
+        <form class="form-register flex flex-col space-y-4" th:action="@{/register}" th:object="${user}" method="post">
+            <h3 class="font-bold text-xl text-slate-800 mb-2">User Registration</h3>
 
-  <select id="userRole" th:field="*{role}" required>
-    <option value="">Select</option>
-    <option value="ADMIN">Admin</option>
-    <option value="CUSTOMER" th:selected="${user.role == 'CUSTOMER'}">Customer</option>
-    <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
-  </select>
-  <br/><br/>
-  <button type="submit">Register</button> | <a th:href="@{|/login|}" th:text="'Log in'"></a>
-  <span th:utext="${successMessage}"></span>
-  <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
-    <ul th:each="data : ${bindingResult.getAllErrors()}">
-      <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
-    </ul>
-  </div>
-</form>
+            <div class="space-y-2 ">
+                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="First Name"
+                       type="text" name="First Name" required/>
+            </div>
+            <div class="space-y-2 ">
+                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Last Name"
+                       type="text" name="Last Name" required/>
+            </div>
+            <div class="space-y-2 ">
+                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="User Name"
+                       type="text" name="User Name" required/>
+            </div>
+            <div class="space-y-2 ">
+                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Email"
+                       type="text" name="Email" required/>
+            </div>
+            <div class="space-y-2 ">
+                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Password"
+                       type="password" name="password" required/>
+            </div>
+            <br/><br/>
+            <div class="flex justify-center">
+                <div class="mb-3 xl:w-96">
+                    <select id="user roles" class="block mb-2 text-sm font-medium text-gray-900 "
+                            required>
+                        <option Value>Select Account Type</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="CUSTOMER" th:selected="${user.role == 'CUSTOMER'}">Customer</option>
+                        <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
+                    </select>
+                </div>
+            </div>
+            <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit" value="Register"/></button>
+            <p>Already have an account!   <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
+            <span th:utext="${successMessage}"></span>
+            <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
+                <ul th:each="data : ${bindingResult.getAllErrors()}">
+                    <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
