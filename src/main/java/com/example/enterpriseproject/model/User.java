@@ -71,6 +71,10 @@ public class User implements UserDetails {
         this.password = encodedPassword;
     }
 
+    public void setEnabled(Boolean b) {
+        this.enabled = b;
+    }
+
     @Override
     public String getUsername() {
         return this.username;

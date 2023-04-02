@@ -1,10 +1,8 @@
 package com.example.enterpriseproject.service;
 
+import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
 import com.example.enterpriseproject.repository.UserRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -62,5 +60,15 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         return userRepository.findByEmail(username).orElseThrow(
                 () -> new UsernameNotFoundException(
                         String.format("USER_NOT_FOUND", username)));
+    }
+
+    @Override
+    public List<User> findAllCustomers() {
+        return userRepository.findAllByRoleAndEnabled(Role.CUSTOMER, false);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

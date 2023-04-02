@@ -8,44 +8,35 @@
 </head>
 <body>
 <div class="flex h-screen bg-gray-50">
-    <div class="m-auto p-20 shadow-md rounded-md bg-white content-center">
+    <div class="m-auto p-6 shadow-md rounded-md bg-white content-center">
         <form class="form-register flex flex-col space-y-4" th:action="@{/register}" th:object="${user}" method="post">
             <h3 class="font-bold text-xl text-slate-800 mb-2">User Registration</h3>
 
-            <div class="space-y-2 ">
-                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="First Name"
+            <div class="flex space-x-4">
+                <input class="bg-gray-50 rounded-md py-2 px-3 border border-gray-300" placeholder="First Name"
                        type="text" th:field="*{firstName}" name="First Name" required/>
-            </div>
-            <div class="space-y-2 ">
-                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Last Name"
+                <input class="bg-gray-50 rounded-md py-2 px-3 border border-gray-300" placeholder="Last Name"
                        type="text" th:field="*{lastName}" name="Last Name" required/>
             </div>
-            <div class="space-y-2 ">
-                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="User Name"
-                       type="text" th:field="*{username}" name="User Name" required/>
+            <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="User Name"
+                   type="text" th:field="*{username}" name="User Name" required/>
+            <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Email"
+                   type="text" th:field="*{email}" name="Email" required/>
+            <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Password"
+                   type="password" th:field="*{password}" name="password" required/>
+
+            <div class="mb-4 xl:w-96">
+                <select id="user roles" class="mb-3 block text-sm font-medium text-gray-900 px-2.5 py-2 bg-gray-50 border-2 rounded-md"
+                        required>
+                    <option Value>Select Account Type</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="CUSTOMER" th:selected="${user.role == 'CUSTOMER'}">Customer</option>
+                    <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
+                </select>
             </div>
-            <div class="space-y-2 ">
-                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Email"
-                       type="text" th:field="*{email}" name="Email" required/>
-            </div>
-            <div class="space-y-2 ">
-                <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Password"
-                       type="password" th:field="*{password}" name="password" required/>
-            </div>
-            <br/><br/>
-            <div class="flex justify-center">
-                <div class="mb-3 xl:w-96">
-                    <select id="user roles" class="block mb-2 text-sm font-medium text-gray-900 "
-                            required>
-                        <option Value>Select Account Type</option>
-                        <option value="ADMIN">Admin</option>
-                        <option value="CUSTOMER" th:selected="${user.role == 'CUSTOMER'}">Customer</option>
-                        <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
-                    </select>
-                </div>
-            </div>
+
             <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit" value="Register"/></button>
-            <p>Already have an account!   <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
+            <p>Already have an account! <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
             <span th:utext="${successMessage}"></span>
             <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
                 <ul th:each="data : ${bindingResult.getAllErrors()}">
