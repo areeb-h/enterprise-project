@@ -24,15 +24,13 @@
                    type="text" th:field="*{email}" name="Email" required/>
             <input class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300" placeholder="Password"
                    type="password" th:field="*{password}" name="password" required/>
-
             <div class="mb-4 xl:w-96">
-                <select id="user roles" class="mb-3 block text-sm font-medium text-gray-900 px-2.5 py-2 bg-gray-50 border-2 rounded-md"
-                        required>
-                    <option Value>Select Account Type</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="CUSTOMER" th:selected="${user.role == 'CUSTOMER'}">Customer</option>
-                    <option value="DRIVER" th:selected="${user.role == 'DRIVER'}">Driver</option>
-                </select>
+            <select th:field="*{role}" class="mb-3 block text-sm font-medium text-gray-900 px-2.5 py-2 bg-gray-50 border-2 rounded-md" required>
+                <option value="">Select</option>
+                <option value="ADMIN">Admin</option>
+                <option value="CUSTOMER">Customer</option>
+                <option value="DRIVER">Driver</option>
+            </select>
             </div>
             <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit" value="Register"/></button>
             <p>Already have an account! <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
