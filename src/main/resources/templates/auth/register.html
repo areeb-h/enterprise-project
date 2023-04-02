@@ -36,7 +36,6 @@
   </select>
   <br/><br/>
   <button type="submit">Register</button> | <a th:href="@{|/login|}" th:text="'Log in'"></a>
-  <span th:utext="${successMessage}"></span>
   <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
     <ul th:each="data : ${bindingResult.getAllErrors()}">
       <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
