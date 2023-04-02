@@ -9,10 +9,14 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.time.Duration;
 
 @Configuration
 @EnableWebSecurity
@@ -48,7 +52,6 @@ public class WebSecurityConfig {
 
         return authProvider;
     }
-
 
     //bean to handle requests
     @Bean
@@ -86,12 +89,20 @@ public class WebSecurityConfig {
                         .logoutSuccessUrl("/")
                 )
                 .exceptionHandling()
-                .accessDeniedPage("/access-denied");
-                http.authenticationProvider(authenticationProvider());
-                http.headers().frameOptions().sameOrigin();
+                .accessDeniedPage("/access-denied")
+
+                //session management
+                .and()
+                .sessionManagement()
+                //.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+                .expiredUrl("/login?expired");
+
+        http.authenticationProvider(authenticationProvider());
+        http.headers().frameOptions().sameOrigin();
 
         return http.build();
 
     }
-
 }
