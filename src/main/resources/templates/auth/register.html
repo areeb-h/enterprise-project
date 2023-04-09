@@ -34,10 +34,13 @@
             </div>
             <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit" value="Register"/></button>
             <p>Already have an account! <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
-            <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
+            <div class="text-red-500 mb-2" th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
                 <ul th:each="data : ${bindingResult.getAllErrors()}">
-                    <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+                    <li th:text="${data.getDefaultMessage()}"></li>
                 </ul>
+            </div>
+            <div class="text-red-500 mb-2">
+                <span th:text="${successMessage}"></span>
             </div>
         </form>
     </div>

@@ -1,7 +1,7 @@
 package com.example.enterpriseproject.model;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +25,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email", nullable = false, unique = true, length = 45)
+    @Email(message = "Please enter a valid email address")
     private String email;
 
     @Column(nullable = false, length = 64)
