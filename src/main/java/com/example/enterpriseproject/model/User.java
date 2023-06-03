@@ -19,8 +19,8 @@ import java.util.Collections;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    //coloumns for user table
-    @Id
+    // coloumns for user table
+    @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -61,7 +61,7 @@ public class User implements UserDetails {
         return Collections.singletonList(authority);
     }
 
-    //getters and setter for the attributes
+    // getters and setter for the attributes
 
     @Override
     public String getPassword() {
@@ -133,7 +133,7 @@ public class User implements UserDetails {
         return this.role;
     }
 
-    //set enabled to false if the role is "CUSTOMER or DRIVER"
+    // set enabled to false if the role is "CUSTOMER or DRIVER"
     public void setRole(Role role) {
         this.role = role;
         if (role == Role.CUSTOMER || role == Role.DRIVER) {

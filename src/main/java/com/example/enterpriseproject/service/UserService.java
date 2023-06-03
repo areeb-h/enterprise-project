@@ -10,9 +10,11 @@ import java.util.Optional;
 //interface for userService
 public interface UserService {
     public void save(User user);
+
     public List<Object> isUserPresent(User user);
 
     UserRepository userRepository = null;
+
     public default List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
@@ -21,16 +23,7 @@ public interface UserService {
 
     List<User> findAllCustomers();
 
-    List<User> findAll();
+    List<User> findAllDrivers();
 
-    public default void enableUser(String email) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            user.setEnabled(true);
-            userRepository.save(user);
-        } else {
-            throw new IllegalArgumentException("User not found with email: " + email);
-        }
-    }
+    List<User> findAll();
 }

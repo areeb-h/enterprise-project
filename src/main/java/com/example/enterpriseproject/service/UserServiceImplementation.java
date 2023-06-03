@@ -68,7 +68,23 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     }
 
     @Override
+    public List<User> findAllDrivers() {
+        return userRepository.findAllByRoleAndEnabled(Role.DRIVER, false);
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public void enableUser(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setEnabled(true);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("User not found with email: " + email);
+        }
     }
 }

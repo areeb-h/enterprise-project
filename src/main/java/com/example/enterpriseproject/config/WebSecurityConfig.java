@@ -21,19 +21,19 @@ public class WebSecurityConfig {
     @Autowired
     private LoginRoleHandler loginRoleHandler;
 
-    //create UserdetailService bean
+    // create UserdetailService bean
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserServiceImplementation();
     }
 
-    //create BcryptPassword encorder bean
+    // create BcryptPassword encorder bean
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //create authentication manager bean
+    // create authentication manager bean
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
@@ -49,46 +49,46 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-
-    //bean to handle requests
+    // bean to handle requests
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        //every user will be able to access these urls
+                        // every user will be able to access these urls
                         .requestMatchers("/", "/home", "/register").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
                         .requestMatchers("/driver/**").hasAnyAuthority("DRIVER")
-                        .anyRequest().authenticated()
-                )
-                /*.csrf().disable().formLogin()
-                        //all the users will be able to access login form
-                        .loginPage("/login")
-                        .permitAll()
-                        .failureUrl("/login?error=true")
-                        //if login is successfull this loginRoleHandler class will decide what happens next
-                        .successHandler(loginRoleHandler)
-                        .usernameParameter("username")
-                        .passwordParameter("password").and()*/
+                        .anyRequest().authenticated())
+                /*
+                 * .csrf().disable().formLogin()
+                 * //all the users will be able to access login form
+                 * .loginPage("/login")
+                 * .permitAll()
+                 * .failureUrl("/login?error=true")
+                 * //if login is successfull this loginRoleHandler class will decide what
+                 * happens next
+                 * .successHandler(loginRoleHandler)
+                 * .usernameParameter("username")
+                 * .passwordParameter("password").and()
+                 */
                 .csrf().disable().formLogin((form) -> form
-                //all the users will be able to access login form
+                        // all the users will be able to access login form
                         .loginPage("/login")
                         .permitAll()
                         .failureUrl("/login?error=true")
-                //if login is successfull this loginRoleHandler class will decide what happens next
+                        // if login is successfull this loginRoleHandler class will decide what happens
+                        // next
                         .successHandler(loginRoleHandler)
-                        .usernameParameter("username")
-                        .passwordParameter("password")
-                )
+                        .usernameParameter("email")
+                        .passwordParameter("password"))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/")
-                )
+                        .logoutSuccessUrl("/"))
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
-                http.authenticationProvider(authenticationProvider());
-                http.headers().frameOptions().sameOrigin();
+        http.authenticationProvider(authenticationProvider());
+        http.headers().frameOptions().sameOrigin();
 
         return http.build();
 
