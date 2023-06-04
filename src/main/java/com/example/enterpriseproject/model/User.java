@@ -19,7 +19,7 @@ import java.util.Collections;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    // coloumns for user table
+    //TABLE COLUMNS
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,6 +55,16 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Boolean enabled = true;
 
+    //RELATIONSHIPS
+
+    @OneToOne(mappedBy = "users")
+    private Customer customer;
+
+    @OneToOne(mappedBy = "drivers")
+    private Driver driver;
+
+
+    //GETTERS AND SETTERS
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
@@ -139,5 +149,13 @@ public class User implements UserDetails {
         if (role == Role.CUSTOMER || role == Role.DRIVER) {
             enabled = false;
         }
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
