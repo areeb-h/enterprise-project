@@ -2,7 +2,6 @@ package com.example.enterpriseproject.repository;
 
 import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

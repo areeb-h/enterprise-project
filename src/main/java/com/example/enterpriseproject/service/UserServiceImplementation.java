@@ -62,14 +62,13 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
                         String.format("USER_NOT_FOUND", username)));
     }
 
+    // to find both active and inactive users
     @Override
-    public List<User> findAllCustomers() {
-        return userRepository.findAllByRoleAndEnabled(Role.CUSTOMER, false);
+    public List<User> findAllCustomers(boolean enabled) {
+        return userRepository.findAllByRoleAndEnabled(Role.CUSTOMER, enabled);
     }
-
-    @Override
-    public List<User> findAllDrivers() {
-        return userRepository.findAllByRoleAndEnabled(Role.DRIVER, false);
+    public List<User> findAllDrivers(boolean enabled) {
+        return userRepository.findAllByRoleAndEnabled(Role.DRIVER, enabled);
     }
 
     @Override

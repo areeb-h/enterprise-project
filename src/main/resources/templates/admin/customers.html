@@ -2,24 +2,71 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Customers</title>
+    <!-- Referring the css file from src/main/resources/static/main.css -->
+    <link th:href="@{/main.css}" rel="stylesheet" />
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>Email</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="customer : ${customers}">
-        <td th:text="${customer.email}"></td>
-        <td th:text="${customer.firstName}"></td>
-        <td th:text="${customer.lastName}"></td>
-        <td><a th:href="@{/admin/dashboard/customers/enable/{email}(email=${customer.email})}">Enable</a></td>
-    </tr>
-    </tbody>
-</table>
+    <nav>
+        <div class="nav-container">
+            <h1 class="logo">Caber</h1>
+            <div class="links">
+              <a th:href="@{/admin/dashboard}" class="link">Dashboard</a>
+              <a th:href="@{/admin/dashboard/customers}" class="link active">Customers</a>
+              <a th:href="@{/admin/dashboard/drivers}" class="link">Drivers</a>
+            </div>
+            <a th:href="@{/logout}" class="btn-logout">Log out</a>
+        </div>
+    </nav>
+    <main>
+        <div class="flex flex-col space-y-3">
+            <div class="table-container">
+                <h1>Pending Customers</h1>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Enable User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customer : ${inactive_customers}">
+                        <td th:text="${customer.id}"></td>
+                        <td th:text="${customer.email}"></td>
+                        <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+                        <td><a th:href="@{/admin/dashboard/customers/enable/{id}(id=${customer.id})}">Enable</a></td>
+                    </tr>
+                    <tr class="no-records" th:if="${#lists.isEmpty(inactive_customers)}">
+                        <td colspan="4"><p>No pending requests</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h1>Active Customers</h1>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customer : ${active_customers}">
+                        <td th:text="${customer.id}"></td>
+                        <td th:text="${customer.email}"></td>
+                        <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+                    </tr>
+                    <tr class="no-records" th:if="${#lists.isEmpty(active_customers)}">
+                        <td colspan="4"><p>No active customers</p></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

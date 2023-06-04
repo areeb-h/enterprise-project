@@ -20,7 +20,7 @@ public class AdminController {
     // private final UserService userService;
     private final UserServiceImplementation userServiceImplementation;
 
-    @Autowired
+    // @Autowired
     public AdminController(UserServiceImplementation userServiceImplementation) {
         this.userServiceImplementation = userServiceImplementation;
     }
@@ -32,27 +32,31 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard/customers")
     public String getCustomers(Model model) {
-        List<User> customers = userServiceImplementation.findAllCustomers();
-        model.addAttribute("customers", customers);
+        List<User> inactive_customers = userServiceImplementation.findAllCustomers(false);
+        List<User> active_customers = userServiceImplementation.findAllCustomers(true);
+        model.addAttribute("inactive_customers", inactive_customers);
+        model.addAttribute("active_customers", active_customers);
         return "admin/customers";
     }
 
-    @GetMapping("/admin/dashboard/customers/enable/{email:.+}")
-    public String enableCustomer(@PathVariable("email") String email) {
-        userServiceImplementation.enableUser(email);
+    @GetMapping("/admin/dashboard/customers/enable/{id}")
+    public String enableCustomer(@PathVariable("id") String id) {
+        userServiceImplementation.enableUser(id);
         return "redirect:/admin/dashboard/customers";
     }
 
     @GetMapping("/admin/dashboard/drivers")
     public String getDrivers(Model model) {
-        List<User> drivers = userServiceImplementation.findAllDrivers();
-        model.addAttribute("drivers", drivers);
+        List<User> inactive_drivers = userServiceImplementation.findAllDrivers(false);
+        List<User> active_drivers = userServiceImplementation.findAllDrivers(true);
+        model.addAttribute("inactive_drivers", inactive_drivers);
+        model.addAttribute("active_drivers", active_drivers);
         return "admin/drivers";
     }
 
-    @GetMapping("/admin/dashboard/drivers/enable/{email:.+}")
-    public String enableDriver(@PathVariable("email") String email) {
-        userServiceImplementation.enableUser(email);
+    @GetMapping("/admin/dashboard/drivers/enable/{id}")
+    public String enableDriver(@PathVariable("id") String id) {
+        userServiceImplementation.enableUser(id);
         return "redirect:/admin/dashboard/drivers";
     }
 }

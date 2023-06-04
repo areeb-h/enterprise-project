@@ -39,7 +39,6 @@ public class Vehicle {
     @OneToMany(mappedBy = "orders")
     private List<Order> order;
 
-
     //GETTERS AND SETTERS
 
     public Long getId() {

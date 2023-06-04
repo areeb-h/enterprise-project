@@ -2,8 +2,6 @@ package com.example.enterpriseproject.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.*;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,7 +60,6 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "drivers")
     private Driver driver;
-
 
     //GETTERS AND SETTERS
     @Override

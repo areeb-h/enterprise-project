@@ -21,9 +21,9 @@ public interface UserService {
         return users;
     }
 
-    List<User> findAllCustomers();
-
-    List<User> findAllDrivers();
+    // to find both active and inactive users
+    List<User> findAllCustomers(boolean enabled);
+    List<User> findAllDrivers(boolean enabled);
 
     List<User> findAll();
 }
