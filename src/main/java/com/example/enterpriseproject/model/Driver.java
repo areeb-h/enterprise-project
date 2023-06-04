@@ -9,29 +9,31 @@ import java.util.List;
 @Table(name = "drivers")
 public class Driver {
 
-    //TABLE COLUMNS
+    // TABLE COLUMNS
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //RELATIONSHIPS
+    // RELATIONSHIPS
 
-    //foreign key driver_id references id in users table
+    // foreign key driver_id references id in users table
     @OneToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private User user;
 
-    //primary key id references driver_id in vehicles table
-    @OneToOne(mappedBy = "vehicles")
-    private Vehicle vehicle;
-
-    @OneToMany(mappedBy = "orders")
-    private List<Order> order;
+    // primary key id references driver_id in vehicles table
+    /*
+     * @OneToOne(mappedBy = "vehicles")
+     * private Vehicle vehicle;
+     * 
+     * @OneToMany(mappedBy = "orders")
+     * private List<Order> order;
+     */
 
     public Driver() {
     }
 
-    //GETTERS AND SETTERS
+    // GETTERS AND SETTERS
     public Long getId() {
         return id;
     }

@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "vehicles")
 public class Vehicle {
 
-    //TABLE COLUMNS
+    // TABLE COLUMNS
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +17,7 @@ public class Vehicle {
     @Column(name = "car_name", nullable = false, length = 45)
     private String carName;
 
-    @Column(name = "car_color" , nullable = false, length = 45)
+    @Column(name = "car_color", nullable = false, length = 45)
     private String carColor;
 
     @Column(name = "license_number", nullable = false, length = 45)
@@ -29,21 +29,24 @@ public class Vehicle {
     @Column(name = "license_issue_date", nullable = false, length = 45)
     private LocalDateTime licenseIssueDate;
 
-    //RELATIONSHIPS
+    // RELATIONSHIPS
 
-    //foreign key driver_id references id in drivers table
+    // foreign key driver_id references id in drivers table
     @OneToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
 
-    @OneToMany(mappedBy = "orders")
-    private List<Order> order;
+    /*
+     * @OneToMany(mappedBy = "orders")
+     * private List<Order> order;
+     */
 
-    //GETTERS AND SETTERS
+    // GETTERS AND SETTERS
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -95,10 +98,4 @@ public class Vehicle {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
-
-
-
-
-
-
 }

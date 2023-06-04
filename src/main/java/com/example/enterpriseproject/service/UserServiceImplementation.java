@@ -76,14 +76,14 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         return userRepository.findAll();
     }
 
-    public void enableUser(String email) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+    public void enableUser(String id) {
+        Optional<User> optionalUser = userRepository.findById(Long.parseLong(id));
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setEnabled(true);
             userRepository.save(user);
         } else {
-            throw new IllegalArgumentException("User not found with email: " + email);
+            throw new IllegalArgumentException("User not found with email: " + id);
         }
     }
 }
