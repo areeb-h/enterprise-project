@@ -131,7 +131,7 @@ public class User implements UserDetails {
     }
 
     public String getLastName() {
-        return this.firstName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
