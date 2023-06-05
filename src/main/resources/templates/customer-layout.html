@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title> Caber: [[${title}]]</title>
+  <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+
+<body>
+  <ul id="default-navbar" class="gap-3 justify-center"></ul>
+  <nav>
+    <div class="nav-container">
+      <h1 class="logo">Caber</h1>
+      <div class="links" id="links">
+        <a th:href="@{/customer/dashboard}" th:class="${title == 'dashboard' ? 'link active' : 'link'}">Dashboard</a>
+        <a th:href="@{/customer/book}" th:class="${title == 'book' ? 'link active' : 'link'}">Book</a>
+      </div>
+      <a th:href="@{/logout}" class="btn-logout">Log out</a>
+    </div>
+  </nav>
+  <div layout:fragment="content"></div>
+</body>
+</html>

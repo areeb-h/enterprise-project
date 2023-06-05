@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Customers</title>
-    <!-- Referring the css file from src/main/resources/static/main.css -->
-    <link th:href="@{/main.css}" rel="stylesheet" />
-</head>
-<body>
-    <nav>
-        <div class="nav-container">
-            <h1 class="logo">Caber</h1>
-            <div class="links">
-              <a th:href="@{/admin/dashboard}" class="link">Dashboard</a>
-              <a th:href="@{/admin/dashboard/customers}" class="link active">Customers</a>
-              <a th:href="@{/admin/dashboard/drivers}" class="link">Drivers</a>
-            </div>
-            <a th:href="@{/logout}" class="btn-logout">Log out</a>
-        </div>
-    </nav>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-layout}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<div layout:fragment="content">
+    ss
     <main>
         <div class="flex flex-col space-y-3">
             <div class="table-container">
@@ -70,5 +56,6 @@
             </div>
         </div>
     </main>
-</body>
+</div>
+
 </html>

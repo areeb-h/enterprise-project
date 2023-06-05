@@ -1,25 +1,9 @@
 <!--admin/dashboard.html-->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-  <title>Dashboard</title>
-  <link th:href="@{/main.css}" rel="stylesheet" />
-</head>
-<body>
-<div class="flex flex-col h-screen bg-gray-50">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-layout}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <nav>
-    <div class="nav-container">
-      <h1 class="logo">Caber</h1>
-      <div class="links">
-        <a th:href="@{/admin/dashboard}" class="link active">Dashboard</a>
-        <a th:href="@{/admin/dashboard/customers}" class="link">Customers</a>
-        <a th:href="@{/admin/dashboard/drivers}" class="link">Drivers</a>
-      </div>
-      <a th:href="@{/logout}" class="btn-logout">Log out</a>
-    </div>
-  </nav>
-
+<div layout:fragment="content">
+  <main>
   <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
     <div class="form-Home flex flex-col space-y-5">
       <h2 class="text-xl font-bold">Welcome to Admin Dashboard</h2>
@@ -31,6 +15,6 @@
 
     </div>
   </div>
+  </main>
 </div>
-</body>
 </html>

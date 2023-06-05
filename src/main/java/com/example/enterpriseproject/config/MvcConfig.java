@@ -10,6 +10,7 @@ public class MvcConfig implements WebMvcConfigurer {
     //register all the views that we do not map in controllers
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/access-denied").setViewName("access-denied");
+        registry.addViewController("/access-denied").setViewName("error/access-denied");
+        registry.addViewController("/page-not-found").setViewName("error/404");
     }
 }

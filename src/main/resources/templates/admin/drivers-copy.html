@@ -1,7 +1,22 @@
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{admin-layout}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
-<div layout:fragment="content">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Drivers</title>
+    <!-- Referring the css file from src/main/resources/static/main.css -->
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <h1 class="logo">Caber</h1>
+            <div class="links">
+                <a th:href="@{/admin/dashboard}" class="link">Dashboard</a>
+                <a th:href="@{/admin/dashboard/customers}" class="link">Customers</a>
+                <a th:href="@{/admin/dashboard/drivers}" class="link active">Drivers</a>
+            </div>
+            <a th:href="@{/logout}" class="btn-logout">Log out</a>
+        </div>
+    </nav>
     <main>
         <div class="flex flex-col space-y-3">
             <div class="table-container">
@@ -55,5 +70,6 @@
             </div>
         </div>
     </main>
-</div>
+</body>
+
 </html>

@@ -26,7 +26,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = { "/admin/dashboard" }, method = RequestMethod.GET)
-    public String adminHome() {
+    public String adminHome(Model model) {
+        model.addAttribute("title", "dashboard");
         return "admin/dashboard";
     }
 
@@ -36,6 +37,7 @@ public class AdminController {
         List<User> active_customers = userServiceImplementation.findAllCustomers(true);
         model.addAttribute("inactive_customers", inactive_customers);
         model.addAttribute("active_customers", active_customers);
+        model.addAttribute("title", "customers");
         return "admin/customers";
     }
 
@@ -57,6 +59,7 @@ public class AdminController {
         List<User> active_drivers = userServiceImplementation.findAllDrivers(true);
         model.addAttribute("inactive_drivers", inactive_drivers);
         model.addAttribute("active_drivers", active_drivers);
+        model.addAttribute("title", "drivers");
         return "admin/drivers";
     }
 
