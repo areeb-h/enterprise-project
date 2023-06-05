@@ -76,11 +76,11 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         return userRepository.findAll();
     }
 
-    public void enableUser(String id) {
+    public void enableUser(String id, boolean enable) {
         Optional<User> optionalUser = userRepository.findById(Long.parseLong(id));
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setEnabled(true);
+            user.setEnabled(enable);
             userRepository.save(user);
         } else {
             throw new IllegalArgumentException("User not found with email: " + id);

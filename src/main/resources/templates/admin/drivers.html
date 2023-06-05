@@ -52,6 +52,7 @@
                         <th>Id</th>
                         <th>Email</th>
                         <th>Name</th>
+                        <th>Disable Driver</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,7 @@
                         <td th:text="${driver.id}"></td>
                         <td th:text="${driver.email}"></td>
                         <td th:text="${driver.firstName + ' ' + driver.lastName}"></td>
+                        <td><a th:href="@{/admin/dashboard/customers/disable/{id}(id=${customer.id})}">Disable</a></td>
                     </tr>
                     <tr class="no-records" th:if="${#lists.isEmpty(active_drivers)}">
                         <td colspan="4"><p>No active drivers</p></td>

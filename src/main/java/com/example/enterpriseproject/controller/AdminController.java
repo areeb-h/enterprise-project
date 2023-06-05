@@ -41,7 +41,13 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard/customers/enable/{id}")
     public String enableCustomer(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id);
+        userServiceImplementation.enableUser(id, true);
+        return "redirect:/admin/dashboard/customers";
+    }
+
+    @GetMapping("/admin/dashboard/customers/disable/{id}")
+    public String disableCustomer(@PathVariable("id") String id) {
+        userServiceImplementation.enableUser(id, false);
         return "redirect:/admin/dashboard/customers";
     }
 
@@ -56,7 +62,13 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard/drivers/enable/{id}")
     public String enableDriver(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id);
+        userServiceImplementation.enableUser(id, true);
+        return "redirect:/admin/dashboard/drivers";
+    }
+
+    @GetMapping("/admin/dashboard/drivers/disable/{id}")
+    public String disableDriver(@PathVariable("id") String id) {
+        userServiceImplementation.enableUser(id, false);
         return "redirect:/admin/dashboard/drivers";
     }
 }

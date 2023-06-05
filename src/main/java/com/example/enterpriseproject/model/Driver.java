@@ -23,11 +23,11 @@ public class Driver {
 
     // primary key id references driver_id in vehicles table
     /*
-     * @OneToOne(mappedBy = "vehicles")
-     * private Vehicle vehicle;
-     * 
-     * @OneToMany(mappedBy = "orders")
-     * private List<Order> order;
+     @OneToOne(mappedBy = "vehicles")
+     private Vehicle vehicle;
+
+     @OneToMany(mappedBy = "orders")
+     private List<Order> order;
      */
 
     public Driver() {

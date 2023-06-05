@@ -19,10 +19,10 @@ public class Customer {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    /*
-     @OneToMany(mappedBy = "orders")
-     private List<Order> order;
-    */
+
+    @OneToMany(mappedBy = "id")
+    private List<Order> order;
+
 
     @Column(name = "address", nullable = false, length = 45)
     private String address;

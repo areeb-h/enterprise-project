@@ -52,6 +52,7 @@
                         <th>Id</th>
                         <th>Email</th>
                         <th>Name</th>
+                        <th>Enable Customer</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,7 @@
                         <td th:text="${customer.id}"></td>
                         <td th:text="${customer.email}"></td>
                         <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+                        <td><a th:href="@{/admin/dashboard/customers/disable/{id}(id=${customer.id})}">Disable</a></td>
                     </tr>
                     <tr class="no-records" th:if="${#lists.isEmpty(active_customers)}">
                         <td colspan="4"><p>No active customers</p></td>
