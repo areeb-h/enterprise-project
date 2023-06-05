@@ -31,13 +31,13 @@ public class Order {
     //RELATIIONSHIPS
 
     //foreign key customer_id references id in customers table
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
     //foreign key driver_id references id in drivers table
-    @OneToOne
-    @JoinColumn(name = "driiver_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
 
     //foreign key vehicle_id references id in vehicles table

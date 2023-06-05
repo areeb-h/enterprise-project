@@ -55,13 +55,12 @@ public class User implements UserDetails {
 
     // RELATIONSHIPS
 
-    /*
-     * @OneToOne(mappedBy = "users")
-     * private Customer customer;
-     * 
-     * @OneToOne(mappedBy = "drivers")
-     * private Driver driver;
-     */
+      @OneToOne(mappedBy = "user")
+      private Customer customer;
+
+      @OneToOne(mappedBy = "user")
+      private Driver driver;
+
 
     // GETTERS AND SETTERS
     @Override

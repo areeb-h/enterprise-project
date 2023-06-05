@@ -20,7 +20,7 @@ public class Customer {
     private User user;
 
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customer")
     private List<Order> order;
 
 
@@ -57,6 +57,11 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    // getter for order
+    public List<Order> getOrder() {
+        return order;
     }
 
 }
