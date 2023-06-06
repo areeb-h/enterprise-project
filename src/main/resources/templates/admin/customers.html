@@ -1,60 +1,73 @@
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{admin-layout}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{admin-layout}"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <div layout:fragment="content">
+    <div class="flex flex-col space-y-3">
+      <div class="table-container">
+        <h1>Pending Customers</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Enable User</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="customer : ${inactive_customers}">
+              <td th:text="${customer.id}"></td>
+              <td th:text="${customer.email}"></td>
+              <td
+                th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+              <td>
+                <a
+                  th:href="@{/admin/dashboard/customers/enable/{id}(id=${customer.id})}"
+                  >Enable</a
+                >
+              </td>
+            </tr>
+            <tr
+              class="no-records"
+              th:if="${#lists.isEmpty(inactive_customers)}">
+              <td colspan="4"><p>No pending requests</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-<div layout:fragment="content">
-    <main>
-        <div class="flex flex-col space-y-3">
-            <div class="table-container">
-                <h1>Pending Customers</h1>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Enable User</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="customer : ${inactive_customers}">
-                        <td th:text="${customer.id}"></td>
-                        <td th:text="${customer.email}"></td>
-                        <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
-                        <td><a th:href="@{/admin/dashboard/customers/enable/{id}(id=${customer.id})}">Enable</a></td>
-                    </tr>
-                    <tr class="no-records" th:if="${#lists.isEmpty(inactive_customers)}">
-                        <td colspan="4"><p>No pending requests</p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="table-container">
-                <h1>Active Customers</h1>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Enable Customer</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="customer : ${active_customers}">
-                        <td th:text="${customer.id}"></td>
-                        <td th:text="${customer.email}"></td>
-                        <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
-                        <td><a th:href="@{/admin/dashboard/customers/disable/{id}(id=${customer.id})}">Disable</a></td>
-                    </tr>
-                    <tr class="no-records" th:if="${#lists.isEmpty(active_customers)}">
-                        <td colspan="4"><p>No active customers</p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-</div>
-
+      <div class="table-container">
+        <h1>Active Customers</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Enable Customer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="customer : ${active_customers}">
+              <td th:text="${customer.id}"></td>
+              <td th:text="${customer.email}"></td>
+              <td
+                th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+              <td>
+                <a
+                  th:href="@{/admin/dashboard/customers/disable/{id}(id=${customer.id})}"
+                  >Disable</a
+                >
+              </td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(active_customers)}">
+              <td colspan="4"><p>No active customers</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </html>

@@ -1,20 +1,20 @@
 <!--admin/dashboard.html-->
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{customer-layout}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<html
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{customer-layout}"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <div layout:fragment="content">
+    <div
+      class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
+      <div class="form-Home flex flex-col space-y-5">
+        <h2 class="text-xl font-bold">Welcome to Customer Dashboard</h2>
 
-<div layout:fragment="content">
-    <main>
-        <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
-            <div class="form-Home flex flex-col space-y-5">
-                <h2 class="text-xl font-bold">Welcome to Customer Dashboard</h2>
-
-                <div>
-                    <p>Logged in as: <span sec:authentication="name"></span></p>
-                    <p>Has role: <span sec:authentication="authorities"></span></p>
-                </div>
-
-            </div>
+        <div>
+          <p>Logged in as: <span sec:authentication="name"></span></p>
+          <p>Has role: <span sec:authentication="authorities"></span></p>
         </div>
-    </main>
-</div>
+      </div>
+    </div>
+  </div>
 </html>
