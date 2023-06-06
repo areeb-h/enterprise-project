@@ -2,8 +2,9 @@
   "name": "frontend",
   "version": "1.0.0",
   "scripts": {
-    "build": "tailwindcss -i ./main.css -o ../resources/static/main.css",
-    "watch": "tailwindcss -i ./main.css --watch"
+    "build": "tailwind -i ./main.css -o ../resources/static/main.css",
+    "watch": "tailwind -i ./main.css --watch",
+    "dev": "npm run build && npm run watch"
   },
   "author": "",
   "license": "ISC",

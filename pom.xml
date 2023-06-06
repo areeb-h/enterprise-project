@@ -92,7 +92,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
+            <version>24.0.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -106,7 +106,7 @@
 			<plugin>
 				<groupId>com.maciejwalkowiak.paseq</groupId>
 				<artifactId>paseq-maven-plugin</artifactId>
-				<version>0.1.0</version>
+				<version>0.1.1</version>
 				<!-- configuration for building the package -->
 				<executions>
 					<execution>
@@ -122,7 +122,7 @@
 								<task>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>npm install</command>
+										<command>C:\PROGRA~1\nodejs\npm.cmd install</command>
 									</exec>
 								</task>
 								<!-- then start watch task in the background and output the result to `src/main/resources/static/main.css` -->
@@ -130,7 +130,7 @@
 									<async>true</async>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>npm run watch -- -o ../resources/static/main.css</command>
+										<command>C:\PROGRA~1\nodejs\npm.cmd run watch -- -o ../resources/static/main.css</command>
 									</exec>
 								</task>
 								<!--
@@ -141,7 +141,7 @@
 									<async>true</async>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>npm run watch -- -o ${project.build.directory}/classes/static/main.css</command>
+										<command>C:\PROGRA~1\nodejs\npm.cmd run watch -- -o ${project.build.directory}/classes/static/main.css</command>
 									</exec>
 								</task>
 								<task>
