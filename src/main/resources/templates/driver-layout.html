@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +8,8 @@
 </head>
 
 <body>
-  <ul id="default-navbar" class="gap-3 justify-center"></ul>
+
+  <!--Navbar-->
   <nav>
     <div class="nav-container">
       <h1 class="logo">Caber</h1>
@@ -19,8 +20,11 @@
       <a th:href="@{/logout}" class="btn-logout">Log out</a>
     </div>
   </nav>
+
+  <!--page content-->
   <main>
     <div layout:fragment="content"></div>
   </main>
+
 </body>
 </html>
