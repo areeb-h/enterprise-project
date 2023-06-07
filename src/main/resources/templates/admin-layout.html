@@ -14,9 +14,9 @@
     <div class="nav-container">
       <h1 class="logo">Caber</h1>
       <div class="links" id="links">
-        <a th:href="@{/admin/dashboard}" th:class="${title == 'dashboard' ? 'link active' : 'link'}">Dashboard</a>
-        <a th:href="@{/admin/dashboard/customers}" th:class="${title == 'customers' ? 'link active' : 'link'}">Customers</a>
-        <a th:href="@{/admin/dashboard/drivers}" th:class="${title == 'drivers' ? 'link active' : 'link'}">Drivers</a>
+        <a th:href="@{/admin/dashboard}" th:class="${title == 'dashboard' ? 'active' : ''}">Dashboard</a>
+        <a th:href="@{/admin/dashboard/customers}" th:class="${title == 'customers' ? 'active' : ''}">Customers</a>
+        <a th:href="@{/admin/dashboard/drivers}" th:class="${title == 'drivers' ? 'active' : ''}">Drivers</a>
       </div>
       <a th:href="@{/logout}" class="btn-logout">Log out</a>
     </div>

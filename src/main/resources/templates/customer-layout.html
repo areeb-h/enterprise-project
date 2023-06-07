@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title> Caber: [[${title}]]</title>
-  <link th:href="@{/main.css}" rel="stylesheet"/>
+  <link th:href="@{/main.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -13,9 +14,9 @@
   <nav>
     <div class="nav-container">
       <h1 class="logo">Caber</h1>
-      <div class="links" id="links">
-        <a th:href="@{/customer/dashboard}" th:class="${title == 'dashboard' ? 'link active' : 'link'}">Dashboard</a>
-        <a th:href="@{/customer/book}" th:class="${title == 'book' ? 'link active' : 'link'}">Book</a>
+      <div class="links">
+        <a th:href="@{/customer/dashboard}" th:class="${title == 'dashboard' ? 'active' : ''}">Dashboard</a>
+        <a th:href="@{/customer/book}" th:class="${title == 'book' ? 'active' : ''}">Book</a>
       </div>
       <a th:href="@{/logout}" class="btn-logout">Log out</a>
     </div>
@@ -27,4 +28,5 @@
   </main>
 
 </body>
+
 </html>
