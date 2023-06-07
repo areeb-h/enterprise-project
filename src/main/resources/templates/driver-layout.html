@@ -15,8 +15,8 @@
       <h1 class="logo">Caber</h1>
       <div class="links" id="links">
         <!--/*@thymesVar id="title" type="String"*/-->
-        <a th:href="@{/driver/dashboard}" th:class="${title == 'dashboard' ? 'link active' : 'link'}">Dashboard</a>
-        <a th:href="@{/driver/orders}" th:class="${title == 'orders' ? 'link active' : 'link'}">Book</a>
+        <a th:href="@{/driver/dashboard}" th:class="${title == 'dashboard' ? 'active' : ''}">Dashboard</a>
+        <a th:href="@{/driver/orders}" th:class="${title == 'orders' ? 'active' : ''}">Book</a>
       </div>
       <a th:href="@{/logout}" class="btn-logout">Log out</a>
     </div>
