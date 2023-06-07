@@ -1,9 +1,58 @@
-<!--admin/dashboard.html-->
 <html lang="en" layout:decorate="~{customer-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 
 <!--page content-->
 <div layout:fragment="content">
-  <div>Booking page</div>
+  <div class="m-auto p-6 shadow rounded-2xl bg-white items-center justify-center">
+    <form class="" th:action="@{/customer/book}" th:object="${order}" method="post">
+      <h3 class="font-bold text-xl text-center text-slate-800 mb-4">Book a ride</h3>
+      <div class="flex flex-col space-y-3 mb-4">
+        <div class="space-y-2 p-2 rounded-xl shadow">
+          <p>Pickup point</p>
+          <input id="pickup-address" th:field="*{pickupAddress}" class="bg-gray-50 rounded-md py-2 px-3 w-full" placeholder="from"
+                 type="text" name="pickup-address"/>
+        </div>
+        <div class="space-y-2 p-2 rounded-xl shadow">
+          <p>Destination</p>
+          <input id="destination-address" th:field="*{destinationAddress}" class="bg-gray-50 rounded-md py-2 px-3 w-full" placeholder="to"
+                 type="text" name="destination-address"/>
+        </div>
+        <div class="space-y-2 p-2 rounded-xl shadow">
+          <p>Day and Time</p>
+          <input id="time" th:field="*{time}" class="bg-gray-50 rounded-md py-2 px-3 w-full"
+                 placeholder="date-time" type="datetime-local" name="time" th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}"/>
+        </div>
+      </div>
+      <div class="text-center w-full">
+        <span class="text-green-500 mb-4" th:utext="${successMessage}"></span>
+        <span class="text-red-500 mb-4" th:utext="${errorMessage}"></span>
+      </div>
+      <button class="rounded-xl w-full mt-4 text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit" value="Confirm the order"/>
+      </button>
+      <div class="text-red-500 mb-2" th:if="${param.error}">
+        There was an error
+      </div>
+    </form>
+  </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.0/toastify.min.js"></script>
+
+<!-- Add JavaScript code -->
+<script th:inline="javascript">
+  function showToast(message) {
+    Toastify({
+      text: message,
+      duration: 3000,
+      gravity: "bottom", // Position the toast at the bottom
+      backgroundColor: "green",
+      className: "toast-success"
+    }).showToast();
+  }
+
+  // Get the success message from the server and display the toast
+  var successMessage = /*[[${successMessage}]]*/ "";
+  if (successMessage) {
+    showToast(successMessage);
+  }
+</script>
 </html>

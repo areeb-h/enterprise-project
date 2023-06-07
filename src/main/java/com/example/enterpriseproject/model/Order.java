@@ -93,4 +93,13 @@ public class Order {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
+    // get and set customers
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

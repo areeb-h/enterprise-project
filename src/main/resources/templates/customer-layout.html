@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +15,7 @@
       <h1 class="logo">Caber</h1>
       <div class="links">
         <a th:href="@{/customer/dashboard}" th:class="${title == 'dashboard' ? 'active' : ''}">Dashboard</a>
-        <a th:href="@{/customer/book}" th:class="${title == 'book' ? 'active' : ''}">Book</a>
+        <a th:href="@{/customer/book}" th:class="${title == 'book' ? 'active' : ''}">Book a ride →</a>
       </div>
       <a th:href="@{/logout}" class="btn-logout">Log out</a>
     </div>
