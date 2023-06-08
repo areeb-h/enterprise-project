@@ -2,9 +2,9 @@ package com.example.enterpriseproject.controller;
 
 import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Order;
-import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
 import com.example.enterpriseproject.service.OrderService;
+import com.example.enterpriseproject.service.OrderServiceImplementation;
 import com.example.enterpriseproject.service.UserService;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 import jakarta.validation.Valid;
@@ -27,8 +27,8 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
+    OrderServiceImplementation orderServiceImpementation;
     OrderService orderService;
-    UserService userService;
 
     @Autowired
     UserServiceImplementation userServiceImplementation;
@@ -40,7 +40,16 @@ public class CustomerController {
 
     @RequestMapping(value = { "/customer/dashboard" }, method = RequestMethod.GET)
     public String customerHome(Model model) {
+        // Get the currently logged-in user
+        Customer customer = userServiceImplementation.getCurrentUser().getCustomer();
+
+        List<Order> pending_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer, false);
+        List<Order> accepted_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer, true);
+
+
         model.addAttribute("title", "dashboard");
+        model.addAttribute("pending_orders", pending_orders);
+        model.addAttribute("accepted_orders", accepted_orders);
         return "customer/dashboard";
     }
 
@@ -71,7 +80,7 @@ public class CustomerController {
         order.setCustomer(customer);
 
         // save order to db
-        orderService.save(order);
+        orderServiceImpementation.save(order);
         model.addAttribute("successMessage", "Your order has been placed!");
 
         // Clear the submitted order from the model
