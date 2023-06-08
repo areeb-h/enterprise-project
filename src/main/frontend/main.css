@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/*** ./mvnw paseq:exec@dev ***/
 /*** NAVBAR ***/
 nav {
     @apply flex justify-center bg-white shadow-sm border-b
@@ -37,6 +38,10 @@ nav .links .active {
 
 main {
     @apply flex justify-center max-w-screen-2xl w-full p-4 mx-auto bg-slate-50
+}
+
+body {
+    @apply bg-slate-50
 }
 
 /* END MAIN */
