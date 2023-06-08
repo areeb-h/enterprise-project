@@ -1,39 +1,75 @@
 <!--login.html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<head>
-  <title>Login</title>
-</head>
+  <head>
+    <title>Login</title>
+  </head>
 
-<body>
-  <div class="flex h-screen bg-gray-50">
-    <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
-      <form class="form-signin flex flex-col space-y-4" th:action="@{/login}" method="post">
-        <h3 class="font-bold text-xl text-slate-800 mb-2">Login</h3>
-        <div class="flex flex-col space-y-2">
-          <div class="space-y-2">
-            <p>Email</p>
-            <input class="bg-gray-50 rounded-md py-2 px-3 w-full" placeholder="you@example.com" type="text" name="email" />
+  <body>
+    <div
+      class="flex h-screen bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-white via-teal-300 to-teal-800 items-center justify-center"
+    >
+      <!-- Login Form Container -->
+      <div class="shadow-md rounded-md bg-white">
+        <form
+          class="space-y-6 p-14 form-signin flex flex-col content-center justify-center h-fit"
+          th:action="@{/login}"
+          method="post"
+        >
+          <h3 class="font-bold text-xl text-slate-800">Login</h3>
+          <div class="space-y-5">
+            <div class="space-y-4">
+              <p>Email</p>
+              <input
+                class="bg-gray-50 rounded-md py-2 px-3 w-96"
+                placeholder="You@yourmail.com"
+                type="text"
+                name="email"
+              />
+            </div>
+            <div class="space-y-2">
+              <p>Password</p>
+              <input
+                class="bg-gray-50 rounded-md py-2 px-3 w-full"
+                placeholder="Password"
+                type="password"
+                name="password"
+              />
+            </div>
+
+            <button
+              class="rounded-md text-white bg-blue-500 shadow-lg shadow-blue-500/50 hover:bg-blue-600 hover:shadow-blue-600/50 py-2 px-3 w-full"
+            >
+              <input type="submit" value="Login" />
+            </button>
+            <p class="text-center">
+              Don't have an account yet?
+              <a th:href="@{/register}" class="text-blue-600 hover:underline"
+                >Register now</a
+              >
+            </p>
+            <div class="text-red-500 mb-2" th:if="${param.error}">
+              Email or Password is invalid.
+            </div>
           </div>
-          <div class="space-y-2">
-            <p>Password</p>
-            <input class="bg-gray-50 rounded-md py-2 px-3 w-full" placeholder="password" type="password" name="password" />
-          </div>
+        </form>
+      </div>
+
+      <!-- Image and Register Button Container -->
+
+      <div
+        class="pr-12 w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/4 flex items-center justify-center h-[500px]"
+      >
+        <div>
+          <img
+            th:src="@{/images/image.jpg}"
+            alt="Registration Image"
+            class="w-80"
+          />
         </div>
-        <div class="text-green-500 mb-2" >
-          <span th:utext="${successMessage}"></span>
-        </div>
-        <button class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"><input type="submit"
-            value="Login" /></button>
-        <p>Don't have an account yet? <a th:href="@{|/register|}" class="text-teal-600 hover:underline">Register now</a></p>
-        <div class="text-red-500 mb-2" th:if="${param.error}">
-          Email or Password is invalid.
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
