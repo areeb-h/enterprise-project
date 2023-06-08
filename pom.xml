@@ -130,7 +130,7 @@
 									<async>true</async>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>C:\PROGRA~1\nodejs\npm.cmd run watch -- -o ../resources/static/main.css</command>
+										<command>C:\PROGRA~1\nodejs\npm.cmd run watch -- -o ../resources/static/css/main.css</command>
 									</exec>
 								</task>
 								<!--
@@ -141,7 +141,7 @@
 									<async>true</async>
 									<exec>
 										<directory>src/main/frontend</directory>
-										<command>C:\PROGRA~1\nodejs\npm.cmd run watch -- -o ${project.build.directory}/classes/static/main.css</command>
+										<command>C:\PROGRA~1\nodejs\npm.cmd run watch -- -o ${project.build.directory}/classes/static/css/main.css</command>
 									</exec>
 								</task>
 								<task>
