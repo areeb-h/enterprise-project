@@ -55,7 +55,16 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         // every user will be able to access these urls
-                        .requestMatchers("/", "/home", "/register").permitAll()
+                        .requestMatchers(request -> {
+                            String path = request.getServletPath();
+                            return path.startsWith("/images/");
+                        }).permitAll()
+                        .requestMatchers(request -> {
+                            String path = request.getServletPath();
+                            return path.startsWith("/css/");
+                        }).permitAll()
+                        .requestMatchers("/resources/static/images/**").permitAll() // Permit access to the /images directory and its contents
+                        .requestMatchers("/", "/home", "/register", "/login").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
                         .requestMatchers("/driver/**").hasAnyAuthority("DRIVER")
