@@ -18,12 +18,7 @@ public class OrderServiceImplementation implements OrderService {
     OrderRepository orderRepository;
 
     public void save(Order order) {
-        order.setPickupAddress(order.getPickupAddress());
-        order.setDestinationAddress(order.getDestinationAddress());
-        order.setTime(order.getTime());
-        order.setCost(order.getCost());
-        order.setOrderStatus(order.getOrderStatus());
-        orderRepository.save(order);
+
     }
 
     @Override
