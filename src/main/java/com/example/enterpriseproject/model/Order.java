@@ -102,4 +102,12 @@ public class Order {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 }

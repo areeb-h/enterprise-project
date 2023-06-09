@@ -8,6 +8,10 @@ nav {
     @apply flex justify-center bg-white shadow-sm border-b
 }
 
+body {
+    @apply bg-slate-50
+}
+
 .nav-container {
     @apply flex px-6 py-3 justify-between items-center max-w-screen-2xl w-full
 }
@@ -32,12 +36,30 @@ nav .links .active {
     @apply text-center px-4 py-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600
 }
 
+/* home page nav */
+nav .home-links {
+    @apply flex space-x-2 p-1
+}
+
+nav .home-links a {
+    @apply text-center px-4 py-2 rounded-xl
+}
+
+.btn-register {
+    @apply bg-green-400
+}
+
+.btn-login {
+    @apply text-center px-4 py-2 bg-teal-500 text-white rounded-xl hover:bg-teal-600
+}
+/* end home page nav */
+
 /* END NAVBAR */
 
 /*** MAIN [to be wrapped around main content] ***/
 
 main {
-    @apply flex justify-center max-w-screen-2xl w-full p-4 mx-auto bg-slate-50
+    @apply flex justify-center max-w-screen-2xl w-full p-4 mx-auto
 }
 
 body {
