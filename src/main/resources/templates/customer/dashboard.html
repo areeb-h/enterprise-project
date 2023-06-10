@@ -31,7 +31,7 @@
             <td th:text="${order.id}"></td>
             <td th:text="${order.pickupAddress}"></td>
             <td th:text="${order.destinationAddress}"></td>
-            <td th:text="${order.orderStatus}"></td>
+            <td th:text="${order.getStatus}"></td>
           </tr>
           <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
             <td colspan="4"><p>No accepted requests</p></td>
@@ -55,7 +55,7 @@
           <td th:text="${order.id}"></td>
           <td th:text="${order.pickupAddress}"></td>
           <td th:text="${order.destinationAddress}"></td>
-          <td th:text="${order.orderStatus}"></td>
+          <td th:text="${order.getStatus}"></td>
         </tr>
         <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
           <td colspan="4"><p>No accepted requests</p></td>
