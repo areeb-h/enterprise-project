@@ -12,7 +12,6 @@
         <form
           class="form-register flex flex-col space-y-4"
           th:action="@{/register}"
-          th:object="${user}"
           method="post"
         >
           <h3 class="font-bold text-xl text-slate-800 mb-2">
@@ -24,7 +23,7 @@
               class="bg-gray-50 rounded-md py-2 px-3 border border-gray-300"
               placeholder="First Name"
               type="text"
-              th:field="*{firstName}"
+              th:field="*{user.firstName}"
               name="First Name"
               required
             />
@@ -32,7 +31,7 @@
               class="bg-gray-50 rounded-md py-2 px-3 border border-gray-300"
               placeholder="Last Name"
               type="text"
-              th:field="*{lastName}"
+              th:field="*{user.lastName}"
               name="Last Name"
               required
             />
@@ -41,7 +40,7 @@
             class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
             placeholder="User Name"
             type="text"
-            th:field="*{username}"
+            th:field="*{user.username}"
             name="User Name"
             required
           />
@@ -49,7 +48,7 @@
             class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
             placeholder="Email"
             type="text"
-            th:field="*{email}"
+            th:field="*{user.email}"
             name="Email"
             required
           />
@@ -57,17 +56,25 @@
             class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
             placeholder="Password"
             type="password"
-            th:field="*{password}"
+            th:field="*{user.password}"
             name="password"
             required
           />
+          <input
+                  class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
+                  placeholder="Address"
+                  type="text"
+                  th:field="*{customer.address}"
+                  name="address"
+                  required
+          />
           <div class="mb-4 xl:w-96">
             <select
-              th:field="*{role}"
+              th:field="*{user.role}"
               class="mb-3 block text-sm font-medium text-gray-900 px-2.5 py-2 bg-gray-50 border-2 rounded-md"
               required
             >
-              <option value="">User type</option>
+              <option value = "">User type</option>
               <option value="CUSTOMER">Customer</option>
               <option value="DRIVER">Driver</option>
             </select>
