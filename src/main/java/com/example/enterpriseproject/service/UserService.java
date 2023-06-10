@@ -1,6 +1,9 @@
 package com.example.enterpriseproject.service;
 
+import com.example.enterpriseproject.model.Customer;
+import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.User;
+import com.example.enterpriseproject.model.Vehicle;
 import com.example.enterpriseproject.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +18,12 @@ import java.util.Optional;
 //interface for userService
 public interface UserService {
     public void save(User user);
+
+    public void saveCustomer(Customer customer);
+
+    public void saveDriver(Driver driver);
+
+    public void saveVehicle(Vehicle vehicle);
 
     void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                  Authentication authentication) throws IOException, ServletException;

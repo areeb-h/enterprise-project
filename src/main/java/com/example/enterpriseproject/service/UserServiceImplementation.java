@@ -1,8 +1,10 @@
 package com.example.enterpriseproject.service;
 
-import com.example.enterpriseproject.model.Role;
-import com.example.enterpriseproject.model.User;
+import com.example.enterpriseproject.model.*;
+import com.example.enterpriseproject.repository.CustomerRepository;
+import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.UserRepository;
+import com.example.enterpriseproject.repository.VehicleRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,6 +31,12 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     // access the userRepository methods to communicate with db
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+    @Autowired
+    DriverRepository driverRepository;
+    @Autowired
+    VehicleRepository vehicleRepository;
 
     // access bcryptpassword methods to encrypt password
     @Autowired
@@ -39,6 +47,18 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
+    }
+
+    public void saveCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    public void saveDriver(Driver driver) {
+        driverRepository.save(driver);
+    }
+
+    public void saveVehicle(Vehicle vehicle) {
+        vehicleRepository.save(vehicle);
     }
 
     @Override

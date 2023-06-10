@@ -16,7 +16,7 @@ public class Customer {
     // RELATIONSHIPS
     // foreign key references id in users table
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", insertable = true, updatable = false)
     private User user;
 
 
@@ -24,7 +24,7 @@ public class Customer {
     private List<Order> order;
 
 
-    @Column(name = "address", nullable = false, length = 45)
+    @Column(name = "address", length = 45)
     private String address;
 
     // GETTERS AND SETTERS
@@ -44,6 +44,7 @@ public class Customer {
 
     // setter for user
     public void setUser(User user) {
+        System.out.println(user.getId());
         this.user = user;
     }
 

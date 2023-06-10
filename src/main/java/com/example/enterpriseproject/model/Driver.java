@@ -18,7 +18,7 @@ public class Driver {
 
     // foreign key driver_id references id in users table
     @OneToOne
-    @JoinColumn(name = "driver_id", referencedColumnName = "id")
+    @JoinColumn(name = "driver_id")
     private User user;
 
     // primary key id references driver_id in vehicles table
@@ -36,6 +36,10 @@ public class Driver {
 
     public List<Order> getOrders() {
         return order;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Vehicle getVehicle() {

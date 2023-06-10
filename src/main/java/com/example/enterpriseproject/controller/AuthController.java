@@ -1,18 +1,16 @@
 package com.example.enterpriseproject.controller;
 
-import com.example.enterpriseproject.model.Role;
-import com.example.enterpriseproject.model.User;
+import com.example.enterpriseproject.model.*;
 import com.example.enterpriseproject.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -37,7 +35,8 @@ public class AuthController {
 
     // handle post call to register route
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String addUser(Model model, @Valid User user, BindingResult bindingResult) {
+    public String addUser(Model model, @Valid User user, BindingResult bindingResult, Customer customer, Driver driver, Vehicle vehicle, @RequestParam("address") String userAddress
+    , @RequestParam("carColor") String cColor, @RequestParam("carName") String cName, @RequestParam ("licenseExpiryDate") LocalDateTime lExpiry, @RequestParam("licenseIssueDate") LocalDateTime lIssue, @RequestParam("licenseNumber") String lNumber) {
         // if any validation error occurs
         if(bindingResult.hasErrors()){
             model.addAttribute("successMessage", "Something went wrong");
@@ -51,15 +50,36 @@ public class AuthController {
             model.addAttribute("successMessage", userPresentObj.get(1));
             return "auth/register";
         }
-
         // set role and set enabled to false if the role is "CUSTOMER"
         user.setRole(user.getRole());
 
         // save user to db
         userService.save(user);
+
         model.addAttribute("successMessage", "User registered successfully!");
         if (!(user.getRole() == Role.ADMIN)) {
             model.addAttribute("successMessage", user.getRole().toString()+" registered successfully! Please wait for an admin to activate your account");
+        }
+
+       if (user.getRole() == Role.CUSTOMER) {
+           //save customer to db
+            customer.setUser(user);
+            customer.setAddress(userAddress);
+            userService.saveCustomer(customer);
+        } else {
+           //save driver to db
+            driver.setUser(user);
+            userService.saveDriver(driver);
+
+            //save vehicle of driver to db
+            vehicle.setDriver(driver);
+            vehicle.setCarName(cName);
+            vehicle.setCarColor(cColor);
+            vehicle.setLicenseExpiryDate(lExpiry);
+            vehicle.setLicenseIssueDate(lIssue);
+            vehicle.setLicenseNumber(lNumber);
+            userService.saveVehicle(vehicle);
+
         }
         return "auth/login";
     }
