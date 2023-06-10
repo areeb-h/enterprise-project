@@ -23,7 +23,7 @@ public interface UserService {
 
     public void saveDriver(Driver driver);
 
-    public void saveVehicle(Vehicle vehicle);
+    public void saveVehicle(Vehicle vehicle, Driver driver);
 
     void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                  Authentication authentication) throws IOException, ServletException;

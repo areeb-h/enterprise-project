@@ -1,101 +1,113 @@
 <!--register.html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Register</title>
+  <link th:href="@{/css/main.css}" rel="stylesheet"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+      $('#role').on('change', function() {
+        const selectedOption = $(this).val();
 
-  <head>
-    <title>Sign-Up</title>
-  </head>
-  <body>
-    <div class="flex h-screen bg-gray-50">
-      <div class="m-auto p-6 shadow-md rounded-md bg-white content-center">
-        <form
-          class="form-register flex flex-col space-y-4"
-          th:action="@{/register}"
-          th:object="${user}"
-          method="post"
-        >
-          <h3 class="font-bold text-xl text-slate-800 mb-2">
-            User Registration
-          </h3>
+        if (selectedOption === 'CUSTOMER') {
+          $('#customer-info').show();
+        } else {
+          $('#customer-info').hide();
+        }
 
-          <div class="flex space-x-4">
-            <input
-              class="bg-gray-50 rounded-md py-2 px-3 border border-gray-300"
-              placeholder="First Name"
-              type="text"
-              th:field="*{firstName}"
-              name="First Name"
-              required
-            />
-            <input
-              class="bg-gray-50 rounded-md py-2 px-3 border border-gray-300"
-              placeholder="Last Name"
-              type="text"
-              th:field="*{lastName}"
-              name="Last Name"
-              required
-            />
-          </div>
-          <input
-            class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
-            placeholder="User Name"
-            type="text"
-            th:field="*{username}"
-            name="User Name"
-            required
-          />
-          <input
-            class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
-            placeholder="Email"
-            type="text"
-            th:field="*{email}"
-            name="Email"
-            required
-          />
-          <input
-            class="bg-gray-50 rounded-md py-2 px-3 w-full border border-gray-300"
-            placeholder="Password"
-            type="password"
-            th:field="*{password}"
-            name="password"
-            required
-          />
-          <div class="mb-4 xl:w-96">
-            <select
-              th:field="*{role}"
-              class="mb-3 block text-sm font-medium text-gray-900 px-2.5 py-2 bg-gray-50 border-2 rounded-md"
-              required
-            >
-              <option value="">User type</option>
+        if (selectedOption === 'DRIVER') {
+          $('#vehicle-info').show();
+          $('#vehicle-licence-info').show();
+        } else {
+          $('#vehicle-info').hide();
+          $('#vehicle-licence-info').hide();
+        }
+      });
+    });
+    /*]]>*/
+  </script>
+</head>
+<body class="flex p-10 h-screen bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-teal-200 via-sky-400 to-teal-200">
+<div class="m-auto /p-6 shadow-md rounded-2xl bg-white content-center backdrop-blur-2xl bg-white/40">
+  <form class="rounded-xl flex flex-col space-y-6 p-14" th:action="@{/register}" method="post">
+
+    <h3 class="font-bold text-2xl text-cyan-700">
+      User Registration
+    </h3>
+
+    <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6">
+
+      <div class="flex flex-col space-y-4 shadow rounded-xl backdrop-blur-3xl bg-white/30 p-4">
+
+        <div class="flex space-x-4">
+          <input class="text-input" placeholder="First Name" type="text" th:field="*{user.firstName}" name="First Name" required/>
+          <input class="text-input" placeholder="Last Name" type="text" th:field="*{user.lastName}" name="Last Name" required/>
+        </div>
+
+        <input class="text-input" placeholder="User Name" type="text" th:field="*{user.username}" name="User Name" required/>
+        <input class="text-input" placeholder="Email" type="text" th:field="*{user.email}" name="Email" required/>
+        <input class="text-input" placeholder="Password" type="password" th:field="*{user.password}" name="password" required/>
+
+      </div>
+
+      <div class="flex flex-col md:w-80 space-y-4 p-5 shadow rounded-xl backdrop-blur-3xl bg-white/30">
+        <h1 class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700">Are you a driver or a customer?</h1>
+
+          <label>
+            <select th:field="*{user.role}" class="text-input" required>
+              <option value="">Select account type</option>
               <option value="CUSTOMER">Customer</option>
               <option value="DRIVER">Driver</option>
             </select>
+          </label>
+
+          <input class="text-input" id="customer-info" placeholder="Current Address" style="display: none;" th:field="*{customer.address}" name="address" type="text"/>
+
+          <div class="flex flex-col space-y-4" id="vehicle-info"  style="display: none;">
+            <input class="text-input" placeholder="Name of the vehicle" th:field="*{vehicle.carName}" type="text"/>
+            <input class="text-input" placeholder="Color of the vehicle" th:field="*{vehicle.carColor}" type="text"/>
           </div>
-          <button
-            class="rounded-md text-white bg-teal-500 hover:bg-teal-600 p-2"
-          >
-            <input type="submit" value="Register" />
-          </button>
-          <p>
-            Already have an account!
-            <a th:href="@{|/login|}" class="text-teal-600 hover:underline"
-              >Login</a
-            >
-          </p>
-          <div
-            class="text-red-500 mb-2"
-            th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}"
-          >
-            <ul th:each="data : ${bindingResult.getAllErrors()}">
-              <li th:text="${data.getDefaultMessage()}"></li>
-            </ul>
-          </div>
-          <div class="text-red-500 mb-2">
-            <span th:text="${successMessage}"></span>
-          </div>
-        </form>
+
       </div>
     </div>
-  </body>
+
+    <div id="vehicle-licence-info" style="display: none;" class="space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30">
+      <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">License Information</p>
+
+      <div class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full">
+
+        <label class="space-y-2 w-full">
+          <p class="px-3 text-cyan-700">Number</p>
+          <input class="text-input" placeholder="Licence number" th:field="*{vehicle.licenseNumber}" type="text"/>
+        </label>
+        <label class="space-y-2 w-full">
+          <p class="px-3 text-cyan-700">Issue Date</p>
+          <input th:field="*{vehicle.licenseIssueDate}" class="text-input" placeholder="date-time" type="datetime-local" name="time" required/>
+        </label>
+        <label class="space-y-2 w-full">
+          <p class="px-3 text-cyan-700">Expiry Date</p>
+          <input th:field="*{vehicle.licenseExpiryDate}" class="text-input" placeholder="date-time" type="datetime-local" name="time" required th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}"/>
+        </label>
+
+      </div>
+    </div>
+
+    <button class="rounded-md text-white bg-cyan-600 hover:bg-cyan-500 py-2 px-4 cursor-pointer">
+      <input type="submit" value="Register" />
+    </button>
+
+    <p> Already have an account? <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a></p>
+
+    <div class="text-red-500 mb-2" th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
+      <ul th:each="data : ${bindingResult.getAllErrors()}">
+        <li th:text="${data.getDefaultMessage()}"></li>
+      </ul>
+    </div>
+  </form>
+</div>
+</body>
 </html>

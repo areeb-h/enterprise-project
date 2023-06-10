@@ -30,13 +30,15 @@ public class AuthController {
     @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
     public String register(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("driver", new Driver());
+        model.addAttribute("vehicle", new Vehicle());
         return "auth/register";
     }
 
     // handle post call to register route
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String addUser(Model model, @Valid User user, BindingResult bindingResult, Customer customer, Driver driver, Vehicle vehicle, @RequestParam("address") String userAddress
-    , @RequestParam("carColor") String cColor, @RequestParam("carName") String cName, @RequestParam ("licenseExpiryDate") LocalDateTime lExpiry, @RequestParam("licenseIssueDate") LocalDateTime lIssue, @RequestParam("licenseNumber") String lNumber) {
+    public String addUser(Model model, @Valid User user, BindingResult bindingResult, Customer customer, Driver driver, Vehicle vehicle) {
         // if any validation error occurs
         if(bindingResult.hasErrors()){
             model.addAttribute("successMessage", "Something went wrong");
@@ -64,7 +66,6 @@ public class AuthController {
        if (user.getRole() == Role.CUSTOMER) {
            //save customer to db
             customer.setUser(user);
-            customer.setAddress(userAddress);
             userService.saveCustomer(customer);
         } else {
            //save driver to db
@@ -72,14 +73,7 @@ public class AuthController {
             userService.saveDriver(driver);
 
             //save vehicle of driver to db
-            vehicle.setDriver(driver);
-            vehicle.setCarName(cName);
-            vehicle.setCarColor(cColor);
-            vehicle.setLicenseExpiryDate(lExpiry);
-            vehicle.setLicenseIssueDate(lIssue);
-            vehicle.setLicenseNumber(lNumber);
-            userService.saveVehicle(vehicle);
-
+            userService.saveVehicle(vehicle, driver);
         }
         return "auth/login";
     }
