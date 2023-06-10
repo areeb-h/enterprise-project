@@ -2,10 +2,8 @@ package com.example.enterpriseproject.controller;
 
 import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Order;
-import com.example.enterpriseproject.model.User;
-import com.example.enterpriseproject.service.OrderService;
+import com.example.enterpriseproject.model.OrderStatus;
 import com.example.enterpriseproject.service.OrderServiceImplementation;
-import com.example.enterpriseproject.service.UserService;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,6 @@ public class CustomerController {
 
     @Autowired
     OrderServiceImplementation orderServiceImpementation;
-    OrderService orderService;
 
     @Autowired
     UserServiceImplementation userServiceImplementation;
@@ -37,15 +34,15 @@ public class CustomerController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-
     @RequestMapping(value = { "/customer/dashboard" }, method = RequestMethod.GET)
     public String customerHome(Model model) {
         // Get the currently logged-in user
         Customer customer = userServiceImplementation.getCurrentUser().getCustomer();
 
-        List<Order> pending_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer, false);
-        List<Order> accepted_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer, true);
-
+        List<Order> pending_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer,
+                OrderStatus.UNASSIGNED);
+        List<Order> accepted_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer,
+                OrderStatus.ASSIGNED);
 
         model.addAttribute("title", "dashboard");
         model.addAttribute("pending_orders", pending_orders);
@@ -53,20 +50,20 @@ public class CustomerController {
         return "customer/dashboard";
     }
 
-    @RequestMapping(value = {"/customer/book"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/customer/book" }, method = RequestMethod.GET)
     public String book(Model model) {
         model.addAttribute("title", "book");
         model.addAttribute("order", new Order());
         return "customer/book";
     }
 
-    @RequestMapping(value = {"/customer/book"}, method = RequestMethod.POST)
+    @RequestMapping(value = { "/customer/book" }, method = RequestMethod.POST)
     public String addOrder(Model model, @Valid Order order, BindingResult bindingResult, Principal principal) {
 
         // if any validation error occurs
         model.addAttribute("title", "book");
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "Something went wrong");
             model.addAttribute("bindingResult", bindingResult);
             return "customer/book";
@@ -75,7 +72,7 @@ public class CustomerController {
         // Get the currently logged-in user
         Customer customer = userServiceImplementation.getCurrentUser().getCustomer();
 
-        order.setOrderStatus(false);
+        order.setStatus(OrderStatus.UNASSIGNED);
         order.setCost(0);
         order.setCustomer(customer);
 

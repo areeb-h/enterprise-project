@@ -1,7 +1,10 @@
 package com.example.enterpriseproject.service;
 
 import com.example.enterpriseproject.model.Customer;
+import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
+import com.example.enterpriseproject.model.OrderStatus;
+import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,17 +19,91 @@ public class OrderServiceImplementation implements OrderService {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    DriverRepository driverRepository;
+
     public void save(Order order) {
         orderRepository.save(order);
     }
 
     @Override
-    public List<Order> findOrdersByCustomerAndOrderStatus(Customer customer, boolean status) {
-        return orderRepository.findAllByCustomerAndOrderStatus(customer, status);
+    public List<Order> findOrdersByCustomerAndOrderStatus(Customer customer, OrderStatus status) {
+        return orderRepository.findAllByCustomerAndStatus(customer, status);
     }
 
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
+
+    @Override
+    public String assignOrder(Long orderId, Long driverId) {
+
+        // todo: check if driver is available
+
+        try {
+            final var existingOrder = orderRepository.findByIdAndStatus(orderId, OrderStatus.UNASSIGNED);
+
+            if (existingOrder.isPresent()) {
+                Order order = existingOrder.get();
+
+                Driver driver = driverRepository.findById(driverId).get();
+
+                order.setDriver(driver);
+
+                order.setStatus(OrderStatus.ASSIGNED);
+
+                orderRepository.save(order);
+
+                return "Driver assigned";
+            } else {
+                return "Already assigned";
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public String cancelOrder(Long orderId) {
+        try {
+            final var existingOrder = orderRepository.findByIdAndStatus(orderId, OrderStatus.ASSIGNED);
+
+            if (existingOrder.isPresent()) {
+                Order order = existingOrder.get();
+
+                order.setStatus(OrderStatus.CANCELLED);
+
+                orderRepository.save(order);
+
+                return "Order cancelled";
+            } else {
+                return "Order not found";
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public String completeOrder(Long orderId) {
+        try {
+            final var existingOrder = orderRepository.findByIdAndStatus(orderId, OrderStatus.ASSIGNED);
+
+            if (existingOrder.isPresent()) {
+                Order order = existingOrder.get();
+
+                order.setStatus(OrderStatus.COMPLETED);
+
+                orderRepository.save(order);
+
+                return "Order completed";
+            } else {
+                return "Order not found";
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 }

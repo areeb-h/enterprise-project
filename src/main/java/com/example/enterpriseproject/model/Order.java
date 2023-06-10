@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order {
 
-    //TABLE COLUMNS
+    // TABLE COLUMNS
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,27 +25,27 @@ public class Order {
     @Column(name = "time", nullable = false, length = 45)
     private LocalDateTime time;
 
-    @Column(name = "order_status", nullable = false, length = 45)
-    private boolean orderStatus;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status = OrderStatus.UNASSIGNED;
 
-    //RELATIIONSHIPS
+    // RELATIIONSHIPS
 
-    //foreign key customer_id references id in customers table
+    // foreign key customer_id references id in customers table
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    //foreign key driver_id references id in drivers table
+    // foreign key driver_id references id in drivers table
     @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
 
-    //foreign key vehicle_id references id in vehicles table
+    // foreign key vehicle_id references id in vehicles table
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     private Vehicle vehicle;
 
-    //GETTERS AND SETTERS
+    // GETTERS AND SETTERS
     public Long getId() {
         return id;
     }
@@ -78,12 +78,12 @@ public class Order {
         this.time = time;
     }
 
-    public boolean getOrderStatus() {
-        return orderStatus;
+    public OrderStatus getStatus() {
+        return this.status;
     }
 
-    public void setOrderStatus(boolean orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setStatus(OrderStatus string) {
+        this.status = string;
     }
 
     public double getCost() {

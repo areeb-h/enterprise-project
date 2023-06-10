@@ -11,8 +11,12 @@ import java.util.Optional;
 //repository to communicate with db
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findAllByCustomerAndOrderStatus(Customer customer, Boolean orderStatus);
+    List<Order> findAllByCustomerAndStatus(Customer customer, OrderStatus status);
 
     Optional<Order> findOrderByDriver(Driver driver);
-    @NotNull Optional<Order> findById(@NotNull Long id);
+
+    @NotNull
+    Optional<Order> findById(@NotNull Long id);
+
+    Optional<Order> findByIdAndStatus(Long id, OrderStatus orderStatus);
 }
