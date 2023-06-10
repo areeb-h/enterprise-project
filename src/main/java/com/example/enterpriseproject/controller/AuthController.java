@@ -32,6 +32,7 @@ public class AuthController {
         model.addAttribute("user", new User());
         model.addAttribute("customer", new Customer());
         model.addAttribute("driver", new Driver());
+        model.addAttribute("vehicle", new Vehicle());
         return "auth/register";
     }
 
@@ -72,8 +73,7 @@ public class AuthController {
             userService.saveDriver(driver);
 
             //save vehicle of driver to db
-            userService.saveVehicle(vehicle);
-
+            userService.saveVehicle(vehicle, driver);
         }
         return "auth/login";
     }

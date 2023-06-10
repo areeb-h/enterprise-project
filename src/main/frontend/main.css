@@ -110,3 +110,12 @@ td a {
 }
 
 /* END TABLE */
+
+/*** COMPONENTS ***/
+
+.text-input {
+    @apply bg-white rounded-md py-2 px-3 w-full border border-cyan-400
+}
+
+/*** END COMPONENTS ***/
+

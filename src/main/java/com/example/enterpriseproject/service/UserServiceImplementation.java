@@ -57,7 +57,8 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         driverRepository.save(driver);
     }
 
-    public void saveVehicle(Vehicle vehicle) {
+    public void saveVehicle(Vehicle vehicle, Driver driver) {
+        vehicle.setDriver(driver);
         vehicleRepository.save(vehicle);
     }
 
