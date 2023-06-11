@@ -17,6 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByDriverAndStatus(Driver driver, OrderStatus status);
 
+    List<Order> findByStatus(OrderStatus status);
+
     @NotNull
     Optional<Order> findById(@NotNull Long id);
 

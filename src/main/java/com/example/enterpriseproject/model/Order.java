@@ -110,4 +110,7 @@ public class Order {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
+
+    public void setOrderStatus(OrderStatus assigned) {
+    }
 }

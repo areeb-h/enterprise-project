@@ -22,6 +22,9 @@
             <td th:text="${order.pickupAddress}"></td>
             <td th:text="${order.destinationAddress}"></td>
             <!-- <td th:text="${order.getStatus}"></td> -->
+            <td>
+              <a th:href="@{/driver/orders/complete/{id}(id=${order.id})}">Complete</a>
+            </td>
           </tr>
           <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
             <td colspan="4">
@@ -47,9 +50,12 @@
             <td th:text="${order.id}"></td>
             <td th:text="${order.pickupAddress}"></td>
             <td th:text="${order.destinationAddress}"></td>
+            <td>
+              <a th:href="@{/driver/orders/accept/{id}(id=${order.id})}">Accept</a>
+            </td>
             <!-- <td th:text="${order.getStatus}"></td> -->
           </tr>
-          <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+          <tr class="no-records" th:if="${#lists.isEmpty(pending_orders)}">
             <td colspan="4">
               <p>No accepted requests</p>
             </td>

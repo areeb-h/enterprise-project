@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -35,11 +36,11 @@ public class DriverController {
 
     @GetMapping("/driver/orders")
     public String book(Model model) {
-        Driver driver = userServiceImplementation.getCurrentUser().getDriver();
+        // Driver driver = userServiceImplementation.getCurrentUser().getDriver();
 
-        List<Order> pending_orders = orderServiceImpementation.findOrdersByDriverAndOrderStatus(driver,
+        List<Order> pending_orders = orderServiceImpementation.findOrderByOrderStatus(
                 OrderStatus.UNASSIGNED);
-        List<Order> accepted_orders = orderServiceImpementation.findOrdersByDriverAndOrderStatus(driver,
+        List<Order> accepted_orders = orderServiceImpementation.findOrderByOrderStatus(
                 OrderStatus.ASSIGNED);
 
         model.addAttribute("title", "dashboard");
@@ -48,4 +49,31 @@ public class DriverController {
 
         return "driver/orders";
     }
+
+    @GetMapping("/driver/orders/accept/{id}")
+    public String acceptOrder(@PathVariable("id") Long id) {
+        Order order = orderServiceImpementation.findOrderById(id);
+        Driver driver = userServiceImplementation.getCurrentUser().getDriver();
+
+        order.setDriver(driver);
+        order.setOrderStatus(OrderStatus.ASSIGNED);
+
+        orderServiceImpementation.assignOrder(id, driver.getId());
+
+        return "redirect:/driver/orders";
+    }
+
+    @GetMapping("/driver/orders/complete/{id}")
+    public String completeOrder(@PathVariable("id") Long id) {
+        Order order = orderServiceImpementation.findOrderById(id);
+        // Driver driver = userServiceImplementation.getCurrentUser().getDriver();
+
+        // order.setDriver(driver);
+        order.setOrderStatus(OrderStatus.COMPLETED);
+
+        orderServiceImpementation.completeOrder(id);
+
+        return "redirect:/driver/orders";
+    }
+
 }

@@ -32,6 +32,11 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
+    public Order findOrderById(Long id) {
+        return orderRepository.findById(id).get();
+    }
+
+    @Override
     public List<Order> findOrdersByDriverAndOrderStatus(Driver driver, OrderStatus status) {
         return orderRepository.findAllByDriverAndStatus(driver, status);
     }
@@ -39,6 +44,11 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public List<Order> findOrderByOrderStatus(OrderStatus status) {
+        return orderRepository.findByStatus(status);
     }
 
     @Override
@@ -109,6 +119,9 @@ public class OrderServiceImplementation implements OrderService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public void saveOrder(Order order) {
     }
 
 }

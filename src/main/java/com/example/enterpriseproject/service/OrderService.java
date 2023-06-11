@@ -17,6 +17,10 @@ public interface OrderService {
 
     List<Order> findAll();
 
+    List<Order> findOrderByOrderStatus(OrderStatus status);
+
+    Order findOrderById(Long id);
+
     String assignOrder(Long orderId, Long driverId);
 
     String cancelOrder(Long orderId);
