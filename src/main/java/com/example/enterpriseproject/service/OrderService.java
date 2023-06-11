@@ -1,6 +1,7 @@
 package com.example.enterpriseproject.service;
 
 import com.example.enterpriseproject.model.Customer;
+import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.OrderStatus;
 
@@ -11,6 +12,8 @@ public interface OrderService {
     public void save(Order order);
 
     List<Order> findOrdersByCustomerAndOrderStatus(Customer customer, OrderStatus status);
+
+    List<Order> findOrdersByDriverAndOrderStatus(Driver drvier, OrderStatus status);
 
     List<Order> findAll();
 

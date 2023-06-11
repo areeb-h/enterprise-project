@@ -55,12 +55,11 @@ public class User implements UserDetails {
 
     // RELATIONSHIPS
 
-      @OneToOne(mappedBy = "user")
-      private Customer customer;
+    @OneToOne(mappedBy = "user")
+    private Customer customer;
 
-      @OneToOne(mappedBy = "user")
-      private Driver driver;
-
+    @OneToOne(mappedBy = "user")
+    private Driver driver;
 
     // GETTERS AND SETTERS
     @Override
@@ -163,5 +162,13 @@ public class User implements UserDetails {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 }

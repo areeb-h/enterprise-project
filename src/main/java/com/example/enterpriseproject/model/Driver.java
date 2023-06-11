@@ -2,7 +2,6 @@ package com.example.enterpriseproject.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,15 +21,14 @@ public class Driver {
     private User user;
 
     // primary key id references driver_id in vehicles table
-     @OneToOne(mappedBy = "driver")
-     private Vehicle vehicle;
+    @OneToOne(mappedBy = "driver")
+    private Vehicle vehicle;
 
-     @OneToMany(mappedBy = "driver")
-     private List<Order> order;
+    @OneToMany(mappedBy = "driver")
+    private List<Order> order;
 
-     @Column(name = "availability_status")
-     private boolean availabilityStatus;
-
+    @Column(name = "availability_status")
+    private boolean availabilityStatus;
 
     // GETTERS AND SETTERS
 

@@ -32,6 +32,11 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
+    public List<Order> findOrdersByDriverAndOrderStatus(Driver driver, OrderStatus status) {
+        return orderRepository.findAllByDriverAndStatus(driver, status);
+    }
+
+    @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
     }

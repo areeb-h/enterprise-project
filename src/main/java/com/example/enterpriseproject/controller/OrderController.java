@@ -18,9 +18,10 @@ public class OrderController {
     @Autowired
     OrderServiceImplementation orderServiceImpementation;
 
-    @RequestMapping(value = "orders", method = RequestMethod.GET)
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public List<Order> getAllOrders(@RequestParam(required = false) Long driverId,
             @RequestParam(required = false) Long id, @RequestParam(required = false) OrderStatus status) {
         return orderServiceImpementation.findAll();
     }
+
 }
