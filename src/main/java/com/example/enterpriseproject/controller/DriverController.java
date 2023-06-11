@@ -14,6 +14,7 @@ import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.OrderStatus;
+import com.example.enterpriseproject.model.Vehicle;
 import com.example.enterpriseproject.service.OrderServiceImplementation;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 
@@ -54,8 +55,10 @@ public class DriverController {
     public String acceptOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
         Driver driver = userServiceImplementation.getCurrentUser().getDriver();
+        Vehicle vehicle = driver.getVehicle();
 
         order.setDriver(driver);
+        order.setVehicle(vehicle);
         order.setOrderStatus(OrderStatus.ASSIGNED);
 
         orderServiceImpementation.assignOrder(id, driver.getId());
@@ -66,9 +69,7 @@ public class DriverController {
     @GetMapping("/driver/orders/complete/{id}")
     public String completeOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
-        // Driver driver = userServiceImplementation.getCurrentUser().getDriver();
 
-        // order.setDriver(driver);
         order.setOrderStatus(OrderStatus.COMPLETED);
 
         orderServiceImpementation.completeOrder(id);

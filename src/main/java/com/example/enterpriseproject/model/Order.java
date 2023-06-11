@@ -113,4 +113,12 @@ public class Order {
 
     public void setOrderStatus(OrderStatus assigned) {
     }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 }
