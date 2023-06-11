@@ -43,10 +43,13 @@ public class DriverController {
                 OrderStatus.UNASSIGNED);
         List<Order> accepted_orders = orderServiceImpementation.findOrderByOrderStatus(
                 OrderStatus.ASSIGNED);
+        List<Order> completed_orders = orderServiceImpementation.findOrderByOrderStatus(
+                OrderStatus.COMPLETED);
 
         model.addAttribute("title", "dashboard");
         model.addAttribute("pending_orders", pending_orders);
         model.addAttribute("accepted_orders", accepted_orders);
+        model.addAttribute("completed_orders", completed_orders);
 
         return "driver/orders";
     }

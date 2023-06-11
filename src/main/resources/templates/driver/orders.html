@@ -6,7 +6,7 @@
 
   <div class="flex flex-col space-y-3">
     <div class="table-container">
-      <h1>Accepted Orders</h1>
+      <h1>Completed Orders</h1>
       <table>
         <thead>
           <tr>
@@ -17,16 +17,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="order : ${accepted_orders}">
+          <tr th:each="order : ${completed_orders}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.pickupAddress}"></td>
             <td th:text="${order.destinationAddress}"></td>
             <!-- <td th:text="${order.getStatus}"></td> -->
-            <td>
-              <a th:href="@{/driver/orders/complete/{id}(id=${order.id})}">Complete</a>
-            </td>
+
           </tr>
-          <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+          <tr class="no-records" th:if="${#lists.isEmpty(completed_orders)}">
             <td colspan="4">
               <p>No accepted requests</p>
             </td>
@@ -34,36 +32,66 @@
         </tbody>
       </table>
     </div>
-    <div class="table-container">
-      <h1>Pending Orders</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>pickupAddress</th>
-            <th>destinationAddress</th>
-            <!-- <th>Status</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="order : ${pending_orders}">
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.pickupAddress}"></td>
-            <td th:text="${order.destinationAddress}"></td>
-            <td>
-              <a th:href="@{/driver/orders/accept/{id}(id=${order.id})}">Accept</a>
-            </td>
-            <!-- <td th:text="${order.getStatus}"></td> -->
-          </tr>
-          <tr class="no-records" th:if="${#lists.isEmpty(pending_orders)}">
-            <td colspan="4">
-              <p>No accepted requests</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="flex flex-col space-y-3">
+      <div class="table-container">
+        <h1>Accepted Orders</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>pickupAddress</th>
+              <th>destinationAddress</th>
+              <!-- <th>Status</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order : ${accepted_orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <!-- <td th:text="${order.getStatus}"></td> -->
+              <td>
+                <a th:href="@{/driver/orders/complete/{id}(id=${order.id})}">Complete</a>
+              </td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+              <td colspan="4">
+                <p>No accepted requests</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-container">
+        <h1>Pending Orders</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>pickupAddress</th>
+              <th>destinationAddress</th>
+              <!-- <th>Status</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order : ${pending_orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <td>
+                <a th:href="@{/driver/orders/accept/{id}(id=${order.id})}">Accept</a>
+              </td>
+              <!-- <td th:text="${order.getStatus}"></td> -->
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(pending_orders)}">
+              <td colspan="4">
+                <p>No accepted requests</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
 
 </html>
