@@ -86,6 +86,9 @@ public class User extends Auditable<String> implements UserDetails {
     public void setEnabled(Boolean b) {
         this.enabled = b;
     }
+    public void setLocked(Boolean b) {
+        this.locked = b;
+    }
 
     @Override
     public String getUsername() {
@@ -100,6 +103,7 @@ public class User extends Auditable<String> implements UserDetails {
     public boolean isAccountNonExpired() {
         return true;
     }
+
 
     @Override
     public boolean isAccountNonLocked() {

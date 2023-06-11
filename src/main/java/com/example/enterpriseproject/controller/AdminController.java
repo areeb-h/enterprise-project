@@ -69,9 +69,15 @@ public class AdminController {
         return "redirect:/admin/dashboard/customers";
     }
 
-    @GetMapping("/admin/dashboard/customers/disable/{id}")
-    public String disableCustomer(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id, false);
+    @GetMapping("/admin/dashboard/customers/lockCustomer/{id}")
+    public String lockCustomer(@PathVariable("id") String id) {
+        userServiceImplementation.lockUser(id, true);
+        return "redirect:/admin/dashboard/customers";
+    }
+
+    @GetMapping("/admin/dashboard/customers/unlockCustomer/{id}")
+    public String unlockCustomer(@PathVariable("id") String id) {
+        userServiceImplementation.lockUser(id, false);
         return "redirect:/admin/dashboard/customers";
     }
 
@@ -103,9 +109,15 @@ public class AdminController {
         return "redirect:/admin/dashboard/drivers";
     }
 
-    @GetMapping("/admin/dashboard/drivers/disable/{id}")
+    @GetMapping("/admin/dashboard/drivers/lockDriver/{id}")
     public String disableDriver(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id, false);
+        userServiceImplementation.lockUser(id, true);
+        return "redirect:/admin/dashboard/drivers";
+    }
+
+    @GetMapping("/admin/dashboard/drivers/unlock/{id}")
+    public String unlockDriver(@PathVariable("id") String id) {
+        userServiceImplementation.lockUser(id, false);
         return "redirect:/admin/dashboard/drivers";
     }
 }

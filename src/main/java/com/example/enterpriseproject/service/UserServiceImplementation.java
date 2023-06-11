@@ -134,4 +134,15 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
             throw new IllegalArgumentException("User not found with email: " + id);
         }
     }
+
+    public void lockUser(String id, boolean lock) {
+        Optional<User> optionalUser = userRepository.findById(Long.parseLong(id));
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setLocked(true);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("User not found with email: " + id);
+        }
+    }
 }
