@@ -15,16 +15,20 @@
 
         if (selectedOption === 'CUSTOMER') {
           $('#customer-info').show();
+          $('.customer-required').prop('required',true);
         } else {
           $('#customer-info').hide();
+          $('.customer-required').prop('required',false);
         }
 
         if (selectedOption === 'DRIVER') {
           $('#vehicle-info').show();
           $('#vehicle-licence-info').show();
+          $('.driver-required').prop('required',true);
         } else {
           $('#vehicle-info').hide();
           $('#vehicle-licence-info').hide();
+          $('.driver-required').prop('required',false);
         }
       });
     });
@@ -65,11 +69,11 @@
             </select>
           </label>
 
-          <input class="text-input" id="customer-info" placeholder="Current Address" style="display: none;" th:field="*{customer.address}" name="address" type="text"/>
+          <input class="text-input customer-required" id="customer-info" placeholder="Current Address" style="display: none;" th:field="*{customer.address}" name="address" type="text"/>
 
           <div class="flex flex-col space-y-4" id="vehicle-info"  style="display: none;">
-            <input class="text-input" placeholder="Name of the vehicle" th:field="*{vehicle.carName}" type="text"/>
-            <input class="text-input" placeholder="Color of the vehicle" th:field="*{vehicle.carColor}" type="text"/>
+            <input id="vehicle-name" class="text-input driver-required" placeholder="Name of the vehicle" th:field="*{vehicle.carName}" type="text"/>
+            <input id="vehicle-color" class="text-input driver-required" placeholder="Color of the vehicle" th:field="*{vehicle.carColor}" type="text"/>
           </div>
 
       </div>
@@ -82,15 +86,15 @@
 
         <label class="space-y-2 w-full">
           <p class="px-3 text-cyan-700">Number</p>
-          <input class="text-input" placeholder="Licence number" th:field="*{vehicle.licenseNumber}" type="text"/>
+          <input id="licence-number" class="text-input driver-required" placeholder="Licence number" th:field="*{vehicle.licenseNumber}" type="text"/>
         </label>
         <label class="space-y-2 w-full">
           <p class="px-3 text-cyan-700">Issue Date</p>
-          <input th:field="*{vehicle.licenseIssueDate}" class="text-input" placeholder="date-time" type="datetime-local" name="time" required/>
+          <input id="licence-issue" th:field="*{vehicle.licenseIssueDate}" class="text-input driver-required" placeholder="date-time" type="datetime-local" name="time" required/>
         </label>
         <label class="space-y-2 w-full">
           <p class="px-3 text-cyan-700">Expiry Date</p>
-          <input th:field="*{vehicle.licenseExpiryDate}" class="text-input" placeholder="date-time" type="datetime-local" name="time" required th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}"/>
+          <input id="licence-expiry" th:field="*{vehicle.licenseExpiryDate}" class="text-input driver-required" placeholder="date-time" type="datetime-local" name="time" required th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}"/>
         </label>
 
       </div>
