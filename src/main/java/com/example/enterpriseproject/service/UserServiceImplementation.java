@@ -111,12 +111,24 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         return userRepository.findAllByRoleAndEnabled(Role.CUSTOMER, enabled);
     }
 
+    public List<User> findAllCustomersByLocked(boolean locked) {
+        return userRepository.findAllByRoleAndEnabledAndLocked(Role.CUSTOMER, true, locked);
+    }
+
     public List<User> findAllDrivers(boolean enabled) {
         return userRepository.findAllByRoleAndEnabled(Role.DRIVER, enabled);
     }
 
+    public List<User> findAllDriversByLocked(boolean locked) {
+        return userRepository.findAllByRoleAndEnabledAndLocked(Role.DRIVER, true, locked);
+    }
+
     public List<User> findAllUsersByEnabled(boolean enabled) {
         return userRepository.findAllByEnabled(enabled);
+    }
+
+    public List<User> findAllUsersByLocked(boolean locked) {
+        return userRepository.findAllByEnabledAndLocked(true, locked);
     }
 
     @Override
@@ -139,7 +151,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         Optional<User> optionalUser = userRepository.findById(Long.parseLong(id));
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setLocked(true);
+            user.setLocked(lock);
             userRepository.save(user);
         } else {
             throw new IllegalArgumentException("User not found with email: " + id);

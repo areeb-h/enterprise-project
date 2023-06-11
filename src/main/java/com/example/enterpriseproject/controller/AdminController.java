@@ -2,14 +2,11 @@ package com.example.enterpriseproject.controller;
 
 import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
-import com.example.enterpriseproject.service.UserService;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -32,92 +29,87 @@ public class AdminController {
         return "admin/dashboard";
     }
 
+    @GetMapping("/admin/dashboard/orders")
+    public String getOrder(Model model) {
+        model.addAttribute("title", "orders");
+        return "admin/orders";
+    }
+
+    @GetMapping("/admin/dashboard/users")
+    public String getUsers(Model model) {
+        List<User> pending_users = userServiceImplementation.findAllUsersByEnabled(false);
+        List<User> active_users = userServiceImplementation.findAllUsersByLocked(false);
+        List<User> inactive_users = userServiceImplementation.findAllUsersByLocked(true);
+
+        // Remove admin users from the lists
+        pending_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
+        inactive_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
+        active_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
+
+        model.addAttribute("pending_users", pending_users);
+        model.addAttribute("inactive_users", inactive_users);
+        model.addAttribute("active_users", active_users);
+        model.addAttribute("title", "users");
+        return "admin/users";
+    }
+
     @GetMapping("/admin/dashboard/customers")
     public String getCustomers(Model model) {
-        List<User> inactive_customers = userServiceImplementation.findAllCustomers(false);
-        List<User> active_customers = userServiceImplementation.findAllCustomers(true);
+        List<User> pending_customers = userServiceImplementation.findAllCustomers(false);
+        List<User> active_customers = userServiceImplementation.findAllCustomersByLocked(false);
+        List<User> inactive_customers = userServiceImplementation.findAllCustomersByLocked(true);
+
+        model.addAttribute("pending_customers", pending_customers);
         model.addAttribute("inactive_customers", inactive_customers);
         model.addAttribute("active_customers", active_customers);
         model.addAttribute("title", "customers");
         return "admin/customers";
     }
 
-    @GetMapping("/admin/dashboard/user")
-    public String getUsers(Model model) {
-        List<User> inactive_users = userServiceImplementation.findAllUsersByEnabled(false);
-        List<User> active_users = userServiceImplementation.findAllUsersByEnabled(true);
-
-        // Remove admin users from the lists
-        inactive_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
-        active_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
-
-        model.addAttribute("inactive_users", inactive_users);
-        model.addAttribute("active_users", active_users);
-        model.addAttribute("title", "user");
-        return "admin/user";
-    }
-
-    @GetMapping("/admin/dashboard/order")
-    public String getOrder(Model model) {
-        model.addAttribute("title", "order");
-        return "admin/order";
-    }
-
-    @GetMapping("/admin/dashboard/customers/enable/{id}")
-    public String enableCustomer(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id, true);
-        return "redirect:/admin/dashboard/customers";
-    }
-
-    @GetMapping("/admin/dashboard/customers/lockCustomer/{id}")
-    public String lockCustomer(@PathVariable("id") String id) {
-        userServiceImplementation.lockUser(id, true);
-        return "redirect:/admin/dashboard/customers";
-    }
-
-    @GetMapping("/admin/dashboard/customers/unlockCustomer/{id}")
-    public String unlockCustomer(@PathVariable("id") String id) {
-        userServiceImplementation.lockUser(id, false);
-        return "redirect:/admin/dashboard/customers";
-    }
-
     @GetMapping("/admin/dashboard/drivers")
     public String getDrivers(Model model) {
-        List<User> inactive_drivers = userServiceImplementation.findAllDrivers(false);
-        List<User> active_drivers = userServiceImplementation.findAllDrivers(true);
+        List<User> pending_drivers = userServiceImplementation.findAllDrivers(false);
+        List<User> active_drivers = userServiceImplementation.findAllDriversByLocked(false);
+        List<User> inactive_drivers = userServiceImplementation.findAllDriversByLocked(true);
+
+        model.addAttribute("pending_drivers", pending_drivers);
         model.addAttribute("inactive_drivers", inactive_drivers);
         model.addAttribute("active_drivers", active_drivers);
         model.addAttribute("title", "drivers");
         return "admin/drivers";
     }
 
-    @GetMapping("/admin/dashboard/user/enable/{id}")
-    public String enableUser(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id, true);
-        return "redirect:/admin/dashboard/user";
+    // could get the role parameter and combine all following three into one function, but that would cause conflicts when dealing with other pages in admin
+    // Enabling, Locking and Unlocking users by getting the required action and the user id from parameter
+    @GetMapping("/admin/dashboard/users/{action}/{id}")
+    public String updateUserStatus(@PathVariable("action") String action, @PathVariable("id") String id) {
+        switch (action) {
+            case "enable" -> userServiceImplementation.enableUser(id, true);
+            case "lock" -> userServiceImplementation.lockUser(id, true);
+            case "unlock" -> userServiceImplementation.lockUser(id, false);
+        }
+        return "redirect:/admin/dashboard/users";
     }
 
-    @GetMapping("/admin/dashboard/user/disable/{id}")
-    public String disableUser(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id, false);
-        return "redirect:/admin/dashboard/user";
+    @GetMapping("/admin/dashboard/customers/{action}/{id}")
+    public String updateCustomerStatus(@PathVariable("action") String action, @PathVariable("id") String id) {
+        switch (action) {
+            case "enable" -> userServiceImplementation.enableUser(id, true);
+            case "lock" -> userServiceImplementation.lockUser(id, true);
+            case "unlock" -> userServiceImplementation.lockUser(id, false);
+        }
+        return "redirect:/admin/dashboard/customers";
     }
 
-    @GetMapping("/admin/dashboard/drivers/enable/{id}")
-    public String enableDriver(@PathVariable("id") String id) {
-        userServiceImplementation.enableUser(id, true);
+    @GetMapping("/admin/dashboard/drivers/{action}/{id}")
+    public String updateDriverStatus(@PathVariable("action") String action, @PathVariable("id") String id) {
+        switch (action) {
+            case "enable" -> userServiceImplementation.enableUser(id, true);
+            case "lock" -> userServiceImplementation.lockUser(id, true);
+            case "unlock" -> userServiceImplementation.lockUser(id, false);
+            default -> {}
+        }
         return "redirect:/admin/dashboard/drivers";
     }
 
-    @GetMapping("/admin/dashboard/drivers/lockDriver/{id}")
-    public String disableDriver(@PathVariable("id") String id) {
-        userServiceImplementation.lockUser(id, true);
-        return "redirect:/admin/dashboard/drivers";
-    }
-
-    @GetMapping("/admin/dashboard/drivers/unlock/{id}")
-    public String unlockDriver(@PathVariable("id") String id) {
-        userServiceImplementation.lockUser(id, false);
-        return "redirect:/admin/dashboard/drivers";
-    }
 }

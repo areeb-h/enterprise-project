@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 //interface for userService
 public interface UserService {
@@ -40,6 +39,7 @@ public interface UserService {
 
     // to find both active and inactive users
     List<User> findAllCustomers(boolean enabled);
+
     List<User> findAllDrivers(boolean enabled);
 
     List<User> findAll();

@@ -11,11 +11,11 @@
               <th>Id</th>
               <th>Email</th>
               <th>Name</th>
-              <th>Enable User</th>
+              <th>Accept User</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="customer : ${inactive_customers}">
+            <tr th:each="customer : ${pending_customers}">
               <td th:text="${customer.id}"></td>
               <td th:text="${customer.email}"></td>
               <td
@@ -23,13 +23,13 @@
               <td>
                 <a
                   th:href="@{/admin/dashboard/customers/enable/{id}(id=${customer.id})}"
-                  >Enable</a
+                  >Accept</a
                 >
               </td>
             </tr>
             <tr
               class="no-records"
-              th:if="${#lists.isEmpty(inactive_customers)}">
+              th:if="${#lists.isEmpty(pending_customers)}">
               <td colspan="4"><p>No pending requests</p></td>
             </tr>
           </tbody>
@@ -44,7 +44,7 @@
               <th>Id</th>
               <th>Email</th>
               <th>Name</th>
-              <th>Enable Customer</th>
+              <th>Disable Customer</th>
             </tr>
           </thead>
           <tbody>
@@ -54,8 +54,8 @@
               <td
                 th:text="${customer.firstName + ' ' + customer.lastName}"></td>
               <td>
-                <a
-                  th:href="@{/admin/dashboard/customers/disable/{id}(id=${customer.id})}"
+                <a class="bg-red-500/50"
+                  th:href="@{/admin/dashboard/customers/lock/{id}(id=${customer.id})}"
                   >Disable</a
                 >
               </td>
@@ -63,6 +63,33 @@
             <tr class="no-records" th:if="${#lists.isEmpty(active_customers)}">
               <td colspan="4"><p>No active customers</p></td>
             </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-container">
+        <h1>Inactive Customers</h1>
+        <table>
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Enable Customer</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="customer : ${inactive_customers}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+            <td>
+              <a class="bg-red-400/40 hover:bg-red-500/50" th:href="@{/admin/dashboard/customers/unlock/{id}(id=${customer.id})}">Enable</a>
+            </td>
+          </tr>
+          <tr class="no-records" th:if="${#lists.isEmpty(inactive_customers)}">
+            <td colspan="4"><p>No inactive customers</p></td>
+          </tr>
           </tbody>
         </table>
       </div>

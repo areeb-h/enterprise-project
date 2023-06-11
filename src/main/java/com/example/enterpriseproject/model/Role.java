@@ -2,7 +2,7 @@ package com.example.enterpriseproject.model;
 
 public enum Role {
     //define enums
-    CUSTOMER("User"),
+    CUSTOMER("Customer"),
     ADMIN("Admin"),
     DRIVER("Driver");
     private final String value;

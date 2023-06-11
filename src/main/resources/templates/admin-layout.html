@@ -22,26 +22,23 @@
             >Dashboard</a
           >
 
+          <a th:href="@{/admin/dashboard/users}" th:class="${title == 'users' ? 'active' : ''}">Users</a>
+
           <a
             th:href="@{/admin/dashboard/customers}"
             th:class="${title == 'customers' ? 'active' : ''}"
-            >Customer</a
+            >Customers</a
           >
           <a
             th:href="@{/admin/dashboard/drivers}"
             th:class="${title == 'drivers' ? 'active' : ''}"
-            >Driver</a
+            >Drivers</a
           >
 
           <a
-            th:href="@{/admin/dashboard/order}"
-            th:class="${title == 'order' ? 'active' : ''}"
-            >Order</a
-          >
-          <a
-            th:href="@{/admin/dashboard/user}"
-            th:class="${title == 'user' ? 'active' : ''}"
-            >User</a
+            th:href="@{/admin/dashboard/orders}"
+            th:class="${title == 'orders' ? 'active' : ''}"
+            >Orders</a
           >
         </div>
         <a th:href="@{/logout}" class="btn-logout">Log out</a>

@@ -15,23 +15,23 @@
               <th>Email</th>
               <th>Name</th>
               <th>User Type</th>
-              <th>Enable User</th>
+              <th>Accept User</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="user : ${inactive_users}">
+            <tr th:each="user : ${pending_users}">
               <td th:text="${user.id}"></td>
               <td th:text="${user.email}"></td>
               <td th:text="${user.firstName + ' ' + user.lastName}"></td>
               <td th:text="${user.role}"></td>
               <td>
-                <a th:href="@{/admin/dashboard/user/enable/{id}(id=${user.id})}"
+                <a th:href="@{/admin/dashboard/users/enable/{id}(id=${user.id})}"
                   >Enable</a
                 >
               </td>
             </tr>
-            <tr class="no-records" th:if="${#lists.isEmpty(inactive_users)}">
-              <td colspan="4"><p>No pending requests</p></td>
+            <tr class="no-records" th:if="${#lists.isEmpty(pending_users)}">
+              <td colspan="5"><p>No pending requests</p></td>
             </tr>
           </tbody>
         </table>
@@ -54,17 +54,47 @@
               <td th:text="${user.id}"></td>
               <td th:text="${user.email}"></td>
               <td th:text="${user.firstName + ' ' + user.lastName}"></td>
-              <td th:text="${user.role}"></td>
+              <td th:text="${user.role.value}"></td>
               <td>
                 <a
-                  th:href="@{/admin/dashboard/user/disable/{id}(id=${user.id})}"
+                  class="bg-red-400/40 hover:bg-red-500/50"
+                  th:href="@{/admin/dashboard/users/lock/{id}(id=${user.id})}"
                   >Disable</a
                 >
               </td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(active_users)}">
-              <td colspan="4"><p>No active users</p></td>
+              <td colspan="5"><p>No active users</p></td>
             </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-container">
+        <h1>Inactive Users</h1>
+        <table>
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>User Type</th>
+            <th>Disable User</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="user : ${inactive_users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+            <td th:text="${user.role.value}"></td>
+            <td>
+              <a th:href="@{/admin/dashboard/users/unlock/{id}(id=${user.id})}">Enable</a>
+            </td>
+          </tr>
+          <tr class="no-records" th:if="${#lists.isEmpty(inactive_users)}">
+            <td colspan="5"><p>No inactive users</p></td>
+          </tr>
           </tbody>
         </table>
       </div>
