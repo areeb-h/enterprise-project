@@ -2,6 +2,7 @@ package com.example.enterpriseproject.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class Vehicle extends Auditable<String> {
     private String licenseNumber;
 
     @Column(name = "license_expiry_date", nullable = false, length = 45)
-    private LocalDateTime licenseExpiryDate;
+    private LocalDate licenseExpiryDate;
 
     @Column(name = "license_issue_date", nullable = false, length = 45)
-    private LocalDateTime licenseIssueDate;
+    private LocalDate licenseIssueDate;
 
     // RELATIONSHIPS
 
@@ -77,19 +78,19 @@ public class Vehicle extends Auditable<String> {
         this.licenseNumber = licenseNumber;
     }
 
-    public LocalDateTime getLicenseExpiryDate() {
+    public LocalDate getLicenseExpiryDate() {
         return licenseExpiryDate;
     }
 
-    public void setLicenseExpiryDate(LocalDateTime licenseExpiryDate) {
+    public void setLicenseExpiryDate(LocalDate licenseExpiryDate) {
         this.licenseExpiryDate = licenseExpiryDate;
     }
 
-    public LocalDateTime getLicenseIssueDate() {
+    public LocalDate getLicenseIssueDate() {
         return licenseIssueDate;
     }
 
-    public void setLicenseIssueDate(LocalDateTime licenseIssueDate) {
+    public void setLicenseIssueDate(LocalDate licenseIssueDate) {
         this.licenseIssueDate = licenseIssueDate;
     }
 

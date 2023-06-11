@@ -1,0 +1,73 @@
+<html
+  lang="en"
+  layout:decorate="~{admin-layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+>
+  <!--page content-->
+  <div layout:fragment="content">
+    <div class="flex flex-col space-y-3">
+      <div class="table-container">
+        <h1>Pending Users</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>User Type</th>
+              <th>Enable User</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="user : ${inactive_users}">
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.email}"></td>
+              <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+              <td th:text="${user.role}"></td>
+              <td>
+                <a th:href="@{/admin/dashboard/user/enable/{id}(id=${user.id})}"
+                  >Enable</a
+                >
+              </td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(inactive_users)}">
+              <td colspan="4"><p>No pending requests</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-container">
+        <h1>Active Users</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>User Type</th>
+              <th>Enable User</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="user : ${active_users}">
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.email}"></td>
+              <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+              <td th:text="${user.role}"></td>
+              <td>
+                <a
+                  th:href="@{/admin/dashboard/user/disable/{id}(id=${user.id})}"
+                  >Disable</a
+                >
+              </td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(active_users)}">
+              <td colspan="4"><p>No active users</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</html>

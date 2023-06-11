@@ -1,5 +1,6 @@
 package com.example.enterpriseproject.controller;
 
+import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
 import com.example.enterpriseproject.service.UserService;
 import com.example.enterpriseproject.service.UserServiceImplementation;
@@ -41,6 +42,27 @@ public class AdminController {
         return "admin/customers";
     }
 
+    @GetMapping("/admin/dashboard/user")
+    public String getUsers(Model model) {
+        List<User> inactive_users = userServiceImplementation.findAllUsersByEnabled(false);
+        List<User> active_users = userServiceImplementation.findAllUsersByEnabled(true);
+
+        // Remove admin users from the lists
+        inactive_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
+        active_users.removeIf(user -> user.getRole().equals(Role.ADMIN));
+
+        model.addAttribute("inactive_users", inactive_users);
+        model.addAttribute("active_users", active_users);
+        model.addAttribute("title", "user");
+        return "admin/user";
+    }
+
+    @GetMapping("/admin/dashboard/order")
+    public String getOrder(Model model) {
+        model.addAttribute("title", "order");
+        return "admin/order";
+    }
+
     @GetMapping("/admin/dashboard/customers/enable/{id}")
     public String enableCustomer(@PathVariable("id") String id) {
         userServiceImplementation.enableUser(id, true);
@@ -61,6 +83,18 @@ public class AdminController {
         model.addAttribute("active_drivers", active_drivers);
         model.addAttribute("title", "drivers");
         return "admin/drivers";
+    }
+
+    @GetMapping("/admin/dashboard/user/enable/{id}")
+    public String enableUser(@PathVariable("id") String id) {
+        userServiceImplementation.enableUser(id, true);
+        return "redirect:/admin/dashboard/user";
+    }
+
+    @GetMapping("/admin/dashboard/user/disable/{id}")
+    public String disableUser(@PathVariable("id") String id) {
+        userServiceImplementation.enableUser(id, false);
+        return "redirect:/admin/dashboard/user";
     }
 
     @GetMapping("/admin/dashboard/drivers/enable/{id}")

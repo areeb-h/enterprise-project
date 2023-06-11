@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.boot.context.properties.bind.Name;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,7 +37,7 @@ public class User extends Auditable<String> implements UserDetails {
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
-    @Column(name = "username", nullable = false, length = 20)
+    @Column(name = "username", nullable = false, unique = true, length = 20)
     private String username;
 
     @CreationTimestamp

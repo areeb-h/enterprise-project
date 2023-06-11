@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title> Caber: admin | [[${title}]]</title>
-  <link th:href="@{/css/main.css}" rel="stylesheet"/>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Caber: admin | [[${title}]]</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+  </head>
 
-<body>
+  <body>
+    <!--Navbar-->
+    <nav>
+      <div class="nav-container">
+        <h1 class="logo">Caber</h1>
+        <div class="links">
+          <a
+            th:href="@{/admin/dashboard}"
+            th:class="${title == 'dashboard' ? 'active' : ''}"
+            >Dashboard</a
+          >
 
-  <!--Navbar-->
-  <nav>
-    <div class="nav-container">
-      <h1 class="logo">Caber</h1>
-      <div class="links">
-        <a th:href="@{/admin/dashboard}" th:class="${title == 'dashboard' ? 'active' : ''}">Dashboard</a>
-        <a th:href="@{/admin/dashboard/customers}" th:class="${title == 'customers' ? 'active' : ''}">Customers</a>
-        <a th:href="@{/admin/dashboard/drivers}" th:class="${title == 'drivers' ? 'active' : ''}">Drivers</a>
+          <a
+            th:href="@{/admin/dashboard/customers}"
+            th:class="${title == 'customers' ? 'active' : ''}"
+            >Customer</a
+          >
+          <a
+            th:href="@{/admin/dashboard/drivers}"
+            th:class="${title == 'drivers' ? 'active' : ''}"
+            >Driver</a
+          >
+
+          <a
+            th:href="@{/admin/dashboard/order}"
+            th:class="${title == 'order' ? 'active' : ''}"
+            >Order</a
+          >
+          <a
+            th:href="@{/admin/dashboard/user}"
+            th:class="${title == 'user' ? 'active' : ''}"
+            >User</a
+          >
+        </div>
+        <a th:href="@{/logout}" class="btn-logout">Log out</a>
       </div>
-      <a th:href="@{/logout}" class="btn-logout">Log out</a>
-    </div>
-  </nav>
+    </nav>
 
-  <!--page content-->
-  <main>
-    <div layout:fragment="content"></div>
-  </main>
-
-</body>
+    <!--page content-->
+    <main>
+      <div layout:fragment="content"></div>
+    </main>
+  </body>
 </html>

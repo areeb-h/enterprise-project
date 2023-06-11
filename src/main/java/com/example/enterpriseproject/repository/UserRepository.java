@@ -24,4 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // @NotNull List<User> findAll();
 
     List<User> findAllByRoleAndEnabled(Role role, Boolean enabled);
+
+    List<User> findAllByEnabled(Boolean enabled);
+
 }

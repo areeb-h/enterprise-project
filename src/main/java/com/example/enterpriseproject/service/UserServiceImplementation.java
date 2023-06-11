@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -64,7 +63,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException, ServletException {
         User user = (User) authentication.getPrincipal();
         save(user);
     }
@@ -111,8 +110,13 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
     public List<User> findAllCustomers(boolean enabled) {
         return userRepository.findAllByRoleAndEnabled(Role.CUSTOMER, enabled);
     }
+
     public List<User> findAllDrivers(boolean enabled) {
         return userRepository.findAllByRoleAndEnabled(Role.DRIVER, enabled);
+    }
+
+    public List<User> findAllUsersByEnabled(boolean enabled) {
+        return userRepository.findAllByEnabled(enabled);
     }
 
     @Override
