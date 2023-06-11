@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.enterpriseproject.audit.Auditable;
+
 @Entity
 @Table(name = "vehicles")
-public class Vehicle {
+public class Vehicle extends Auditable<String> {
 
     // TABLE COLUMNS
     @Id()

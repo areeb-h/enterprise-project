@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+import com.example.enterpriseproject.audit.Auditable;
+
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends Auditable<String> {
 
     // TABLE COLUMNS
     @Id()

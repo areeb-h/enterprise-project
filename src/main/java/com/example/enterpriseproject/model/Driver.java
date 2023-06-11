@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.example.enterpriseproject.audit.Auditable;
+
 @Entity
 @Table(name = "drivers")
-public class Driver {
+public class Driver extends Auditable<String> {
 
     // TABLE COLUMNS
     @Id()

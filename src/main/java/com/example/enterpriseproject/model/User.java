@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.enterpriseproject.audit.Auditable;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,7 +17,7 @@ import java.util.Collections;
 //create users table
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User extends Auditable<String> implements UserDetails {
 
     // TABLE COLUMNS
     @Id()

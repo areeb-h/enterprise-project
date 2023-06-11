@@ -6,14 +6,15 @@ public enum OrderStatus {
     IN_PROGRESS("In Progress"),
     COMPLETED("Completed"),
     CANCELLED("Cancelled");
-private final String value;
-private OrderStatus(String value) {
-    this.value = value;
-}
 
-public String getValue() {
-    return value;
-}
+    private final String value;
+
+    private OrderStatus(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 
 }
-

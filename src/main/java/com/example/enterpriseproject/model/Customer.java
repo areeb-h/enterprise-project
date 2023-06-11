@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.example.enterpriseproject.audit.Auditable;
+
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer extends Auditable<String> {
 
     // TABLE COLUMNS
     @Id()
@@ -19,10 +21,8 @@ public class Customer {
     @JoinColumn(name = "user_id", insertable = true, updatable = false)
     private User user;
 
-
     @OneToMany(mappedBy = "customer")
     private List<Order> order;
-
 
     @Column(name = "address", length = 45)
     private String address;
