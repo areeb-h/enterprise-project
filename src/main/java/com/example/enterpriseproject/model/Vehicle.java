@@ -3,7 +3,6 @@ package com.example.enterpriseproject.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.enterpriseproject.audit.Auditable;

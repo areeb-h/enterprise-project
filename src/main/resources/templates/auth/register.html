@@ -123,6 +123,8 @@
           </div>
         </div>
 
+        <!-- Vehicle License Information Card-->
+
         <div
           id="vehicle-licence-info"
           style="display: none"
@@ -136,7 +138,7 @@
             class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full"
           >
             <label class="space-y-2 w-full">
-              <p class="px-3 text-cyan-700">Number</p>
+              <p class="px-3 text-cyan-700">License number</p>
               <input
                 id="licence-number"
                 class="text-input driver-required"
@@ -171,6 +173,65 @@
                 th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
               />
             </label>
+          </div>
+        </div>
+
+        <!-- Driver License Information Card-->
+
+        <div
+          id="driver-licence-info"
+          style="display: none"
+          class="space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30"
+        >
+          <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">
+            Driver License Information
+          </p>
+
+          <div
+            class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full"
+          >
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">License number</p>
+              <input
+                id="Driver-licence-number"
+                class="text-input driver-required"
+                placeholder="License number"
+                th:field="*{driver.licenseNumber}"
+                type="text"
+              />
+            </label>
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Issue Date</p>
+              <input
+                id="Driver-licence-issue"
+                th:field="*{driver.licenseIssueDate}"
+                class="text-input driver-required"
+                placeholder="date"
+                type="date"
+                name="time"
+                required
+                th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              />
+            </label>
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Expiry Date</p>
+              <input
+                id="Driver-licence-expiry"
+                th:field="*{driver.licenseExpiryDate}"
+                class="text-input driver-required"
+                placeholder="Date"
+                type="date"
+                name="time"
+                required
+                th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div class="space-y-4" th:if="${failedMessage}">
+          <div class="text-red-500 px-4 py-3 rounded-xl bg-red-300/50 w-fit">
+            <span th:utext="${failedMessage}"></span>
           </div>
         </div>
 
@@ -215,10 +276,12 @@
           if (selectedOption === "DRIVER") {
             $("#vehicle-info").show();
             $("#vehicle-licence-info").show();
+            $("#driver-licence-info").show();
             $(".driver-required").prop("required", true);
           } else {
             $("#vehicle-info").hide();
             $("#vehicle-licence-info").hide();
+            $("#driver-licence-info").hide();
             $(".driver-required").prop("required", false);
           }
         });

@@ -82,18 +82,12 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         boolean userExists = false;
         String message = null;
 
-        Optional<User> existingUsername = userRepository.findByUsername(user.getUsername());
         Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
-        if (existingUsername.isPresent()) {
-            userExists = true;
-            message = "This username is not available";
-        }
         if (existingEmail.isPresent()) {
             userExists = true;
             message = "This email is not available";
         }
-        System.out.println("existingEmail.isPresent() - " + existingEmail.isPresent()
-                + "exisitingUsername.isPresent() - " + existingUsername.isPresent());
+        System.out.println("existingEmail.isPresent() - " + existingEmail.isPresent());
         return Arrays.asList(userExists, message);
     }
 
