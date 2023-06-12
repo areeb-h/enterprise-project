@@ -54,7 +54,7 @@
               <td
                 th:text="${customer.firstName + ' ' + customer.lastName}"></td>
               <td>
-                <a class="bg-red-500/50"
+                <a class="bg-red-400/40 hover:bg-red-500/50"
                   th:href="@{/admin/dashboard/customers/lock/{id}(id=${customer.id})}"
                   >Disable</a
                 >
@@ -84,7 +84,7 @@
             <td th:text="${customer.email}"></td>
             <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
             <td>
-              <a class="bg-red-400/40 hover:bg-red-500/50" th:href="@{/admin/dashboard/customers/unlock/{id}(id=${customer.id})}">Enable</a>
+              <a th:href="@{/admin/dashboard/customers/unlock/{id}(id=${customer.id})}">Enable</a>
             </td>
           </tr>
           <tr class="no-records" th:if="${#lists.isEmpty(inactive_customers)}">

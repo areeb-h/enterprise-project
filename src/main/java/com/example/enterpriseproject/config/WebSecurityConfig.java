@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -69,18 +70,6 @@ public class WebSecurityConfig {
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
                         .requestMatchers("/driver/**").hasAnyAuthority("DRIVER")
                         .anyRequest().authenticated())
-                /*
-                 * .csrf().disable().formLogin()
-                 * //all the users will be able to access login form
-                 * .loginPage("/login")
-                 * .permitAll()
-                 * .failureUrl("/login?error=true")
-                 * //if login is successfull this loginRoleHandler class will decide what
-                 * happens next
-                 * .successHandler(loginRoleHandler)
-                 * .usernameParameter("username")
-                 * .passwordParameter("password").and()
-                 */
                 .csrf().disable().formLogin((form) -> form
                         // all the users will be able to access login form
                         .loginPage("/login")
@@ -94,6 +83,9 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/"))
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .invalidSessionUrl("/login?session=0"))
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");
         http.authenticationProvider(authenticationProvider());
