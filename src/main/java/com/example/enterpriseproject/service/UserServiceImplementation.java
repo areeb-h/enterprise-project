@@ -85,7 +85,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         Optional<User> existingEmail = userRepository.findByEmail(user.getEmail());
         if (existingEmail.isPresent()) {
             userExists = true;
-            message = "This email is not available";
+            message = "This email is not available!";
         }
         System.out.println("existingEmail.isPresent() - " + existingEmail.isPresent());
         return Arrays.asList(userExists, message);

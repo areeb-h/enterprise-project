@@ -31,7 +31,7 @@ public class DriverController {
 
     @RequestMapping(value = { "/driver/dashboard" }, method = RequestMethod.GET)
     public String driverHome(Model model) {
-
+        model.addAttribute("title", "dashboard");
         return "driver/dashboard";
     }
 
@@ -46,7 +46,7 @@ public class DriverController {
         List<Order> completed_orders = orderServiceImpementation.findOrderByOrderStatus(
                 OrderStatus.COMPLETED);
 
-        model.addAttribute("title", "dashboard");
+        model.addAttribute("title", "orders");
         model.addAttribute("pending_orders", pending_orders);
         model.addAttribute("accepted_orders", accepted_orders);
         model.addAttribute("completed_orders", completed_orders);

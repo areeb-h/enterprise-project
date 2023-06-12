@@ -40,20 +40,31 @@ public class AuthController {
     @RequestMapping(value = { "/register" }, method = RequestMethod.POST)
     public String addUser(Model model, @Valid User user, BindingResult bindingResult, Customer customer, Driver driver,
             Vehicle vehicle) {
+
         // if any validation error occurs
         if (bindingResult.hasErrors()) {
             model.addAttribute("successMessage", "Something went wrong");
             model.addAttribute("bindingResult", bindingResult);
+
             return "auth/register"; // redirect to register page
         }
 
         // check if user is present
         List<Object> userPresentObj = userService.isUserPresent(user);
         if ((Boolean) userPresentObj.get(0)) {
-            model.addAttribute("failedMessage",
-                    " EMAIL ALREADY IN USE. Please register with a different email address.");
+            model.addAttribute("errorMessage", "Email already in use. Please register with a different email address!");
             return "auth/register";
         }
+
+        // check if user is present
+        /*List<Object> userPresentObj = userService.isUserPresent(user);
+        if ((Boolean) userPresentObj.get(0)) {
+            model.addAttribute("failedMessage",
+                    "EMAIL ALREADY IN USE. Please register with a different email address.");
+            model.addAttribute("errorMessage", "Something went wrong");
+            model.addAttribute("bindingResult", bindingResult);
+            return "auth/register";
+        }*/
 
         // set role and set enabled to false if the role is "CUSTOMER"
         user.setRole(user.getRole());

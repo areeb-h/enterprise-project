@@ -155,8 +155,6 @@
                 class="text-input driver-required"
                 placeholder="date"
                 type="date"
-                name="time"
-                required
                 th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
               />
             </label>
@@ -168,8 +166,6 @@
                 class="text-input driver-required"
                 placeholder="Date"
                 type="date"
-                name="time"
-                required
                 th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
               />
             </label>
@@ -208,8 +204,6 @@
                 class="text-input driver-required"
                 placeholder="date"
                 type="date"
-                name="time"
-                required
                 th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
               />
             </label>
@@ -221,17 +215,15 @@
                 class="text-input driver-required"
                 placeholder="Date"
                 type="date"
-                name="time"
-                required
                 th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
               />
             </label>
           </div>
         </div>
 
-        <div class="space-y-4" th:if="${failedMessage}">
+        <div id="error" class="space-y-4" th:if="${errorMessage}">
           <div class="text-red-500 px-4 py-3 rounded-xl bg-red-300/50 w-fit">
-            <span th:utext="${failedMessage}"></span>
+            <span th:utext="${errorMessage}"></span>
           </div>
         </div>
 
@@ -265,6 +257,8 @@
         $("#role").on("change", function () {
           const selectedOption = $(this).val();
 
+          $("#error").hide();
+
           if (selectedOption === "CUSTOMER") {
             $("#customer-info").show();
             $(".customer-required").prop("required", true);
@@ -288,5 +282,7 @@
       });
       /*]]>*/
     </script>
+
+
   </body>
 </html>
