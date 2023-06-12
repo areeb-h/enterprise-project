@@ -738,6 +738,10 @@ video {
   background-color: rgb(255 255 255 / 0.4);
 }
 
+.bg-red-300\/50 {
+  background-color: rgb(252 165 165 / 0.5);
+}
+
 .bg-\[radial-gradient\(ellipse_at_bottom_right\2c _var\(--tw-gradient-stops\)\)\] {
   background-image: radial-gradient(ellipse at bottom right, var(--tw-gradient-stops));
 }
@@ -810,9 +814,9 @@ video {
   padding-right: 1rem;
 }
 
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .py-2 {
@@ -828,11 +832,6 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
-}
-
-.px-7 {
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
 }
 
 .text-center {

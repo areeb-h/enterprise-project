@@ -56,15 +56,8 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         // every user will be able to access these urls
-                        .requestMatchers(request -> {
-                            String path = request.getServletPath();
-                            return path.startsWith("/images/");
-                        }).permitAll()
-                        .requestMatchers(request -> {
-                            String path = request.getServletPath();
-                            return path.startsWith("/css/");
-                        }).permitAll()
-                        .requestMatchers("/resources/static/images/**").permitAll() // Permit access to the /images directory and its contents
+                        .requestMatchers(request -> request.getServletPath().startsWith("/images/")).permitAll() // in resources/static/
+                        .requestMatchers(request -> request.getServletPath().startsWith("/css/")).permitAll() // in resources/static/
                         .requestMatchers("/", "/home", "/register", "/login").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
@@ -83,7 +76,7 @@ public class WebSecurityConfig {
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/"))
-                .sessionManagement((sessionManagement) -> sessionManagement
+                .sessionManagement((sessionManagement) -> sessionManagement // checks if there is a session and redirects to /login with a parameter of session=0
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                         .invalidSessionUrl("/login?session=0"))
                 .exceptionHandling()
