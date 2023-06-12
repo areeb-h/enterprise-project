@@ -37,7 +37,7 @@ public class User extends Auditable<String> implements UserDetails {
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
-    @Column(name = "username", nullable = false, unique = true, length = 20)
+    @Column(name = "username", nullable = false, length = 20)
     private String username;
 
     @CreationTimestamp
@@ -86,6 +86,7 @@ public class User extends Auditable<String> implements UserDetails {
     public void setEnabled(Boolean b) {
         this.enabled = b;
     }
+
     public void setLocked(Boolean b) {
         this.locked = b;
     }
@@ -103,7 +104,6 @@ public class User extends Auditable<String> implements UserDetails {
     public boolean isAccountNonExpired() {
         return true;
     }
-
 
     @Override
     public boolean isAccountNonLocked() {

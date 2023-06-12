@@ -2,7 +2,10 @@ package com.example.enterpriseproject.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.cglib.core.Local;
 
 import com.example.enterpriseproject.audit.Auditable;
 
@@ -14,6 +17,15 @@ public class Driver extends Auditable<String> {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "license_number", nullable = false, length = 45)
+    private String licenseNumber;
+
+    @Column(name = "license_expiry_date", nullable = false, length = 45)
+    private LocalDate licenseExpiryDate;
+
+    @Column(name = "license_issue_date", nullable = false, length = 45)
+    private LocalDate licenseIssueDate;
 
     // RELATIONSHIPS
 
@@ -44,6 +56,30 @@ public class Driver extends Auditable<String> {
 
     public Vehicle getVehicle() {
         return vehicle;
+    }
+
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+
+    public LocalDate getLicenseExpiryDate() {
+        return licenseExpiryDate;
+    }
+
+    public void setLicenseExpiryDate(LocalDate licenseExpiryDate) {
+        this.licenseExpiryDate = licenseExpiryDate;
+    }
+
+    public LocalDate getLicenseIssueDate() {
+        return licenseIssueDate;
+    }
+
+    public void setLicenseIssueDate(LocalDate licenseIssueDate) {
+        this.licenseIssueDate = licenseIssueDate;
     }
 
     public List<Order> getOrder() {
