@@ -1,95 +1,170 @@
-<html
-  lang="en"
-  layout:decorate="~{customer-layout}"
-  xmlns:layout="http://www.w3.org/1999/xhtml"
->
-  <!--page content-->
-  <div layout:fragment="content">
-    <div
-      class="m-auto p-6 shadow rounded-2xl bg-white items-center justify-center"
-    >
-      <form
-        class=""
-        th:action="@{/customer/book}"
-        th:object="${order}"
-        method="post"
-      >
-        <h3 class="font-bold text-xl text-center text-slate-800 mb-4">
-          Book a ride
-        </h3>
-        <div class="flex flex-col space-y-3 mb-4">
-          <div class="space-y-2 p-2 rounded-xl shadow">
-            <p>Pickup point</p>
-            <input
-              id="pickup-address"
-              th:field="*{pickupAddress}"
-              class="bg-gray-50 rounded-md py-2 px-3 w-full"
-              placeholder="from"
-              type="text"
-              required
-              name="pickup-address"
-            />
-          </div>
-          <div class="space-y-2 p-2 rounded-xl shadow">
-            <p>Destination</p>
-            <input
-              id="destination-address"
-              th:field="*{destinationAddress}"
-              class="bg-gray-50 rounded-md py-2 px-3 w-full"
-              placeholder="to"
-              type="text"
-              required
-              name="destination-address"
-            />
-          </div>
-          <div class="space-y-2 p-2 rounded-xl shadow">
-            <p>Day and Time</p>
-            <input
-              id="time"
-              th:field="*{time}"
-              class="bg-gray-50 rounded-md py-2 px-3 w-full"
-              placeholder="date-time"
-              type="datetime-local"
-              name="time"
-              required
-              th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}"
-            />
-          </div>
+<html lang="en" layout:decorate="~{customer-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<!--page content-->
+<div layout:fragment="content">
+  <form class="flex flex-col space-y-4 md:min-w-[700px] w-full p-6 shadow rounded-2xl bg-white"
+    th:action="@{/customer/book}" th:object="${order}" method="post">
+
+    <div class="space-y-2 /p-2 /rounded-xl /shadow">
+      <p>Select pickup point and destination</p>
+      <div class="space-y-4 w-full">
+        <div class="flex space-x-4">
+          <input type="text" th:field="*{pickupAddress}" id="pickup-input"
+            class="bg-gray-50 border-2 border-slate-200 rounded-md py-2 px-3 w-full"
+            placeholder="Pickup point" />
+          <button type="button" class="bg-slate-50 border-2 border-slate-200 rounded-md p-1 pt-1.5 hover:bg-cyan-100 hover:border-cyan-300" onclick="getCurrentLocation()">
+            <img th:src="@{/images/current-location.png}" class="w-[40px]" alt="Caber" />
+          </button>
         </div>
-        <div class="text-center w-full">
-          <span class="text-green-500 mb-4" th:utext="${successMessage}"></span>
-          <span class="text-red-500 mb-4" th:utext="${errorMessage}"></span>
-        </div>
-        <button
-          class="rounded-xl w-full mt-4 text-white bg-teal-500 hover:bg-teal-600 p-2"
-        >
-          <input type="submit" value="Confirm the order" />
-        </button>
-        <div class="text-red-500 mb-2" th:if="${param.error}">
-          There was an error
-        </div>
-      </form>
+        <input type="text" th:field="*{destinationAddress}" id="destination-input"
+          class="bg-gray-50 border-2 border-slate-200 rounded-md p-2 px-3 w-full"
+          placeholder="Destination" />
+      </div>
     </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.0/toastify.min.js"></script>
+    <div class="rounded-md overflow-hidden">
+      <div id="map" class="h-[350px]"></div>
+    </div>
 
-  <!-- Add JavaScript code -->
+    <div id="route-details" class="p-4 text-center border-2 border-green-400/90 bg-green-200 text-slate-800 rounded-md">
+    </div>
+
+    <div class="space-y-2 /p-2 /rounded-xl /shadow">
+      <p>Choose a day and time</p>
+      <input id="time" th:field="*{time}" class="bg-gray-50 border-2 border-slate-200 rounded-md py-2 px-3 w-full"
+        placeholder="date-time" type="datetime-local" name="time" required
+        th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}" />
+    </div>
+
+    <div class="text-center w-full">
+      <span class="text-green-500 mb-4" th:utext="${successMessage}"></span>
+      <span class="text-red-500 mb-4" th:utext="${errorMessage}"></span>
+    </div>
+    <button class="rounded-xl w-full mt-4 text-white bg-teal-500 hover:bg-teal-600 p-2">
+      <input type="submit" value="Confirm the order" />
+    </button>
+    <div class="text-red-500 mb-2" th:if="${param.error}">
+      There was an error
+    </div>
+  </form>
+
+
   <script th:inline="javascript">
-    function showToast(message) {
-      Toastify({
-        text: message,
-        duration: 3000,
-        gravity: "bottom", // Position the toast at the bottom
-        backgroundColor: "green",
-        className: "toast-success",
-      }).showToast();
+    var map, pickupInput, destinationInput;
+    var directionsService, directionsRenderer;
+    var pickupAutocomplete, destinationAutocomplete;
+
+    // Get the user's current location
+    function getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var currentLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          // Set the current location as the pickup input value
+          var geocoder = new google.maps.Geocoder();
+          geocoder.geocode({ location: currentLocation }, function (results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                var pickupAddress = results[0].formatted_address;
+                pickupInput.value = pickupAddress;
+                pickupAutocomplete.set('place', { // Set the selected place for pickupAutocomplete
+                  name: pickupAddress,
+                  formatted_address: pickupAddress,
+                  geometry: { location: currentLocation }
+                });
+                map.setCenter(currentLocation);
+                var marker = new google.maps.Marker({
+                  position: currentLocation,
+                  map: map,
+                  title: 'Current Location'
+                });
+              }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });
+        }, function () {
+          handleLocationError(true, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, map.getCenter());
+      }
     }
 
-    // Get the success message from the server and display the toast
-    var successMessage = /*[[${successMessage}]]*/ "";
-    if (successMessage) {
-      showToast(successMessage);
+    // Initialize the map, directions service, and directions renderer
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 0, lng: 0 },
+        zoom: 10
+      });
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true
+      });
+
+      pickupInput = document.getElementById('pickup-input');
+      destinationInput = document.getElementById('destination-input');
+
+      pickupAutocomplete = new google.maps.places.Autocomplete(pickupInput);
+      destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
+
+      // listeners to handle place selection
+      pickupAutocomplete.addListener('place_changed', function () {
+        calculateRoute();
+      });
+
+      destinationAutocomplete.addListener('place_changed', function () {
+        calculateRoute();
+      });
+    }
+
+    // calculating route distance and duration of the ride using google place/map's directionService
+    function calculateRoute() {
+      var pickupPlace = pickupAutocomplete.getPlace();
+      var destinationPlace = destinationAutocomplete.getPlace();
+
+      if (!pickupPlace || !destinationPlace) {
+        return;
+      }
+
+      directionsService.route(
+        {
+          origin: pickupPlace.geometry.location,
+          destination: destinationPlace.geometry.location,
+          travelMode: 'DRIVING'
+        },
+        function (response, status) {
+          if (status === 'OK') {
+            directionsRenderer.setDirections(response);
+            displayRouteDetails(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        }
+      );
+    }
+
+    function displayRouteDetails(directionsResult) {
+      var route = directionsResult.routes[0];
+      var distance = route.legs[0].distance.text;
+      var duration = route.legs[0].duration.text;
+
+      var routeDetailsElement = document.getElementById('route-details');
+      routeDetailsElement.innerHTML =
+        'Total distance of the ride is <span class="font-bold">' +
+        distance +
+        '</span> and the estimated duration is <span class="font-bold">' +
+        duration +
+        '</span>';
     }
   </script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXx_KxvBJnsfa8qqwQzMZKd1TLItwBD6M&libraries=places&callback=initMap"
+    async defer></script>
+</div>
+
 </html>

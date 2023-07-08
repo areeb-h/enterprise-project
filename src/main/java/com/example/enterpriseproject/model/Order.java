@@ -18,10 +18,10 @@ public class Order extends Auditable<String> {
     @Column(name = "cost", nullable = false, length = 45)
     private double cost;
 
-    @Column(name = "destination_address", nullable = false, length = 45)
+    @Column(name = "destination_address", nullable = false, length = 150)
     private String destinationAddress;
 
-    @Column(name = "pickup_address", nullable = false, length = 45)
+    @Column(name = "pickup_address", nullable = false, length = 150)
     private String pickupAddress;
 
     @Column(name = "time", nullable = false, length = 45)
