@@ -48,7 +48,7 @@
           <input class="text-input customer-required" id="customer-info" placeholder="Current Address"
             style="display: none" th:field="*{customer.address}" name="address" type="text" />
 
-          <div class="flex flex-col space-y-4" id="vehicle-info" style="display: none">
+          <div class="flex driver-section flex-col space-y-4" id="vehicle-info" style="display: none">
             <input id="vehicle-name" class="text-input driver-required driver-section" placeholder="Name of the vehicle"
               th:field="*{vehicle.carName}" type="text" />
             <input id="vehicle-color" class="text-input driver-required driver-section"
