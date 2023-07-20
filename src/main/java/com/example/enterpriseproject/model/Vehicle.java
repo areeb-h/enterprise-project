@@ -31,6 +31,10 @@ public class Vehicle extends Auditable<String> {
     @Column(name = "license_issue_date", nullable = false, length = 45)
     private LocalDate licenseIssueDate;
 
+    // initialized an enum column for vehicle type
+    @Enumerated(EnumType.STRING)
+    private VehicleType vehicleType;
+
     // RELATIONSHIPS
 
     // foreign key driver_id references id in drivers table
@@ -99,5 +103,13 @@ public class Vehicle extends Auditable<String> {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+    }
+
+    public VehicleType getVehicleType() {
+        return this.vehicleType;
+    }
+
+    public void setVehicleType(VehicleType string) {
+        this.vehicleType = string;
     }
 }
