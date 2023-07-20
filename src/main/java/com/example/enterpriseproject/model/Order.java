@@ -18,10 +18,10 @@ public class Order extends Auditable<String> {
     @Column(name = "cost", nullable = false, length = 45)
     private double cost;
 
-    @Column(name = "destination_address", nullable = false, length = 150)
+    @Column(name = "destination_address", nullable = false, length = 500)
     private String destinationAddress;
 
-    @Column(name = "pickup_address", nullable = false, length = 150)
+    @Column(name = "pickup_address", nullable = false, length = 500)
     private String pickupAddress;
 
     @Column(name = "time", nullable = false, length = 45)
@@ -46,6 +46,10 @@ public class Order extends Auditable<String> {
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     private Vehicle vehicle;
+
+    // initialized an enum column for vehicle type
+    @Enumerated(EnumType.STRING)
+    private VehicleType vehicleType;
 
     // GETTERS AND SETTERS
     public Long getId() {
@@ -122,5 +126,13 @@ public class Order extends Auditable<String> {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public VehicleType getVehicleType() {
+        return this.vehicleType;
+    }
+
+    public void setVehicleType(VehicleType string) {
+        this.vehicleType = string;
     }
 }

@@ -19,12 +19,9 @@
       <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6">
         <div class="flex flex-col space-y-4 shadow rounded-xl backdrop-blur-3xl bg-white/30 p-4">
           <div class="flex space-x-4">
-            <input class="text-input" placeholder="First Name" type="text" th:field="*{user.firstName}"
-              name="First Name" required />
-            <input class="text-input" placeholder="Last Name" type="text" th:field="*{user.lastName}" name="Last Name"
-              required />
+            <input class="text-input" placeholder="First Name" type="text" th:field="*{user.firstName}" name="First Name" required />
+            <input class="text-input" placeholder="Last Name" type="text" th:field="*{user.lastName}" name="Last Name" required />
           </div>
-
           <input class="text-input" placeholder="User Name" type="text" th:field="*{user.username}" name="User Name"
             required />
           <input class="text-input" placeholder="Email" type="text" th:field="*{user.email}" name="Email" required />
@@ -51,8 +48,20 @@
           <div class="flex driver-section flex-col space-y-4" id="vehicle-info" style="display: none">
             <input id="vehicle-name" class="text-input driver-required driver-section" placeholder="Name of the vehicle"
               th:field="*{vehicle.carName}" type="text" />
-            <input id="vehicle-color" class="text-input driver-required driver-section"
-              placeholder="Color of the vehicle" th:field="*{vehicle.carColor}" type="text" />
+            <div class="flex space-x-4">
+                <input id="vehicle-color" class="text-input driver-required driver-section"
+                       placeholder="Vehicle color" th:field="*{vehicle.carColor}" type="text" />
+                <label class="w-[330px]">
+                  <select th:field="*{vehicle.vehicleType}" class="text-input w-full driver-required">
+                    <option value="">Vehicle type</option>
+                    <option value="CAR">Car</option>
+                    <option value="CYCLE">Cycle</option>
+                    <option value="VAN">Van</option>
+                    <option value="PICKUP">Pickup</option>
+                    <option value="LPICKUP">Large Pickup</option>
+                  </select>
+                </label>
+            </div>
           </div>
         </div>
       </div>
@@ -62,12 +71,12 @@
       <div id="vehicle-licence-info" style="display: none"
         class="driver-section space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30">
         <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">
-          Vehicle License Information
+          Vehicle Registration Information
         </p>
 
         <div class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full">
           <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">License number</p>
+            <p class="px-3 text-cyan-700">Registration number</p>
             <input id="licence-number" class="text-input driver-required" placeholder="Licence number"
               th:field="*{vehicle.licenseNumber}" type="text" />
           </label>

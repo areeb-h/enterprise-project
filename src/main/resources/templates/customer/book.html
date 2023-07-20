@@ -35,6 +35,22 @@
         th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}}" />
     </div>
 
+    <div class="space-y-2 /p-2 /rounded-xl /shadow">
+      <p>Choose a vehicle type</p>
+      <label>
+        <select th:field="*{vehicleType}" class="text-input w-full" required>
+          <option value="">Vehicle type</option>
+          <option value="CAR">Car</option>
+          <option value="CYCLE">Cycle</option>
+          <option value="VAN">Van</option>
+          <option value="PICKUP">Pickup</option>
+          <option value="LPICKUP">Large Pickup</option>
+        </select>
+      </label>
+    </div>
+
+
+
     <div class="text-center w-full">
       <span class="text-green-500 mb-4" th:utext="${successMessage}"></span>
       <span class="text-red-500 mb-4" th:utext="${errorMessage}"></span>
