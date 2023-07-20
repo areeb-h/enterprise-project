@@ -1,58 +1,130 @@
 <!--register.html-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Register</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Register</title>
-  <link th:href="@{/css/main.css}" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+  <body
+    class="flex p-10 h-screen bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-teal-200 via-sky-400 to-teal-200"
+  >
+    <div
+      class="m-auto /p-6 shadow-md rounded-2xl bg-white content-center backdrop-blur-2xl bg-white/40"
+    >
+      <form
+        class="rounded-xl flex flex-col space-y-6 p-14"
+        th:action="@{/register}"
+        method="post"
+      >
+        <h3 class="font-bold text-2xl text-cyan-700">User Registration</h3>
 
-<body
-  class="flex p-10 h-screen bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-teal-200 via-sky-400 to-teal-200">
-  <div class="m-auto /p-6 shadow-md rounded-2xl bg-white content-center backdrop-blur-2xl bg-white/40">
-    <form class="rounded-xl flex flex-col space-y-6 p-14" th:action="@{/register}" method="post">
-      <h3 class="font-bold text-2xl text-cyan-700">User Registration</h3>
-
-      <div class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6">
-        <div class="flex flex-col space-y-4 shadow rounded-xl backdrop-blur-3xl bg-white/30 p-4">
-          <div class="flex space-x-4">
-            <input class="text-input" placeholder="First Name" type="text" th:field="*{user.firstName}" name="First Name" required />
-            <input class="text-input" placeholder="Last Name" type="text" th:field="*{user.lastName}" name="Last Name" required />
-          </div>
-          <input class="text-input" placeholder="User Name" type="text" th:field="*{user.username}" name="User Name"
-            required />
-          <input class="text-input" placeholder="Email" type="text" th:field="*{user.email}" name="Email" required />
-          <input class="text-input" placeholder="Password" type="password" th:field="*{user.password}" name="password"
-            required />
-        </div>
-
-        <div class="flex flex-col md:w-80 space-y-4 p-5 shadow rounded-xl backdrop-blur-3xl bg-white/30">
-          <h1 class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700">
-            Are you a driver or a customer?
-          </h1>
-
-          <label>
-            <select th:field="*{user.role}" class="text-input" required>
-              <option value="">Select account type</option>
-              <option value="CUSTOMER">Customer</option>
-              <option value="DRIVER">Driver</option>
-            </select>
-          </label>
-
-          <input class="text-input customer-required" id="customer-info" placeholder="Current Address"
-            style="display: none" th:field="*{customer.address}" name="address" type="text" />
-
-          <div class="flex driver-section flex-col space-y-4" id="vehicle-info" style="display: none">
-            <input id="vehicle-name" class="text-input driver-required driver-section" placeholder="Name of the vehicle"
-              th:field="*{vehicle.carName}" type="text" />
+        <div
+          class="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-6"
+        >
+          <div
+            class="flex flex-col space-y-4 shadow rounded-xl backdrop-blur-3xl bg-white/30 p-4"
+          >
             <div class="flex space-x-4">
-                <input id="vehicle-color" class="text-input driver-required driver-section"
-                       placeholder="Vehicle color" th:field="*{vehicle.carColor}" type="text" />
+              <input
+                class="text-input"
+                placeholder="First Name"
+                type="text"
+                th:field="*{user.firstName}"
+                name="First Name"
+                required
+              />
+              <input
+                class="text-input"
+                placeholder="Last Name"
+                type="text"
+                th:field="*{user.lastName}"
+                name="Last Name"
+                required
+              />
+            </div>
+            <input
+              class="text-input"
+              placeholder="User Name"
+              type="text"
+              th:field="*{user.username}"
+              name="User Name"
+              required
+            />
+            <input
+              class="text-input"
+              placeholder="Email"
+              type="text"
+              th:field="*{user.email}"
+              name="Email"
+              required
+            />
+            <input
+              class="text-input"
+              placeholder="Password"
+              type="password"
+              th:field="*{user.password}"
+              name="password"
+              required
+            />
+          </div>
+
+          <div
+            class="flex flex-col md:w-80 space-y-4 p-5 shadow rounded-xl backdrop-blur-3xl bg-white/30"
+          >
+            <h1 class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700">
+              Are you a driver or a customer?
+            </h1>
+
+            <label>
+              <select th:field="*{user.role}" class="text-input" required>
+                <option value="">Select account type</option>
+                <option value="CUSTOMER">Customer</option>
+                <option value="DRIVER">Driver</option>
+              </select>
+            </label>
+
+            <input
+              class="text-input customer-required"
+              id="customer-info"
+              placeholder="Current Address"
+              style="display: none"
+              th:field="*{customer.address}"
+              name="address"
+              type="text"
+            />
+
+            <div
+              class="flex driver-section flex-col space-y-4"
+              id="vehicle-info"
+              style="display: none"
+            >
+              <input
+                id="vehicle-name"
+                class="text-input driver-required driver-section"
+                placeholder="Brand Name of Vehicle"
+                th:field="*{vehicle.carName}"
+                type="text"
+              />
+              <div class="flex space-x-4">
+                <input
+                  id="vehicle-color"
+                  class="text-input driver-required driver-section"
+                  placeholder="Vehicle color"
+                  th:field="*{vehicle.carColor}"
+                  type="text"
+                />
                 <label class="w-[330px]">
-                  <select th:field="*{vehicle.vehicleType}" class="text-input w-full driver-required">
+                  <select
+                    th:field="*{vehicle.vehicleType}"
+                    class="text-input w-full driver-required"
+                  >
                     <option value="">Vehicle type</option>
                     <option value="CAR">Car</option>
                     <option value="CYCLE">Cycle</option>
@@ -61,115 +133,165 @@
                     <option value="LPICKUP">Large Pickup</option>
                   </select>
                 </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Vehicle License Information Card-->
+        <!-- Vehicle License Information Card-->
 
-      <div id="vehicle-licence-info" style="display: none"
-        class="driver-section space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30">
-        <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">
-          Vehicle Registration Information
+        <div
+          id="vehicle-licence-info"
+          style="display: none"
+          class="driver-section space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30"
+        >
+          <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">
+            Vehicle Registration Information
+          </p>
+
+          <div
+            class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full"
+          >
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Registration number</p>
+              <input
+                id="licence-number"
+                class="text-input driver-required"
+                placeholder="Licence number"
+                th:field="*{vehicle.licenseNumber}"
+                type="text"
+              />
+            </label>
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Issue Date</p>
+              <input
+                id="licence-issue"
+                th:field="*{vehicle.licenseIssueDate}"
+                class="text-input driver-required"
+                placeholder="date"
+                type="date"
+                th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              />
+            </label>
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Expiry Date</p>
+              <input
+                id="licence-expiry"
+                th:field="*{vehicle.licenseExpiryDate}"
+                class="text-input driver-required"
+                placeholder="Date"
+                type="date"
+                th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              />
+            </label>
+          </div>
+        </div>
+
+        <!-- Driver License Information Card-->
+
+        <div
+          id="driver-licence-info"
+          style="display: none"
+          class="driver-section space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30"
+        >
+          <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">
+            Driver License Information
+          </p>
+
+          <div
+            class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full"
+          >
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">License number</p>
+              <input
+                id="Driver-licence-number"
+                class="text-input driver-required"
+                placeholder="License number"
+                th:field="*{driver.licenseNumber}"
+                type="text"
+              />
+            </label>
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Issue Date</p>
+              <input
+                id="Driver-licence-issue"
+                th:field="*{driver.licenseIssueDate}"
+                class="text-input driver-required"
+                placeholder="date"
+                type="date"
+                th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              />
+            </label>
+            <label class="space-y-2 w-full">
+              <p class="px-3 text-cyan-700">Expiry Date</p>
+              <input
+                id="Driver-licence-expiry"
+                th:field="*{driver.licenseExpiryDate}"
+                class="text-input driver-required"
+                placeholder="Date"
+                type="date"
+                th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div id="error" class="space-y-4" th:if="${errorMessage}">
+          <div class="text-red-500 px-4 py-3 rounded-xl bg-red-300/50 w-fit">
+            <span th:utext="${errorMessage}"></span>
+          </div>
+        </div>
+
+        <button
+          class="rounded-md text-white bg-cyan-600 hover:bg-cyan-500 py-2 px-4 cursor-pointer"
+        >
+          <input type="submit" value="Register" />
+        </button>
+
+        <p>
+          Already have an account?
+          <a th:href="@{|/login|}" class="text-teal-600 hover:underline"
+            >Login</a
+          >
         </p>
 
-        <div class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full">
-          <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">Registration number</p>
-            <input id="licence-number" class="text-input driver-required" placeholder="Licence number"
-              th:field="*{vehicle.licenseNumber}" type="text" />
-          </label>
-          <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">Issue Date</p>
-            <input id="licence-issue" th:field="*{vehicle.licenseIssueDate}" class="text-input driver-required"
-              placeholder="date" type="date" th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}" />
-          </label>
-          <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">Expiry Date</p>
-            <input id="licence-expiry" th:field="*{vehicle.licenseExpiryDate}" class="text-input driver-required"
-              placeholder="Date" type="date" th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}" />
-          </label>
+        <div
+          class="text-red-500 mb-2"
+          th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}"
+        >
+          <ul th:each="data : ${bindingResult.getAllErrors()}">
+            <li th:text="${data.getDefaultMessage()}"></li>
+          </ul>
         </div>
-      </div>
+      </form>
+    </div>
 
-      <!-- Driver License Information Card-->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      $(document).ready(function () {
+        $("#role").on("change", function () {
+          const selectedOption = $(this).val();
 
-      <div id="driver-licence-info" style="display: none"
-        class="driver-section space-y-4 p-4 shadow rounded-xl backdrop-blur-3xl bg-white/30">
-        <p class="py-2 px-3 rounded-lg bg-white/30 text-cyan-700 font-bold">
-          Driver License Information
-        </p>
+          $("#error").hide();
 
-        <div class="flex flex-col md:flex-row md:space-y-0 md:space-x-4 w-full">
-          <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">License number</p>
-            <input id="Driver-licence-number" class="text-input driver-required" placeholder="License number"
-              th:field="*{driver.licenseNumber}" type="text" />
-          </label>
-          <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">Issue Date</p>
-            <input id="Driver-licence-issue" th:field="*{driver.licenseIssueDate}" class="text-input driver-required"
-              placeholder="date" type="date" th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}" />
-          </label>
-          <label class="space-y-2 w-full">
-            <p class="px-3 text-cyan-700">Expiry Date</p>
-            <input id="Driver-licence-expiry" th:field="*{driver.licenseExpiryDate}" class="text-input driver-required"
-              placeholder="Date" type="date" th:attr="min=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}" />
-          </label>
-        </div>
-      </div>
+          if (selectedOption === "CUSTOMER") {
+            $("#customer-info").show();
+            $(".customer-required").prop("required", true);
+          } else {
+            $("#customer-info").hide();
+            $(".customer-required").prop("required", false);
+          }
 
-      <div id="error" class="space-y-4" th:if="${errorMessage}">
-        <div class="text-red-500 px-4 py-3 rounded-xl bg-red-300/50 w-fit">
-          <span th:utext="${errorMessage}"></span>
-        </div>
-      </div>
-
-      <button class="rounded-md text-white bg-cyan-600 hover:bg-cyan-500 py-2 px-4 cursor-pointer">
-        <input type="submit" value="Register" />
-      </button>
-
-      <p>
-        Already have an account?
-        <a th:href="@{|/login|}" class="text-teal-600 hover:underline">Login</a>
-      </p>
-
-      <div class="text-red-500 mb-2" th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
-        <ul th:each="data : ${bindingResult.getAllErrors()}">
-          <li th:text="${data.getDefaultMessage()}"></li>
-        </ul>
-      </div>
-    </form>
-  </div>
-
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-    $(document).ready(function () {
-      $("#role").on("change", function () {
-        const selectedOption = $(this).val();
-
-        $("#error").hide();
-
-        if (selectedOption === "CUSTOMER") {
-          $("#customer-info").show();
-          $(".customer-required").prop("required", true);
-        } else {
-          $("#customer-info").hide();
-          $(".customer-required").prop("required", false);
-        }
-
-        if (selectedOption === "DRIVER") {
-          $(".driver-section").show();
-          $(".driver-required").prop("required", true);
-        } else {
-          $(".driver-section").hide();
-          $(".driver-required").prop("required", false);
-        }
+          if (selectedOption === "DRIVER") {
+            $(".driver-section").show();
+            $(".driver-required").prop("required", true);
+          } else {
+            $(".driver-section").hide();
+            $(".driver-required").prop("required", false);
+          }
+        });
       });
-    });
       /*]]>*/
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
