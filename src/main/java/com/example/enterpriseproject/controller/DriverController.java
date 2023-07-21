@@ -39,11 +39,14 @@ public class DriverController {
     public String book(Model model) {
         // Driver driver = userServiceImplementation.getCurrentUser().getDriver();
 
-        List<Order> pending_orders = orderServiceImpementation.findOrderByOrderStatus(
+        List<Order> pending_orders = orderServiceImpementation.findOrdersByDriverAndOrderStatus(
+                userServiceImplementation.getCurrentUser().getDriver(),
                 OrderStatus.UNASSIGNED);
-        List<Order> accepted_orders = orderServiceImpementation.findOrderByOrderStatus(
+        List<Order> accepted_orders = orderServiceImpementation.findOrdersByDriverAndOrderStatus(
+                userServiceImplementation.getCurrentUser().getDriver(),
                 OrderStatus.ASSIGNED);
-        List<Order> completed_orders = orderServiceImpementation.findOrderByOrderStatus(
+        List<Order> completed_orders = orderServiceImpementation.findOrdersByDriverAndOrderStatus(
+                userServiceImplementation.getCurrentUser().getDriver(),
                 OrderStatus.COMPLETED);
 
         model.addAttribute("title", "orders");

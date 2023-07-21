@@ -4,12 +4,18 @@ import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.OrderStatus;
+import com.example.enterpriseproject.model.Vehicle;
+import com.example.enterpriseproject.model.VehicleType;
 import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.OrderRepository;
+import com.example.enterpriseproject.repository.VehicleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //UserService will be implemented using this
 @Service
@@ -22,8 +28,27 @@ public class OrderServiceImplementation implements OrderService {
     @Autowired
     DriverRepository driverRepository;
 
+    @Autowired
+    VehicleRepository vehicleRepository;
+
     public void save(Order order) {
+        List<Vehicle> vehicles = vehicleRepository.findAllByVehicleType(order.getVehicleType());
+
+        List<Driver> availableDrivers = new ArrayList<Driver>();
+
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getDriver().getAvailabilityStatus()) {
+                availableDrivers.add(vehicle.getDriver());
+            }
+        }
+
+        Driver driver = availableDrivers.get(0);
+
+        order.setDriver(driver);
+        order.setVehicle(driver.getVehicle());
+
         orderRepository.save(order);
+
     }
 
     @Override
