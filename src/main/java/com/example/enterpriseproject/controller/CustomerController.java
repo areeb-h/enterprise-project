@@ -44,8 +44,11 @@ public class CustomerController {
                 OrderStatus.UNASSIGNED);
         List<Order> accepted_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer,
                 OrderStatus.ASSIGNED);
+        List<Order> cancelled_Orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer,
+                OrderStatus.CANCELLED);
 
         model.addAttribute("title", "dashboard");
+        model.addAttribute("cancelled_orders", cancelled_Orders);
         model.addAttribute("pending_orders", pending_orders);
         model.addAttribute("accepted_orders", accepted_orders);
         return "customer/dashboard";
@@ -89,8 +92,9 @@ public class CustomerController {
 
         return "customer/book";
     }
+
     @GetMapping("/customer/dashboard/orders/{id}")
-    public String updateDriverStatus(Model model, @PathVariable("id")String id){
+    public String updateDriverStatus(Model model, @PathVariable("id") String id) {
         Order order = orderServiceImpementation.findOrderById(Long.parseLong((id)));
 
         model.addAttribute("order", order);
