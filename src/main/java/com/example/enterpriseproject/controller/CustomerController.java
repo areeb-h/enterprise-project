@@ -46,11 +46,14 @@ public class CustomerController {
                 OrderStatus.ASSIGNED);
         List<Order> cancelled_Orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer,
                 OrderStatus.CANCELLED);
+        List<Order> completed_orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer,
+                OrderStatus.COMPLETED);
 
         model.addAttribute("title", "dashboard");
         model.addAttribute("cancelled_orders", cancelled_Orders);
         model.addAttribute("pending_orders", pending_orders);
         model.addAttribute("accepted_orders", accepted_orders);
+        model.addAttribute("completed_orders", completed_orders);
         return "customer/dashboard";
     }
 
@@ -85,7 +88,8 @@ public class CustomerController {
 
         if (error == "Cannot find a driver. Please try again later" || error == "No driver available") {
             model.addAttribute("errorMessage", error);
-        } else model.addAttribute("successMessage", "Your order has been placed!");
+        } else
+            model.addAttribute("successMessage", "Your order has been placed!");
 
         // Clear the submitted order from the model
         model.addAttribute("order", new Order());
