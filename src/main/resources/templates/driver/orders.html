@@ -52,6 +52,7 @@
               <!-- <td th:text="${order.getStatus}"></td> -->
               <td>
                 <a th:href="@{/driver/orders/complete/{id}(id=${order.id})}">Complete</a>
+                <a th:href="@{/driver/orders/cancel/{id}(id=${order.id})}">Cancel</a>
               </td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
@@ -80,6 +81,7 @@
               <td th:text="${order.destinationAddress}"></td>
               <td>
                 <a th:href="@{/driver/orders/accept/{id}(id=${order.id})}">Accept</a>
+                <a th:href="@{/driver/orders/reject/{id}(id=${order.id})}">Reject</a>
               </td>
               <!-- <td th:text="${order.getStatus}"></td> -->
             </tr>

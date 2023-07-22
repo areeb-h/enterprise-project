@@ -72,6 +72,13 @@ public class DriverController {
         return "redirect:/driver/orders";
     }
 
+    @GetMapping("/driver/orders/reject/{id}")
+    public String rejectOrder(@PathVariable("id") Long id) {
+        Order order = orderServiceImpementation.findOrderById(id);
+        orderServiceImpementation.assignDriver(order);
+        return "redirect:/driver/orders";
+    }
+
     @GetMapping("/driver/orders/complete/{id}")
     public String completeOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
