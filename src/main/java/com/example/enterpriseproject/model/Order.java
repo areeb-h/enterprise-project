@@ -51,6 +51,10 @@ public class Order extends Auditable<String> {
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
+    // created at
+    @Column(name = "created_at", nullable = false, length = 45)
+    private LocalDateTime createdAt;
+
     // GETTERS AND SETTERS
     public Long getId() {
         return id;
@@ -134,5 +138,13 @@ public class Order extends Auditable<String> {
 
     public void setVehicleType(VehicleType string) {
         this.vehicleType = string;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime localDateTime) {
+        this.createdAt = localDateTime;
     }
 }

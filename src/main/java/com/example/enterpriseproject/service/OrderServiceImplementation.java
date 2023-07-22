@@ -34,13 +34,22 @@ public class OrderServiceImplementation implements OrderService {
     VehicleRepository vehicleRepository;
 
     public void save(Order order) {
+        order.setCreatedAt(LocalDateTime.now());
         assignDriver(order);
 
     }
 
-    private void assignDriver(Order order) {
+    public void assignDriver(Order order) {
 
         if (order.getStatus() != OrderStatus.UNASSIGNED) {
+            return;
+        }
+
+        if (order.getCreatedAt().plusMinutes(2).isBefore(LocalDateTime.now())) {
+            order.setStatus(OrderStatus.CANCELLED);
+            orderRepository.save(order);
+
+            System.out.println("Order " + order.getId() + " cancelled");
             return;
         }
 
@@ -72,6 +81,8 @@ public class OrderServiceImplementation implements OrderService {
         if (order.getDriver() != null && order.getDriver().getId() == driver.getId()) {
             order.setStatus(OrderStatus.CANCELLED);
             orderRepository.save(order);
+
+            System.out.println("Order " + order.getId() + " cancelled");
             return;
         }
 
@@ -83,10 +94,12 @@ public class OrderServiceImplementation implements OrderService {
 
         orderRepository.save(order);
 
+        System.out.println("Order " + order.getId() + " assigned to driver " + driver.getId());
+
     }
 
     @Async
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 60000)
     public void assignDriverToOrder() {
         List<Order> orders = orderRepository.findByStatus(OrderStatus.UNASSIGNED);
 
