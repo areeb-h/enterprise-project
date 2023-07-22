@@ -24,6 +24,7 @@
             <th>pickupAddress</th>
             <th>destinationAddress</th>
             <th>Status</th>
+            <th>orderDetails</th>
           </tr>
           </thead>
           <tbody>
@@ -32,6 +33,10 @@
             <td th:text="${order.pickupAddress}"></td>
             <td th:text="${order.destinationAddress}"></td>
             <td th:text="${order.getStatus}"></td>
+            <td>
+            <button class="my-button"><a th:href="@{/customer/dashboard/orders/{id}(id=${order.id})}">View details</a></button>
+            
+            </td>     
           </tr>
           <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
             <td colspan="4"><p>No accepted requests</p></td>

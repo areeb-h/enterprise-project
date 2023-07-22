@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.ui.Model;
@@ -84,5 +85,12 @@ public class CustomerController {
         model.addAttribute("order", new Order());
 
         return "customer/book";
+    }
+    @GetMapping("/customer/dashboard/orders/{id}")
+    public String updateDriverStatus(Model model, @PathVariable("id")String id){
+        Order order = orderServiceImpementation.findOrderById(Long.parseLong((id)));
+
+        model.addAttribute("order", order);
+        return "customer/individual";
     }
 }
