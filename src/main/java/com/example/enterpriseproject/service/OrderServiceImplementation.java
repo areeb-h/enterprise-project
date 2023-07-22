@@ -13,9 +13,10 @@ import com.example.enterpriseproject.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 //UserService will be implemented using this
 @Service
@@ -41,6 +42,18 @@ public class OrderServiceImplementation implements OrderService {
                 availableDrivers.add(vehicle.getDriver());
             }
         }
+
+        Collections.sort(availableDrivers, (d1, d2) -> {
+            if (d1.getLastCompletedOrderTime() == null && d2.getLastCompletedOrderTime() == null) {
+                return 0;
+            } else if (d1.getLastCompletedOrderTime() == null) {
+                return -1;
+            } else if (d2.getLastCompletedOrderTime() == null) {
+                return 1;
+            } else {
+                return d1.getLastCompletedOrderTime().compareTo(d2.getLastCompletedOrderTime());
+            }
+        });
 
         Driver driver = availableDrivers.get(0);
 
@@ -133,7 +146,10 @@ public class OrderServiceImplementation implements OrderService {
             if (existingOrder.isPresent()) {
                 Order order = existingOrder.get();
 
+                Driver driver = order.getDriver();
+
                 order.setStatus(OrderStatus.COMPLETED);
+                driver.setLastCompletedOrderTime(LocalDateTime.now());
 
                 orderRepository.save(order);
 
