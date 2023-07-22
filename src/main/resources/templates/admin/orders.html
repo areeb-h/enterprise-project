@@ -8,10 +8,82 @@
   <!--All orders will be displayed on this page-->
   <div layout:fragment="content">
     <div class="flex flex-col space-y-3">
+
+      <h1>Order Summary</h1>
+
+      <div class="flex w-full">
+        <label class="space-y-2 w-full">
+          <p class="px-3 text-cyan-700">From</p>
+          <input
+                  id="from"
+                  class="text-input driver-required"
+                  placeholder="date"
+                  type="date"
+                  th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+                  onchange="updateToDateMin(this.value)"
+          />
+        </label>
+        <label class="space-y-2 w-full">
+          <p class="px-3 text-cyan-700">To</p>
+          <input
+                  id="to"
+                  class="text-input driver-required"
+                  placeholder="date"
+                  type="date"
+                  th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+                  onchange="updateFromDateMax(this.value)"
+          />
+        </label>
+      </div>
+
       <div class="table-container">
-        <h1>All Orders</h1>
+        <table>
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>pickupAddress</th>
+            <th>destinationAddress</th>
+            <th>Customer</th>
+            <th>Driver</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order : ${orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <td th:text="${order.customer.firstname}"></td>
+              <td th:text="${order.driver.firstname}"></td>
+              <td th:text="${order.getStatus}"></td>
+            </tr>
+          <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+            <td colspan="6"><p>No requests found</p></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
+    <script th:inline="JavaScript">
+      function updateToDateMin(fromDate) {
+        const toDateInput = document.getElementById("to");
+        if (fromDate && fromDate !== "") {
+          toDateInput.min = fromDate;
+        } else {
+          // If the "from" date is cleared, reset the "To" date's min attribute.
+          toDateInput.min = "";
+        }
+      }
 
+      function updateFromDateMax(toDate) {
+        const fromDateInput = document.getElementById("from");
+        if (toDate && toDate !== "") {
+          fromDateInput.max = toDate;
+        } else {
+          // If the "to" date is cleared, reset the "From" date's max attribute.
+          fromDateInput.max = "{{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}";
+        }
+      }
+    </script>
+  </div>
 </html>

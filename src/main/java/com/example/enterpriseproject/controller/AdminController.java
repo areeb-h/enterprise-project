@@ -1,9 +1,13 @@
 package com.example.enterpriseproject.controller;
 
+import com.example.enterpriseproject.model.Order;
+import com.example.enterpriseproject.model.OrderStatus;
 import com.example.enterpriseproject.model.Role;
 import com.example.enterpriseproject.model.User;
+import com.example.enterpriseproject.service.OrderServiceImplementation;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +20,11 @@ import java.util.List;
 public class AdminController {
 
     // private final UserService userService;
-    private final UserServiceImplementation userServiceImplementation;
+    @Autowired
+    UserServiceImplementation userServiceImplementation;
+
+    @Autowired
+    OrderServiceImplementation orderServiceImpementation;
 
     // @Autowired
     public AdminController(UserServiceImplementation userServiceImplementation) {
@@ -31,7 +39,14 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard/orders")
     public String getOrder(Model model) {
+
+        //List<Order> orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer, OrderStatus.UNASSIGNED);
+
+        List<Order> orders = orderServiceImpementation.findOrderByOrderStatus(OrderStatus.COMPLETED);
+
         model.addAttribute("title", "orders");
+        model.addAttribute("orders", orders);
+
         return "admin/orders";
     }
 

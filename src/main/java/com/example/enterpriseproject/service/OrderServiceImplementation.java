@@ -39,11 +39,10 @@ public class OrderServiceImplementation implements OrderService {
     @Autowired
     RejectedOrderRepository rejectedOrderRepository;
 
-    public void save(Order order) {
+    public String save(Order order) {
         order.setCreatedAt(LocalDateTime.now());
         calculateTotalCost(order);
-        assignDriver(order);
-
+        return assignDriver(order);
     }
 
     public Order calculateTotalCost(Order order) {
