@@ -179,4 +179,17 @@ public class User extends Auditable<String> implements UserDetails {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
+
+    // constructor
+    public User() {
+    }
+
+    public User(String email, String password, String firstName, String lastName, String username, Role role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.role = role;
+    }
 }
