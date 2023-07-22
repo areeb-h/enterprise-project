@@ -1,6 +1,9 @@
 package com.example.enterpriseproject.repository;
 
 import com.example.enterpriseproject.model.*;
+
+import jakarta.transaction.Transactional;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -23,4 +26,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findById(@NotNull Long id);
 
     Optional<Order> findByIdAndStatus(Long id, OrderStatus orderStatus);
+
 }

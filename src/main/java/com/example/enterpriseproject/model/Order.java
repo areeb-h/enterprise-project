@@ -15,8 +15,14 @@ public class Order extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cost", nullable = false, length = 45)
-    private double cost;
+    @Column(name = "cost_excluding_vat", nullable = false, length = 45)
+    private double cost = 0;
+
+    @Column(name = "VAT %", nullable = false, length = 45)
+    private double vat = 0;
+
+    @Column(name = "total_cost", nullable = false, length = 45)
+    private double totalCost = 0;
 
     @Column(name = "destination_address", nullable = false, length = 500)
     private String destinationAddress;
@@ -50,6 +56,10 @@ public class Order extends Auditable<String> {
     // initialized an enum column for vehicle type
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
+
+    // created at
+    @Column(name = "created_at", nullable = false, length = 45)
+    private LocalDateTime createdAt;
 
     // GETTERS AND SETTERS
     public Long getId() {
@@ -135,4 +145,29 @@ public class Order extends Auditable<String> {
     public void setVehicleType(VehicleType string) {
         this.vehicleType = string;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime localDateTime) {
+        this.createdAt = localDateTime;
+    }
+
+    public double getVat() {
+        return vat;
+    }
+
+    public void setVat(double d) {
+        this.vat = d;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double d) {
+        this.totalCost = d;
+    }
+
 }

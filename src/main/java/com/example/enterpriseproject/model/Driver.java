@@ -3,6 +3,7 @@ package com.example.enterpriseproject.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.cglib.core.Local;
@@ -43,6 +44,9 @@ public class Driver extends Auditable<String> {
 
     @Column(name = "availability_status")
     private boolean availabilityStatus;
+
+    @Column(name = "last_assinged_time")
+    private LocalDateTime lastAssignedTime;
 
     // GETTERS AND SETTERS
 
@@ -100,6 +104,14 @@ public class Driver extends Auditable<String> {
 
     public boolean getAvailabilityStatus() {
         return availabilityStatus;
+    }
+
+    public void setLastAssignedTime(LocalDateTime lastCompletedOrderTime) {
+        this.lastAssignedTime = lastCompletedOrderTime;
+    }
+
+    public LocalDateTime getLastAssignedTime() {
+        return lastAssignedTime;
     }
 
 }
