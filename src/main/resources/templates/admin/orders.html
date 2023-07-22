@@ -9,29 +9,36 @@
   <div layout:fragment="content">
     <div class="flex flex-col space-y-3">
 
-      <h1>Order Summary</h1>
-
-      <div class="flex w-full">
+      <div class="flex w-full space-x-4">
+        <label>
+          <p class="px-3 text-cyan-700">Driver</p>
+          <select class="text-input w-full" required onchange="redirectToDriver(this)">
+            <option value="">Select a Driver</option>
+            <option th:each="driver : ${drivers}" th:value="${driver.driver.id}" th:text="${driver.firstName + ' ' + driver.lastName + ' (' + driver.driver.id + ')'}" th:attr="data-url=@{/admin/dashboard/orders/{id}(id=${driver.id})}"></option>
+          </select>
+        </label>
         <label class="space-y-2 w-full">
           <p class="px-3 text-cyan-700">From</p>
           <input
-                  id="from"
-                  class="text-input driver-required"
-                  placeholder="date"
-                  type="date"
-                  th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
-                  onchange="updateToDateMin(this.value)"
+              id="from"
+              class="text-input driver-required"
+              placeholder="date"
+              type="date"
+              th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              onchange="updateToDateMin(this.value)"
+              th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
           />
         </label>
         <label class="space-y-2 w-full">
           <p class="px-3 text-cyan-700">To</p>
           <input
-                  id="to"
-                  class="text-input driver-required"
-                  placeholder="date"
-                  type="date"
-                  th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
-                  onchange="updateFromDateMax(this.value)"
+              id="to"
+              class="text-input driver-required"
+              placeholder="date"
+              type="date"
+              th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
+              onchange="updateFromDateMax(this.value)"
+              th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
           />
         </label>
       </div>
@@ -40,25 +47,27 @@
         <table>
           <thead>
           <tr>
-            <th>Id</th>
-            <th>pickupAddress</th>
-            <th>destinationAddress</th>
+            <th>Order ID</th>
+            <th>Pickup Address</th>
+            <th>Destination Address</th>
             <th>Customer</th>
             <th>Driver</th>
-            <th>Status</th>
+            <th>Date</th>
+            <th>Time</th>
           </tr>
           </thead>
           <tbody>
             <tr th:each="order : ${orders}">
               <td th:text="${order.id}"></td>
-              <td th:text="${order.pickupAddress}"></td>
-              <td th:text="${order.destinationAddress}"></td>
-              <td th:text="${order.customer.firstname}"></td>
-              <td th:text="${order.driver.firstname}"></td>
-              <td th:text="${order.getStatus}"></td>
+              <td class="w-1/5" th:text="${order.pickupAddress}"></td>
+              <td class="w-1/5" th:text="${order.destinationAddress}"></td>
+              <td th:text="${order.customer.user.firstName + ' ' + order.customer.user.lastName}"></td>
+              <td th:text="${order.driver.user.firstName + ' ' + order.driver.user.lastName}"></td>
+              <td th:text="${#temporals.format(order.time, 'dd-MM-yyyy')}"></td>
+              <td th:text="${#temporals.format(order.time, 'HH:mm')}"></td>
             </tr>
-          <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
-            <td colspan="6"><p>No requests found</p></td>
+          <tr class="no-records" th:if="${#lists.isEmpty(orders)}">
+            <td colspan="6"><p>No orders found</p></td>
           </tr>
           </tbody>
         </table>

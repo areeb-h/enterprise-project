@@ -19,6 +19,11 @@ public class Driver extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // foreign key driver_id references id in users table
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "license_number", nullable = false, length = 45)
     private String licenseNumber;
 
@@ -29,11 +34,6 @@ public class Driver extends Auditable<String> {
     private LocalDate licenseIssueDate;
 
     // RELATIONSHIPS
-
-    // foreign key driver_id references id in users table
-    @OneToOne
-    @JoinColumn(name = "driver_id")
-    private User user;
 
     // primary key id references driver_id in vehicles table
     @OneToOne(mappedBy = "driver")
@@ -56,6 +56,10 @@ public class Driver extends Auditable<String> {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public Vehicle getVehicle() {
