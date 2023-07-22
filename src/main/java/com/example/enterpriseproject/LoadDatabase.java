@@ -16,6 +16,11 @@ class LoadDatabase {
     // load database with admin user
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+        // check if admin user exists
+        if (userRepository.findByEmail("admin@gmail.com") != null) {
+            return null;
+        }
         return args -> {
             log.info(("Preloading "),
                     userRepository
