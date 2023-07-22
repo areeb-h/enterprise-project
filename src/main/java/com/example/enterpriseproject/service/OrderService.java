@@ -9,7 +9,7 @@ import java.util.List;
 
 //interface for userService
 public interface OrderService {
-    public void save(Order order);
+    public String save(Order order);
 
     List<Order> findOrdersByCustomerAndOrderStatus(Customer customer, OrderStatus status);
 

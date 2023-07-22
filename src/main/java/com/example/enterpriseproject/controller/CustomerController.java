@@ -78,8 +78,11 @@ public class CustomerController {
         order.setCustomer(customer);
 
         // save order to db
-        orderServiceImpementation.save(order);
-        model.addAttribute("successMessage", "Your order has been placed!");
+        String error = orderServiceImpementation.save(order);
+
+        if (error == "Cannot find a driver. Please try again later" || error == "No driver available") {
+            model.addAttribute("errorMessage", error);
+        } else model.addAttribute("successMessage", "Your order has been placed!");
 
         // Clear the submitted order from the model
         model.addAttribute("order", new Order());
