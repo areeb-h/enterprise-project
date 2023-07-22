@@ -5,12 +5,13 @@ import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.OrderStatus;
 import com.example.enterpriseproject.model.Vehicle;
-import com.example.enterpriseproject.model.VehicleType;
 import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.OrderRepository;
 import com.example.enterpriseproject.repository.VehicleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,16 @@ public class OrderServiceImplementation implements OrderService {
     VehicleRepository vehicleRepository;
 
     public void save(Order order) {
+        assignDriver(order);
+
+    }
+
+    private void assignDriver(Order order) {
+
+        if (order.getStatus() != OrderStatus.UNASSIGNED) {
+            return;
+        }
+
         List<Vehicle> vehicles = vehicleRepository.findAllByVehicleType(order.getVehicleType());
 
         List<Driver> availableDrivers = new ArrayList<Driver>();
@@ -44,24 +55,44 @@ public class OrderServiceImplementation implements OrderService {
         }
 
         Collections.sort(availableDrivers, (d1, d2) -> {
-            if (d1.getLastCompletedOrderTime() == null && d2.getLastCompletedOrderTime() == null) {
+            if (d1.getLastAssignedTime() == null && d2.getLastAssignedTime() == null) {
                 return 0;
-            } else if (d1.getLastCompletedOrderTime() == null) {
+            } else if (d1.getLastAssignedTime() == null) {
                 return -1;
-            } else if (d2.getLastCompletedOrderTime() == null) {
+            } else if (d2.getLastAssignedTime() == null) {
                 return 1;
             } else {
-                return d1.getLastCompletedOrderTime().compareTo(d2.getLastCompletedOrderTime());
+                return d1.getLastAssignedTime().compareTo(d2.getLastAssignedTime());
             }
+
         });
 
         Driver driver = availableDrivers.get(0);
+
+        if (order.getDriver() != null && order.getDriver().getId() == driver.getId()) {
+            order.setStatus(OrderStatus.CANCELLED);
+            orderRepository.save(order);
+            return;
+        }
+
+        driver.setLastAssignedTime(LocalDateTime.now());
+        driverRepository.save(driver);
 
         order.setDriver(driver);
         order.setVehicle(driver.getVehicle());
 
         orderRepository.save(order);
 
+    }
+
+    @Async
+    @Scheduled(fixedRate = 20000)
+    public void assignDriverToOrder() {
+        List<Order> orders = orderRepository.findByStatus(OrderStatus.UNASSIGNED);
+
+        for (Order order : orders) {
+            assignDriver(order);
+        }
     }
 
     @Override
@@ -149,7 +180,6 @@ public class OrderServiceImplementation implements OrderService {
                 Driver driver = order.getDriver();
 
                 order.setStatus(OrderStatus.COMPLETED);
-                driver.setLastCompletedOrderTime(LocalDateTime.now());
 
                 orderRepository.save(order);
 

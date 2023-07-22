@@ -45,8 +45,8 @@ public class Driver extends Auditable<String> {
     @Column(name = "availability_status")
     private boolean availabilityStatus;
 
-    @Column(name = "last_completed_order_time")
-    private LocalDateTime lastCompletedOrderTime;
+    @Column(name = "last_assinged_time")
+    private LocalDateTime lastAssignedTime;
 
     // GETTERS AND SETTERS
 
@@ -106,12 +106,12 @@ public class Driver extends Auditable<String> {
         return availabilityStatus;
     }
 
-    public void setLastCompletedOrderTime(LocalDateTime lastCompletedOrderTime) {
-        this.lastCompletedOrderTime = lastCompletedOrderTime;
+    public void setLastAssignedTime(LocalDateTime lastCompletedOrderTime) {
+        this.lastAssignedTime = lastCompletedOrderTime;
     }
 
-    public LocalDateTime getLastCompletedOrderTime() {
-        return lastCompletedOrderTime;
+    public LocalDateTime getLastAssignedTime() {
+        return lastAssignedTime;
     }
 
 }
