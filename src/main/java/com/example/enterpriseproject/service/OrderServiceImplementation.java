@@ -92,6 +92,10 @@ public class OrderServiceImplementation implements OrderService {
             }
         }
 
+        if (availableDrivers.size() == 0) {
+            return;
+        }
+
         Collections.sort(availableDrivers, (d1, d2) -> {
             if (d1.getLastAssignedTime() == null && d2.getLastAssignedTime() == null) {
                 return 0;
