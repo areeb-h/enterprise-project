@@ -1,73 +1,151 @@
 <!--customer/dashboard.html-->
-<html lang="en" layout:decorate="~{customer-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html
+  lang="en"
+  layout:decorate="~{customer-layout}"
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+>
+  <!--page content-->
+  <div layout:fragment="content" class="flex flex-col space-y-4">
+    <div
+      class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center"
+    >
+      <div class="form-Home flex flex-col space-y-5">
+        <h2 class="text-xl font-bold">Welcome to Customer Dashboard</h2>
 
-<!--page content-->
-<div layout:fragment="content" class="flex flex-col space-y-4">
-  <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
-    <div class="form-Home flex flex-col space-y-5">
-      <h2 class="text-xl font-bold">Welcome to Customer Dashboard</h2>
-
-      <div>
-        <p>Logged in as: <span sec:authentication="name"></span></p>
-        <p>Has role: <span sec:authentication="authorities"></span></p>
+        <div>
+          <p>Logged in as: <span sec:authentication="name"></span></p>
+          <p>Has role: <span sec:authentication="authorities"></span></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="flex flex-col space-y-3">
-    <div class="table-container">
+    <div class="flex flex-col space-y-3">
+      <div class="table-container">
         <h1>Accepted Orders</h1>
         <table>
           <thead>
-          <tr>
-            <th>Id</th>
-            <th>pickupAddress</th>
-            <th>destinationAddress</th>
-            <th>Status</th>
-            <th>orderDetails</th>
-          </tr>
+            <tr>
+              <th>Order ID</th>
+              <th>Pickup Address</th>
+              <th>Destination Address</th>
+              <th>Date and Time</th>
+              <th>Status</th>
+              <th>Order Details</th>
+            </tr>
           </thead>
           <tbody>
-          <tr th:each="order : ${accepted_orders}">
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.pickupAddress}"></td>
-            <td th:text="${order.destinationAddress}"></td>
-            <td th:text="${order.getStatus}"></td>
-            <td>
-            <button class="my-button"><a th:href="@{/customer/dashboard/orders/{id}(id=${order.id})}">View details</a></button>
-            
-            </td>     
-          </tr>
-          <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
-            <td colspan="4"><p>No accepted requests</p></td>
-          </tr>
+            <tr th:each="order : ${accepted_orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <td th:text="${order.time}"></td>
+              <td th:text="${order.getStatus.value}"></td>
+              <td>
+                <button class="my-button">
+                  <a
+                    th:href="@{/customer/dashboard/orders/{id}(id=${order.id})}"
+                    >View details</a
+                  >
+                </button>
+              </td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+              <td colspan="4"><p>No Accepted requests</p></td>
+            </tr>
           </tbody>
         </table>
-    </div>
-    <div class="table-container">
-      <h1>Pending Orders</h1>
-      <table>
-        <thead>
-        <tr>
-          <th>Id</th>
-          <th>pickupAddress</th>
-          <th>destinationAddress</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${pending_orders}">
-          <td th:text="${order.id}"></td>
-          <td th:text="${order.pickupAddress}"></td>
-          <td th:text="${order.destinationAddress}"></td>
-          <td th:text="${order.getStatus}"></td>
-        </tr>
-        <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
-          <td colspan="4"><p>No accepted requests</p></td>
-        </tr>
-        </tbody>
-      </table>
+      </div>
+      <div class="table-container">
+        <h1>My Bookings</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Pickup Address</th>
+              <th>Destination Address</th>
+              <th>Date and Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order : ${pending_orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <td th:text="${order.time}"></td>
+              <td th:text="${order.getStatus.value}"></td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+              <td colspan="4"><p>No pending requests</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-container">
+        <h1>Completed Orders</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Pickup Address</th>
+              <th>Destination Address</th>
+              <th>Date and Time</th>
+              <th>Status</th>
+              <th>Order Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order : ${completed_orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <td th:text="${order.time}"></td>
+              <td th:text="${order.getStatus.value}"></td>
+              <td>
+                <button class="my-button">
+                  <a
+                    th:href="@{/customer/dashboard/orders/{id}(id=${order.id})}"
+                    >View details</a
+                  >
+                </button>
+              </td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(completed_orders)}">
+              <td colspan="4">
+                <p>No orders found</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-container">
+        <h1>Canceled Orders</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Pickup Address</th>
+              <th>Destination Address</th>
+              <th>Date and Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="order : ${cancelled_orders}">
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.pickupAddress}"></td>
+              <td th:text="${order.destinationAddress}"></td>
+              <td th:text="${order.time}"></td>
+              <td th:text="${order.getStatus.value}"></td>
+            </tr>
+            <tr class="no-records" th:if="${#lists.isEmpty(cancelled_orders)}">
+              <td colspan="4">
+                <p>No orders found</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
 </html>
