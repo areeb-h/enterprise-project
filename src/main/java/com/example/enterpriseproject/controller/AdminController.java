@@ -1,9 +1,6 @@
 package com.example.enterpriseproject.controller;
 
-import com.example.enterpriseproject.model.Order;
-import com.example.enterpriseproject.model.OrderStatus;
-import com.example.enterpriseproject.model.Role;
-import com.example.enterpriseproject.model.User;
+import com.example.enterpriseproject.model.*;
 import com.example.enterpriseproject.service.OrderServiceImplementation;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 
@@ -40,12 +37,13 @@ public class AdminController {
     @GetMapping("/admin/dashboard/orders")
     public String getOrder(Model model) {
 
-        //List<Order> orders = orderServiceImpementation.findOrdersByCustomerAndOrderStatus(customer, OrderStatus.UNASSIGNED);
-
         List<Order> orders = orderServiceImpementation.findOrderByOrderStatus(OrderStatus.COMPLETED);
+        List<User> drivers = userServiceImplementation.findAllDrivers(true);
+
 
         model.addAttribute("title", "orders");
         model.addAttribute("orders", orders);
+        model.addAttribute("drivers", drivers);
 
         return "admin/orders";
     }
