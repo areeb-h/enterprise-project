@@ -27,6 +27,8 @@ public interface OrderService {
 
     String completeOrder(Long orderId);
 
+    String rejectOrder(Order order);
+
 }
 
 //

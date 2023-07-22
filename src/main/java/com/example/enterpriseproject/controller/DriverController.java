@@ -75,7 +75,7 @@ public class DriverController {
     @GetMapping("/driver/orders/reject/{id}")
     public String rejectOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
-        orderServiceImpementation.assignDriver(order);
+        orderServiceImpementation.rejectOrder(order);
         return "redirect:/driver/orders";
     }
 

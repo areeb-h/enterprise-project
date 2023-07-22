@@ -4,10 +4,12 @@ import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.OrderStatus;
+import com.example.enterpriseproject.model.RejectedOrder;
 import com.example.enterpriseproject.model.Vehicle;
 import com.example.enterpriseproject.model.VehicleType;
 import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.OrderRepository;
+import com.example.enterpriseproject.repository.RejectedOrderRepository;
 import com.example.enterpriseproject.repository.VehicleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class OrderServiceImplementation implements OrderService {
 
     @Autowired
     VehicleRepository vehicleRepository;
+
+    @Autowired
+    RejectedOrderRepository rejectedOrderRepository;
 
     public void save(Order order) {
         order.setCreatedAt(LocalDateTime.now());
@@ -87,9 +92,9 @@ public class OrderServiceImplementation implements OrderService {
         List<Driver> availableDrivers = new ArrayList<Driver>();
 
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.getDriver().getAvailabilityStatus()) {
-                availableDrivers.add(vehicle.getDriver());
-            }
+
+            availableDrivers.add(vehicle.getDriver());
+
         }
 
         if (availableDrivers.size() == 0) {
@@ -119,6 +124,22 @@ public class OrderServiceImplementation implements OrderService {
             return;
         }
 
+        List<RejectedOrder> rejectedOrder = rejectedOrderRepository.findByOrderId(order.getId());
+
+        if (rejectedOrder != null) {
+
+            for (RejectedOrder rejected : rejectedOrder) {
+                if (rejected.getDriverId() == driver.getId()) {
+                    order.setStatus(OrderStatus.CANCELLED);
+                    orderRepository.save(order);
+
+                    System.out.println("Order " + order.getId() + " cancelled");
+                    return;
+                }
+            }
+
+        }
+
         driver.setLastAssignedTime(LocalDateTime.now());
         driverRepository.save(driver);
 
@@ -132,7 +153,7 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Async
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 70000)
     public void assignDriverToOrder() {
         List<Order> orders = orderRepository.findByStatus(OrderStatus.UNASSIGNED);
 
@@ -236,6 +257,19 @@ public class OrderServiceImplementation implements OrderService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public String rejectOrder(Order order) {
+
+        RejectedOrder rejectedOrder = new RejectedOrder(order.getId(), order.getDriver().getId());
+
+        rejectedOrderRepository.save(rejectedOrder);
+
+        assignDriver(order);
+
+        return "Order rejected";
+
     }
 
 }

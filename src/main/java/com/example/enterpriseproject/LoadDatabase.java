@@ -20,14 +20,15 @@ class LoadDatabase {
         // check if admin user exists
         if (userRepository.findByEmail("admin@gmail.com") != null) {
             return null;
-        }
-        return args -> {
-            log.info(("Preloading "),
-                    userRepository
-                            .save(new User("admin@gmail.com", passwordEncoder.encode("admin1234"), "System", "Admin",
-                                    "Admin", Role.ADMIN)));
+        } else
+            return args -> {
+                log.info(("Preloading "),
+                        userRepository
+                                .save(new User("admin@gmail.com", passwordEncoder.encode("admin1234"), "System",
+                                        "Admin",
+                                        "Admin", Role.ADMIN)));
 
-        };
+            };
 
     }
 
