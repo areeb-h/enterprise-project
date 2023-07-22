@@ -73,10 +73,10 @@ public class OrderServiceImplementation implements OrderService {
         return order;
     }
 
-    public void assignDriver(Order order) {
+    public String assignDriver(Order order) {
 
         if (order.getStatus() != OrderStatus.UNASSIGNED) {
-            return;
+            return "Order already assigned";
         }
 
         if (order.getCreatedAt().plusMinutes(2).isBefore(LocalDateTime.now())) {
@@ -84,7 +84,7 @@ public class OrderServiceImplementation implements OrderService {
             orderRepository.save(order);
 
             System.out.println("Order " + order.getId() + " cancelled");
-            return;
+            return "Cannot find a driver. Please try again later";
         }
 
         List<Vehicle> vehicles = vehicleRepository.findAllByVehicleType(order.getVehicleType());
@@ -98,7 +98,7 @@ public class OrderServiceImplementation implements OrderService {
         }
 
         if (availableDrivers.size() == 0) {
-            return;
+            return "No driver available";
         }
 
         Collections.sort(availableDrivers, (d1, d2) -> {
@@ -121,7 +121,7 @@ public class OrderServiceImplementation implements OrderService {
             orderRepository.save(order);
 
             System.out.println("Order " + order.getId() + " cancelled");
-            return;
+            return "Cannot find a driver. Please try again later";
         }
 
         List<RejectedOrder> rejectedOrder = rejectedOrderRepository.findByOrderId(order.getId());
@@ -134,7 +134,7 @@ public class OrderServiceImplementation implements OrderService {
                     orderRepository.save(order);
 
                     System.out.println("Order " + order.getId() + " cancelled");
-                    return;
+                    return "Order has been cancelled";
                 }
             }
 
@@ -149,6 +149,8 @@ public class OrderServiceImplementation implements OrderService {
         orderRepository.save(order);
 
         System.out.println("Order " + order.getId() + " assigned to driver " + driver.getId());
+
+        return "Order assigned to driver " + driver.getId();
 
     }
 
