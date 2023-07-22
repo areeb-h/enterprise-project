@@ -75,7 +75,7 @@
               <td th:text="${order.time}"></td>
               <td th:text="${order.getStatus.value}"></td>
             </tr>
-            <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
+            <tr class="no-records" th:if="${#lists.isEmpty(pending_orders)}">
               <td colspan="4"><p>No pending requests</p></td>
             </tr>
           </tbody>
