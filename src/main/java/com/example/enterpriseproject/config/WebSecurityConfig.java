@@ -1,6 +1,9 @@
 package com.example.enterpriseproject.config;
 
 import com.example.enterpriseproject.service.UserServiceImplementation;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +13,15 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +29,19 @@ public class WebSecurityConfig {
 
     @Autowired
     private LoginRoleHandler loginRoleHandler;
+
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
+
+    @Component
+    public static class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+        @Override
+        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                            AuthenticationException exception) throws IOException, ServletException {
+            setDefaultFailureUrl("/login?error=" + exception.getLocalizedMessage());
+            super.onAuthenticationFailure(request, response, exception);
+        }
+    }
 
     // create UserdetailService bean
     @Bean
@@ -67,7 +88,8 @@ public class WebSecurityConfig {
                         // all the users will be able to access login form
                         .loginPage("/login")
                         .permitAll()
-                        .failureUrl("/login?error=true")
+                        // if login failed this loginFailureHandler class will decide what happens
+                        .failureHandler(loginFailureHandler)
                         // if login is successfull this loginRoleHandler class will decide what happens
                         // next
                         .successHandler(loginRoleHandler)
@@ -87,5 +109,4 @@ public class WebSecurityConfig {
         return http.build();
 
     }
-
 }

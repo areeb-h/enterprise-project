@@ -16,7 +16,7 @@
       <!-- Login Form Container -->
       <!--class="flex items-center justify-center space-x-4 p-6 bg-gradient-to-r from-cyan-500/30 via-teal-300/30 to-cyan-300/30 rounded-2xl shadow backdrop-blur-2xl">-->
       <div class="rounded-xl backdrop-blur-3xl bg-white/40">
-        <form class="space-y-6 p-14 flex flex-col content-center justify-center h-fit" th:action="@{/login}"
+        <form class="space-y-6 p-14 flex flex-col content-center justify-center h-fit" id="loginForm" th:action="@{/login}"
           method="post">
           <h3 class="font-semibold text-2xl w-fit">
             <span class="rounded-lg text-cyan-600">Log in to </span><span class="text-cyan-700">Caber</span>
@@ -41,7 +41,25 @@
               </div>
             </div>
 
-            <button class="rounded-md text-white bg-cyan-600 hover:bg-cyan-500 py-2 px-3 w-full cursor-pointer">
+            <div class="space-y-4 max-w-[350px]" th:if="${param.error != null and #strings.equals(param.error, 'User is disabled')}">
+              <div class="text-red-600 px-4 py-3 rounded-xl bg-red-300/30 flex-wrap w-fit">
+                Your registration request to Caber is under review. You can sign in to your account after you've been verified!
+              </div>
+            </div>
+
+            <div class="space-y-4 max-w-[350px]" th:if="${param.error != null and #strings.equals(param.error, 'User account is locked')}">
+              <div class="text-red-600 px-4 py-3 rounded-xl bg-red-300/30 flex-wrap w-fit">
+                Your account has been locked! Please contact us for further clarification.
+              </div>
+            </div>
+
+            <div class="space-y-4 max-w-[350px]" th:if="${param.error != null and #strings.equals(param.error, 'Bad credentials')}">
+              <div class="text-red-600 px-4 py-3 rounded-xl bg-red-300/30 flex-wrap w-fit">
+                Invalid Credentials. Please try again!
+              </div>
+            </div>
+
+              <button class="rounded-md text-white bg-cyan-600 hover:bg-cyan-500 py-2 px-3 w-full cursor-pointer">
               <input type="submit" value="Login" />
             </button>
 
@@ -49,9 +67,6 @@
               Don't have an account yet?
               <a th:href="@{/register}" class="text-teal-600 hover:underline">Register now</a>
             </p>
-            <div class="text-red-500 mb-2" th:if="${param.error}">
-              Email or Password is invalid.
-            </div>
           </div>
         </form>
       </div>
