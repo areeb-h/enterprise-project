@@ -5,6 +5,7 @@ import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.OrderStatus;
 import com.example.enterpriseproject.model.Vehicle;
+import com.example.enterpriseproject.model.VehicleType;
 import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.OrderRepository;
 import com.example.enterpriseproject.repository.VehicleRepository;
@@ -35,8 +36,36 @@ public class OrderServiceImplementation implements OrderService {
 
     public void save(Order order) {
         order.setCreatedAt(LocalDateTime.now());
+        calculateTotalCost(order);
         assignDriver(order);
 
+    }
+
+    public Order calculateTotalCost(Order order) {
+        double cost = 0;
+        double vat = 0;
+        double totalCost = 0;
+
+        if (order.getVehicleType() == VehicleType.CAR) {
+            cost = 25;
+        } else if (order.getVehicleType() == VehicleType.CYCLE) {
+            cost = 20;
+        } else if (order.getVehicleType() == VehicleType.VAN) {
+            cost = 40;
+        } else if (order.getVehicleType() == VehicleType.LPICKUP) {
+            cost = 50;
+        } else if (order.getVehicleType() == VehicleType.PICKUP) {
+            cost = 60;
+        }
+
+        vat = 8;
+        totalCost = cost + (cost * vat / 100);
+
+        order.setCost(cost);
+        order.setVat(vat);
+        order.setTotalCost(totalCost);
+
+        return order;
     }
 
     public void assignDriver(Order order) {
