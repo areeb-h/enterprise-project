@@ -35,7 +35,7 @@ public class LoginRoleHandler extends SimpleUrlAuthenticationSuccessHandler {
             roles.add(a.getAuthority());
         }
         if(roles.contains("ADMIN")){
-            url = "/admin/dashboard";
+            url = "/admin/dashboard/driver-orders";
         } else if(roles.contains("CUSTOMER")) {
             url = "/customer/dashboard";
         } else if (roles.contains("DRIVER")) {

@@ -2,11 +2,14 @@ package com.example.enterpriseproject.controller;
 
 import com.example.enterpriseproject.model.*;
 import com.example.enterpriseproject.service.OrderServiceImplementation;
+import com.example.enterpriseproject.service.UserService;
 import com.example.enterpriseproject.service.UserServiceImplementation;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +23,9 @@ public class AdminController {
     // private final UserService userService;
     @Autowired
     UserServiceImplementation userServiceImplementation;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     OrderServiceImplementation orderServiceImpementation;
@@ -41,11 +47,8 @@ public class AdminController {
         List<Order> orders = orderServiceImpementation.findOrderByOrderStatus(OrderStatus.COMPLETED);
         List<User> drivers = userServiceImplementation.findAllDrivers(true);
 
-<<<<<<< Updated upstream
         model.addAttribute("title", "driver orders");
-=======
         model.addAttribute("title", "orders");
->>>>>>> Stashed changes
         model.addAttribute("orders", orders);
         model.addAttribute("drivers", drivers);
 
@@ -66,7 +69,36 @@ public class AdminController {
     }
 
     @GetMapping("/admin/dashboard/users/update/{id}")
-    public String updateUserStatus(@PathVariable("id") String id) {
+    public String displayUserStatus(Model model, @PathVariable("id") String id) {
+        User user = userServiceImplementation.findUserById(Long.valueOf(id));
+        model.addAttribute("user", user);
+
+        return "/admin/updateProfile";
+    }
+
+
+    @RequestMapping(value = {"/admin/dashboard/users/update" }, method = RequestMethod.POST)
+    public String updateUserStatus(Model model, @Valid User user, BindingResult bindingResult) {
+        model.addAttribute("user", user);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errorMessage", "Something went wrong!");
+            model.addAttribute("bindingResult", bindingResult);
+            return "/admin/updateProfile";
+        }
+
+        // check if user is present
+        List<Object> userPresentObj = userService.isUserPresent(user);
+        if ((Boolean) userPresentObj.get(0)) {
+            model.addAttribute("errorMessage", "Email already in use. Please register with a different email address!");
+            return "/admin/updateProfile";
+        }
+
+        // set role and set enabled to false if the role is "CUSTOMER"
+        user.setRole(user.getRole());
+
+        userServiceImplementation.modifyUser(user);
+        model.addAttribute("successMessage", "User detail successfully updated!");
 
         return "/admin/updateProfile";
     }

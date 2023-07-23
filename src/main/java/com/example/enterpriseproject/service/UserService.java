@@ -41,7 +41,7 @@ public interface UserService {
     // to find both active and inactive users
     List<User> findAllCustomers(boolean enabled);
 
-    Order findUserById(Long id);
+    User findUserById(Long id);
 
     List<User> findAllDrivers(boolean enabled);
 

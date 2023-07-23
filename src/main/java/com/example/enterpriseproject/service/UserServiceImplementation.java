@@ -48,6 +48,10 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
         userRepository.save(user);
     }
 
+    public void modifyUser(User user) {
+        userRepository.save(user);
+    }
+
     public void saveCustomer(Customer customer) {
         customerRepository.save(customer);
     }
@@ -123,6 +127,11 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
 
     public List<User> findAllUsersByLocked(boolean locked) {
         return userRepository.findAllByEnabledAndLocked(true, locked);
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).get();
     }
 
     @Override

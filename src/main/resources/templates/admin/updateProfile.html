@@ -6,9 +6,66 @@
   <!--page content-->
   <div layout:fragment="content" class="">
     <div class="flex flex-col space-y-3">
-      <div class="table-container">
-        <h1>Update User Information</h1>
-      </div>
+      <form class="flex flex-col space-y-4 md:max-w-[500px] w-full p-6 shadow rounded-2xl bg-white"
+            th:action="@{/admin/dashboard/users/update}" th:object="${user}" method="post">
+        <h1 class="text-center font-semibold">Update User Information</h1>
+        <div>
+
+          <div class="hidden">
+            <p>Username</p>
+            <input
+                   th:field="*{username}" th:value="${user.username}" type="text" name="username"/>
+          </div>
+
+          <div class="hidden space-y-2">
+            <p>role</p>
+            <input class="bg-gray-50/50 border border-cyan-400 rounded-md py-2 px-3 w-full"
+                   th:field="*{role}" th:value="${user.role}" type="text" name="role"/>
+          </div>
+
+          <div class="space-y-2">
+            <p>FirstName</p>
+            <input class="bg-gray-50/50 border border-cyan-400 rounded-md py-2 px-3 w-full"
+                   th:field="*{firstName}" th:value="${user.firstName}" type="text" name="fname"/>
+          </div>
+
+
+          <div class="space-y-2">
+            <p>LastName</p>
+            <input class="bg-gray-50/50 border border-cyan-400 rounded-md py-2 px-3 w-full"
+                   th:field="*{lastName}" th:value="${user.lastName}" type="text" name="lname"/>
+          </div>
+
+          <div class="space-y-2">
+            <p>Email</p>
+            <input class="bg-gray-50/50 border border-cyan-400 rounded-md py-2 px-3 w-full"
+                    th:field="*{email}" th:value="${user.email}" type="text" name="email"/>
+          </div>
+
+          <div class="space-y-2">
+            <p>Password</p>
+            <input class="bg-gray-50/50 border border-cyan-400 rounded-md py-2 px-3 w-full" placeholder="Password"
+                   th:field="*{password}" type="password" name="password" required />
+          </div>
+
+        </div>
+
+        <div class="space-y-4 w-full" th:if="${successMessage}">
+          <div class="text-green-600 px-4 py-3 rounded-xl bg-green-300/30 flex-wrap w-fit">
+            <span th:utext="${successMessage}"></span>
+          </div>
+        </div>
+
+        <div class="space-y-4 w-full" th:if="${errorMessage}">
+          <div class="text-red-600 px-4 py-3 rounded-xl bg-red-300/30 flex-wrap w-fit">
+            <span th:utext="${errorMessage}"></span>
+          </div>
+        </div>
+
+        <button class="rounded-xl w-full mt-4 text-white bg-teal-500 hover:bg-teal-600 p-2">
+          <input type="submit" value="Update the update" />
+        </button>
+      </form>
     </div>
   </div>
 </html>
