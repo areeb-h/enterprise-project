@@ -97,6 +97,7 @@ public class CustomerController {
         return "customer/book";
     }
 
+    // For customers to see order details
     @GetMapping("/customer/dashboard/orders/{id}")
     public String updateDriverStatus(Model model, @PathVariable("id") String id) {
         Order order = orderServiceImpementation.findOrderById(Long.parseLong((id)));
