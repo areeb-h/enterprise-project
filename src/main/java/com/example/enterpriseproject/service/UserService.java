@@ -2,6 +2,7 @@ package com.example.enterpriseproject.service;
 
 import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Driver;
+import com.example.enterpriseproject.model.Order;
 import com.example.enterpriseproject.model.User;
 import com.example.enterpriseproject.model.Vehicle;
 import com.example.enterpriseproject.repository.UserRepository;
@@ -25,7 +26,7 @@ public interface UserService {
     public void saveVehicle(Vehicle vehicle, Driver driver);
 
     void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                 Authentication authentication) throws IOException, ServletException;
+            Authentication authentication) throws IOException, ServletException;
 
     public List<Object> isUserPresent(User user);
 
@@ -39,6 +40,8 @@ public interface UserService {
 
     // to find both active and inactive users
     List<User> findAllCustomers(boolean enabled);
+
+    Order findUserById(Long id);
 
     List<User> findAllDrivers(boolean enabled);
 
