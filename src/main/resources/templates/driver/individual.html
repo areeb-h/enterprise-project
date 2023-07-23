@@ -1,9 +1,9 @@
-<html lang="en" layout:decorate="~{customer-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html lang="en" layout:decorate="~{driver-layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
     <div layout:fragment="content" class="flex flex-col space-y-4">
         <div class="m-auto p-6 shadow-md rounded-md bg-white items-center justify-center">
           <div class="form-Home flex flex-col space-y-5">
             <h2 class="text-xl font-bold">Order Details</h2>
-            <div  class="space-y-2 /p-2 /rounded-xl /shadow">
+            <div  class="space-y-3 /p-2 /rounded-xl /shadow">
               <h3 class="font-bold">Order ID:</h3>
               <p th:text="${order.id}"></p>
               <h3 class="font-bold">Pickup Address:</h3>
@@ -12,8 +12,6 @@
               <p th:text="${order.destinationAddress}"></p>
               <h3 class="font-bold">Date and Time:</h3>
               <p th:text="${order.time}"></p>
-              <h3 class="font-bold">Vehicle Type:</h3>
-              <p th:text="${order.vehicleType}"></p>
               <h3 class="font-bold">Cost:</h3>
               <p th:text="${order.Cost}"></p>
             </div>
@@ -21,3 +19,4 @@
         </div>
       
 </html>
+

@@ -1,17 +1,22 @@
 package com.example.enterpriseproject.controller;
 
-import com.example.enterpriseproject.model.*;
-import com.example.enterpriseproject.service.UserService;
-import jakarta.validation.Valid;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import com.example.enterpriseproject.model.Customer;
+import com.example.enterpriseproject.model.Driver;
+import com.example.enterpriseproject.model.Role;
+import com.example.enterpriseproject.model.User;
+import com.example.enterpriseproject.model.Vehicle;
+import com.example.enterpriseproject.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -57,14 +62,16 @@ public class AuthController {
         }
 
         // check if user is present
-        /*List<Object> userPresentObj = userService.isUserPresent(user);
-        if ((Boolean) userPresentObj.get(0)) {
-            model.addAttribute("failedMessage",
-                    "EMAIL ALREADY IN USE. Please register with a different email address.");
-            model.addAttribute("errorMessage", "Something went wrong");
-            model.addAttribute("bindingResult", bindingResult);
-            return "auth/register";
-        }*/
+        /*
+         * List<Object> userPresentObj = userService.isUserPresent(user);
+         * if ((Boolean) userPresentObj.get(0)) {
+         * model.addAttribute("failedMessage",
+         * "EMAIL ALREADY IN USE. Please register with a different email address.");
+         * model.addAttribute("errorMessage", "Something went wrong");
+         * model.addAttribute("bindingResult", bindingResult);
+         * return "auth/register";
+         * }
+         */
 
         // set role and set enabled to false if the role is "CUSTOMER"
         user.setRole(user.getRole());
