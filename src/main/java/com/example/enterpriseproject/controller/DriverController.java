@@ -100,6 +100,18 @@ public class DriverController {
         //save pdf to byte variable
         return generateInvoice(order);
     }
+    
+     // For drivers to cancel accepted orders
+     @GetMapping("/driver/orders/cancel/{id}")
+    public String cancelOrder(@PathVariable("id") Long id) {
+        Order order = orderServiceImpementation.findOrderById(id);
+
+        order.setOrderStatus(OrderStatus.CANCELLED);
+
+        orderServiceImpementation.cancelOrder(id);
+
+        return "redirect:/driver/orders";
+    }
 
 
     //generate invoice by calling api
