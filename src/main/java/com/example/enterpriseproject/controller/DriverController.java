@@ -2,18 +2,23 @@ package com.example.enterpriseproject.controller;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
@@ -21,7 +26,6 @@ import com.example.enterpriseproject.model.OrderStatus;
 import com.example.enterpriseproject.model.Vehicle;
 import com.example.enterpriseproject.service.OrderServiceImplementation;
 import com.example.enterpriseproject.service.UserServiceImplementation;
-import org.springframework.web.client.RestTemplate;
 
 // WILL HANDLE THE MAPPINGS FOR ONLY WHAT THE DRIVER CAN ACCESS
 
@@ -97,12 +101,12 @@ public class DriverController {
         order.setInvoice(pdf);
 
         orderServiceImpementation.completeOrder(id);
-        //save pdf to byte variable
+        // save pdf to byte variable
         return generateInvoice(order);
     }
-    
-     // For drivers to cancel accepted orders
-     @GetMapping("/driver/orders/cancel/{id}")
+
+    // For drivers to cancel accepted orders
+    @GetMapping("/driver/orders/cancel/{id}")
     public String cancelOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
 
@@ -113,54 +117,54 @@ public class DriverController {
         return "redirect:/driver/orders";
     }
 
-
-    //generate invoice by calling api
+    // generate invoice by calling api
     public ResponseEntity<byte[]> generateInvoice(Order order) throws IOException {
 
-        //init variables
+        // init variables
         Long orderId = order.getId();
-        String customerName = order.getCustomer().getUser().getFirstName() + " " + order.getCustomer().getUser().getFirstName();
+        String customerName = order.getCustomer().getUser().getFirstName() + " "
+                + order.getCustomer().getUser().getFirstName();
         String pickupAddress = order.getPickupAddress();
         double distance = order.getDistance();
         String dropOffAddress = order.getDestinationAddress();
-        String driverName = order.getDriver().getUser().getFirstName() + " " + order.getDriver().getUser().getLastName();
+        String driverName = order.getDriver().getUser().getFirstName() + " "
+                + order.getDriver().getUser().getLastName();
         String vehicleType = String.valueOf(order.getVehicle().getVehicleType());
         String vehicleColor = order.getVehicle().getCarColor();
         String licenseNumber = order.getVehicle().getLicenseNumber();
         LocalDateTime dateTime = order.getTime();
         double amount = order.getTotalCost();
 
-        //create json input
+        // create json input
         String jsonInput = "{\n" +
-                "    \"orderId\": "+orderId+",\n" +
-                "    \"distance\": "+distance+",\n" +
-                "    \"customerName\": \""+customerName+"\",\n" +
-                "    \"pickupAddress\": \""+pickupAddress+"\",\n" +
-                "    \"dropOffAddress\": \""+dropOffAddress+"\",\n" +
-                "    \"driverName\": \""+driverName+"\",\n" +
-                "    \"vehicleType\": \""+vehicleType+"\",\n" +
-                "    \"vehicleColor\": \""+vehicleColor+"\",\n" +
-                "    \"licenseNumber\": \""+licenseNumber+"\",\n" +
-                "    \"dateTime\": \""+dateTime+"\",\n" +
-                "    \"amount\": "+amount+"\n" +
+                "    \"orderId\": " + orderId + ",\n" +
+                "    \"distance\": " + distance + ",\n" +
+                "    \"customerName\": \"" + customerName + "\",\n" +
+                "    \"pickupAddress\": \"" + pickupAddress + "\",\n" +
+                "    \"dropOffAddress\": \"" + dropOffAddress + "\",\n" +
+                "    \"driverName\": \"" + driverName + "\",\n" +
+                "    \"vehicleType\": \"" + vehicleType + "\",\n" +
+                "    \"vehicleColor\": \"" + vehicleColor + "\",\n" +
+                "    \"licenseNumber\": \"" + licenseNumber + "\",\n" +
+                "    \"dateTime\": \"" + dateTime + "\",\n" +
+                "    \"amount\": " + amount + "\n" +
                 "}";
 
-        //create request
+        // create request
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.valueOf(MediaType.APPLICATION_PDF_VALUE)));
         HttpEntity<String> request = new HttpEntity<>(jsonInput, headers);
 
-        //send request
+        // send request
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<byte[]> response = restTemplate.exchange(
                 "http://localhost:8080/api/generateInvoice",
                 HttpMethod.POST,
                 request,
-                byte[].class
-        );
+                byte[].class);
 
-        //get response
+        // get response
         if (response.getStatusCode() == HttpStatus.OK) {
             byte[] invoiceData = response.getBody();
 
@@ -177,7 +181,7 @@ public class DriverController {
         return null;
     }
 
-    //download invoice
+    // download invoice
     @GetMapping("/orders/download/{id}")
     public ResponseEntity<byte[]> downloadInvoice(@PathVariable("id") String id) throws IOException {
         Order order = orderServiceImpementation.findOrderById(Long.parseLong(id));

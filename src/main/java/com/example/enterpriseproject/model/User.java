@@ -1,20 +1,27 @@
 package com.example.enterpriseproject.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.boot.context.properties.bind.Name;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.enterpriseproject.audit.Auditable;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 //create users table
 @Entity

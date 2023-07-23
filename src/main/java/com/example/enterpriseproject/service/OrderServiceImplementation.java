@@ -1,5 +1,15 @@
 package com.example.enterpriseproject.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
 import com.example.enterpriseproject.model.Customer;
 import com.example.enterpriseproject.model.Driver;
 import com.example.enterpriseproject.model.Order;
@@ -11,16 +21,6 @@ import com.example.enterpriseproject.repository.DriverRepository;
 import com.example.enterpriseproject.repository.OrderRepository;
 import com.example.enterpriseproject.repository.RejectedOrderRepository;
 import com.example.enterpriseproject.repository.VehicleRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 //UserService will be implemented using this
 @Service
@@ -244,8 +244,6 @@ public class OrderServiceImplementation implements OrderService {
 
             if (existingOrder.isPresent()) {
                 Order order = existingOrder.get();
-
-                Driver driver = order.getDriver();
 
                 order.setStatus(OrderStatus.COMPLETED);
 
