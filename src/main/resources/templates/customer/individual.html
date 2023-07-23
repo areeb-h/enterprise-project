@@ -16,7 +16,14 @@
               <p th:text="${order.vehicleType}"></p>
               <h3 class="font-bold">Cost:</h3>
               <p th:text="${order.Cost}"></p>
+              <button class="my-button">
+                <a
+                  th:href="@{/orders/download/{id}(id=${order.id})}"
+                  >Download PDF</a
+                >
+              </button>
             </div>
+              
           </div>
         </div>
       
