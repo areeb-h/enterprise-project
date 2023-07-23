@@ -36,9 +36,15 @@
           >
 
           <a
-            th:href="@{/admin/dashboard/orders}"
-            th:class="${title == 'orders' ? 'active' : ''}"
-            >Orders</a
+                  th:href="@{/admin/dashboard/driver-orders}"
+                  th:class="${title == 'driver orders' ? 'active' : ''}"
+          >Driver Orders</a
+          >
+
+          <a
+            th:href="@{/admin/dashboard/customer-orders}"
+            th:class="${title == 'customer orders' ? 'active' : ''}"
+            >Customer Orders</a
           >
         </div>
         <a th:href="@{/logout}" class="btn-logout">Log out</a>

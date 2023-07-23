@@ -1,5 +1,5 @@
 
-<!--admin/orders.html-->
+<!--admin/customer-orders.html-->
 <html
   lang="en"
   layout:decorate="~{admin-layout}"
@@ -11,19 +11,19 @@
 
       <div class="flex w-full space-x-4">
         <label class="space-y-2 w-full">
-          <p class="px-3 text-cyan-700">Driver</p>
-          <input class="text-input w-full" id="driverInput" type="text" list="driversList" required>
-          <datalist id="driversList">
-            <option value="">Select a Driver</option>
-            <option th:each="driver : ${drivers}" th:value="${driver.driver.id}" th:text="${driver.firstName + ' ' + driver.lastName + ' (' + driver.driver.id + ')'}"
-                    th:attr="data-url=@{/admin/dashboard/orders/{id}(id=${driver.id})}"></option>
+          <p class="px-3 text-cyan-700">Customer</p>
+          <input class="text-input w-full" id="customerInput" type="text" list="customersList" required>
+          <datalist id="customersList">
+            <option value="">Select a Customer</option>
+            <option th:each="customer : ${customers}" th:value="${customer.customer.id}" th:text="${customer.firstName + ' ' + customer.lastName + ' (' + customer.customer.id + ')'}"
+                    th:attr="data-url=@{/admin/dashboard/orders/{id}(id=${customer.id})}"></option>
           </datalist>
         </label>
         <label class="space-y-2 w-full">
           <p class="px-3 text-cyan-700">From</p>
           <input
               id="from"
-              class="text-input driver-required"
+              class="text-input"
               placeholder="date"
               type="date"
               th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
@@ -35,7 +35,7 @@
           <p class="px-3 text-cyan-700">To</p>
           <input
               id="to"
-              class="text-input driver-required"
+              class="text-input"
               placeholder="date"
               type="date"
               th:attr="max=${{#dates.format(#dates.createNow(), 'yyyy-MM-dd')}}"
@@ -43,29 +43,6 @@
               th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
           />
         </label>
-      </div>
-
-      <div class="flex justify-between items-center">
-
-        <div id="driver-name" class="px-4 font-semibold justify-center items-center"></div>
-
-        <div class="flex space-x-3">
-
-          <div class="flex pl-4 p-2 bg-white font-semibold border rounded-xl justify-center items-center space-x-3">
-            <div>Total no. of customers</div>
-            <div class="p-1 px-2 bg-slate-100 rounded-lg border font-bold" id="total-customers"></div>
-          </div>
-
-          <div class="flex pl-4 p-2 bg-white font-semibold border rounded-xl justify-center items-center space-x-3">
-            <div>Total no. of orders</div>
-            <div class="p-1 px-2 bg-slate-100 rounded-lg border font-bold" id="total-orders"></div>
-          </div>
-
-          <div class="flex pl-4 p-2 bg-white font-semibold border rounded-xl justify-center items-center space-x-3">
-            <div>Total profit (MVR)</div>
-            <div class="p-1 px-2 bg-slate-100 rounded-lg border font-bold" id="total-cost"></div>
-          </div>
-        </div>
       </div>
 
       <div class="table-container w-full">
@@ -78,7 +55,7 @@
             <th>Destination Address</th>
             <th>Customer</th>
             <th>Driver</th>
-            <th>Cost</th>
+            <th>Total Amount</th>
           </tr>
           </thead>
           <tbody>
@@ -100,7 +77,7 @@
           </tbody>
         </table>
         <div class="block pb-3 max-w-7xl" style="display: none" id="no-orders">
-          <p class="w-full">No orders found for the driver</p>
+          <p class="w-full">No orders found</p>
         </div>
       </div>
     </div>
@@ -110,30 +87,18 @@
       function onLoad() {
         let totalCost = 0;
         let totalOrders = 0;
-        let totalNoOfCustomers = 0;
-        let uniqueCustomers = {};
+
 
         const tableRows = document.querySelectorAll("tbody tr");
         for (let i = 0; i < tableRows.length; i++) {
           tableRows[i].style.display = "";
           totalCost += parseFloat(tableRows[i].querySelector("td:nth-child(10)").textContent)
-          totalOrders += 1
+          totalOrders += 1;
 
-          const customerID = tableRows[i].querySelector("td:nth-child(9)").textContent;
-          if (!uniqueCustomers[customerID]) {
-            uniqueCustomers[customerID] = true;
-            totalNoOfCustomers += 1;
-          }
         }
 
-        document.getElementById("total-cost").innerText = totalCost;
-        document.getElementById("total-orders").innerText = totalOrders;
-        document.getElementById("total-customers").innerText = totalNoOfCustomers;
-
-        document.getElementById("driver-name").innerText = "Orders of all drivers";
-
         if (totalOrders !== 0) document.getElementById("no-orders").style.display = "none"
-        if (totalOrders === 0) document.getElementById("table").style.display = "none"
+        if (totalOrders === 0) document.getElementById("table").style.display = "block"
       }
 
       onLoad()
@@ -171,44 +136,28 @@
       }
 
       // Function to filter the table rows based on the selected driver and date range
-      function filterTableByDriverAndDate(driverId, fromDate, toDate) {
+      function filterTableByCustomerAndDate(customerId, fromDate, toDate) {
 
-        let totalCost = 0;
-        let totalOrders = 0;
         let ordersFound = false;
-        let totalNoOfCustomers = 0;
-        let uniqueCustomers = {};
 
         const tableRows = document.querySelectorAll("tbody tr");
 
         for (let i = 0; i < tableRows.length; i++) {
           const dateCell = tableRows[i].querySelector("td:nth-child(7)").textContent;
-          const driverCell = tableRows[i].querySelector("td:nth-child(8)").textContent;
-          const driverNameCell = tableRows[i].querySelector("td:nth-child(6)").textContent.toLowerCase();
+          const customerCell = tableRows[i].querySelector("td:nth-child(9)").textContent;
+          const customerNameCell = tableRows[i].querySelector("td:nth-child(5)").textContent.toLowerCase();
 
           // Flip the date format from "DD-MM-YYYY" to "YYYY-MM-DD"
           const orderDate = new Date(flipDateOrder(dateCell));
 
           // Filter by driver name and date range
           if (
-                  (!driverId || driverCell.includes(driverId) || driverNameCell.toLowerCase().includes(driverId)) &&
+                  (!customerId || customerCell.includes(customerId) || customerNameCell.toLowerCase().includes(customerId)) &&
                   (!fromDate || new Date(fromDate) <= orderDate) &&
                   (!toDate || new Date(toDate) >= orderDate)
           ) {
 
             ordersFound = true;
-
-            const customerID = tableRows[i].querySelector("td:nth-child(9)").textContent;
-            if (!uniqueCustomers[customerID]) {
-              uniqueCustomers[customerID] = true;
-              totalNoOfCustomers += 1;
-            }
-
-            document.getElementById("driver-name").innerText = "Orders of " + tableRows[i].querySelector("td:nth-child(6)").textContent;
-
-            totalCost += parseFloat(tableRows[i].querySelector("td:nth-child(10)").textContent)
-            totalOrders += 1
-
             tableRows[i].style.display = ""; // Show the row if it meets the filtering criteria
           } else {
             tableRows[i].style.display = "none"; // Hide the row if it does not meet the filtering criteria
@@ -216,70 +165,57 @@
         }
 
         if (!ordersFound) {
-          document.getElementById("driver-name").style.display = "none"
           document.getElementById("no-orders").style.display = "block"
         } else {
-          document.getElementById("driver-name").style.display = "block"
           document.getElementById("no-orders").style.display = "none"
         }
-
-        document.getElementById("total-cost").innerText = totalCost;
-        document.getElementById("total-orders").innerText = totalOrders;
-        document.getElementById("total-customers").innerText = totalNoOfCustomers;
       }
 
       // function to handle filtering by driver
-      document.getElementById("driverInput").addEventListener("input", function() {
-        let driverId = this.value.trim();
+      document.getElementById("customerInput").addEventListener("input", function() {
+        let customerId = this.value.trim();
         let fromDate = document.getElementById("from").value;
         let toDate = document.getElementById("to").value;
 
-        let totalCost = 0;
         let totalOrders = 0;
-        let totalNoOfCustomers = 0;
-        let uniqueCustomers = {};
 
-        if (driverId !== "") {
-          filterTableByDriverAndDate(driverId, fromDate, toDate);
+        if (customerId !== "") {
+          filterTableByCustomerAndDate(customerId, fromDate, toDate);
         } else {
           // Show all rows if the driver input is empty
-          const tableRows = document.querySelectorAll("tbody tr");
-          for (let i = 0; i < tableRows.length; i++) {
-            tableRows[i].style.display = "";
-            totalCost += parseFloat(tableRows[i].querySelector("td:nth-child(10)").textContent)
-            totalOrders += 1
 
-            const customerID = tableRows[i].querySelector("td:nth-child(9)").textContent;
-            if (!uniqueCustomers[customerID]) {
-              uniqueCustomers[customerID] = true;
-              totalNoOfCustomers += 1;
+          const dateCell = tableRows[i].querySelector("td:nth-child(7)").textContent;
+          const orderDate = new Date(flipDateOrder(dateCell));
+
+          if (
+                  (!fromDate || new Date(fromDate) <= orderDate) &&
+                  (!toDate || new Date(toDate) >= orderDate)
+          ) {
+            const tableRows = document.querySelectorAll("tbody tr");
+            for (let i = 0; i < tableRows.length; i++) {
+              tableRows[i].style.display = "";
+              totalOrders += 1
+
             }
-
           }
-          document.getElementById("driver-name").style.display = "block"
-          document.getElementById("driver-name").innerText = "Orders of all drivers";
-          document.getElementById("total-cost").innerText = totalCost;
-          document.getElementById("total-orders").innerText = totalOrders;
-          document.getElementById("total-customers").innerText = totalNoOfCustomers;
           document.getElementById("no-orders").style.display = "none"
-          document.getElementById("table").style.display = "block"
         }
       });
 
       document.getElementById("from").addEventListener("change", function() {
-        let driverName = document.getElementById("driverInput").value.trim();
+        let customerName = document.getElementById("customerInput").value.trim();
         let fromDate = this.value;
         let toDate = document.getElementById("to").value;
 
-        filterTableByDriverAndDate(driverName, fromDate, toDate);
+        filterTableByCustomerAndDate(customerName, fromDate, toDate);
       });
 
       document.getElementById("to").addEventListener("change", function() {
-        let driverName = document.getElementById("driverInput").value.trim();
+        let customerName = document.getElementById("customerInput").value.trim();
         let fromDate = document.getElementById("from").value;
         let toDate = this.value;
 
-        filterTableByDriverAndDate(driverName, fromDate, toDate);
+        filterTableByCustomerAndDate(customerName, fromDate, toDate);
       });
 
     </script>

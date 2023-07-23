@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 //WILL HANDLE ALL THE MAPPINGS FOR WHAT THE ADMIN CAN ACCESS
 
@@ -34,18 +35,30 @@ public class AdminController {
         return "admin/dashboard";
     }
 
-    @GetMapping("/admin/dashboard/orders")
-    public String getOrder(Model model) {
+    @GetMapping("/admin/dashboard/driver-orders")
+    public String getDriverOrders(Model model) {
 
         List<Order> orders = orderServiceImpementation.findOrderByOrderStatus(OrderStatus.COMPLETED);
         List<User> drivers = userServiceImplementation.findAllDrivers(true);
 
-
-        model.addAttribute("title", "orders");
+        model.addAttribute("title", "driver orders");
         model.addAttribute("orders", orders);
         model.addAttribute("drivers", drivers);
 
-        return "admin/orders";
+        return "admin/driver-orders";
+    }
+
+    @GetMapping("/admin/dashboard/customer-orders")
+    public String getCustomerOrders(Model model) {
+
+        List<Order> orders = orderServiceImpementation.findOrderByOrderStatus(OrderStatus.COMPLETED);
+        List<User> customers = userServiceImplementation.findAllCustomers(true);
+
+        model.addAttribute("title", "customer orders");
+        model.addAttribute("orders", orders);
+        model.addAttribute("customers", customers);
+
+        return "admin/customer-orders";
     }
 
     @GetMapping("/admin/dashboard/users")
