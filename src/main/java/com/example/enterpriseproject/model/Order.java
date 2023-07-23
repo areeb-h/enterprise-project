@@ -21,6 +21,9 @@ public class Order extends Auditable<String> {
     @Column(name = "VAT %", nullable = false, length = 45)
     private double vat = 0;
 
+    @Column(name = "distance", nullable = false, length = 45)
+    private double distance = 0;
+
     @Column(name = "total_cost", nullable = false, length = 45)
     private double totalCost = 0;
 
@@ -56,6 +59,11 @@ public class Order extends Auditable<String> {
     // initialized an enum column for vehicle type
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
+
+    //invoice pdf save
+    @Lob
+    @Column(name = "invoice", columnDefinition = "BLOB")
+    private byte[] invoice;
 
     // created at
     @Column(name = "created_at", nullable = false, length = 45)
@@ -170,4 +178,19 @@ public class Order extends Auditable<String> {
         this.totalCost = d;
     }
 
+    public byte[] getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(byte[] invoice) {
+        this.invoice = invoice;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 }
