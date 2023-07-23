@@ -29,6 +29,7 @@ public abstract class Auditable<U> {
     @Temporal(TemporalType.TIMESTAMP)
     protected U lastModifiedDate;
 
+    // getters and setters for orders
     public U getCreatedBy() {
         return createdBy;
     }

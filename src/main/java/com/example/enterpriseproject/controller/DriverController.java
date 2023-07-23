@@ -57,6 +57,7 @@ public class DriverController {
         return "driver/orders";
     }
 
+    // For drivers to accept orders
     @GetMapping("/driver/orders/accept/{id}")
     public String acceptOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
@@ -72,6 +73,7 @@ public class DriverController {
         return "redirect:/driver/orders";
     }
 
+    // For drivers to reject orders
     @GetMapping("/driver/orders/reject/{id}")
     public String rejectOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
@@ -79,6 +81,7 @@ public class DriverController {
         return "redirect:/driver/orders";
     }
 
+    // For drivers to mark completed orders
     @GetMapping("/driver/orders/complete/{id}")
     public String completeOrder(@PathVariable("id") Long id) {
         Order order = orderServiceImpementation.findOrderById(id);
@@ -90,6 +93,7 @@ public class DriverController {
         return "redirect:/driver/orders";
     }
 
+    // For drivers to see order details
     @GetMapping("/driver/dashboard/orders/{id}")
     public String updateDriverStatus(Model model, @PathVariable("id") String id) {
         Order order = orderServiceImpementation.findOrderById(Long.parseLong((id)));
