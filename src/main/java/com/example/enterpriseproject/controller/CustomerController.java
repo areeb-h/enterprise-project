@@ -105,4 +105,18 @@ public class CustomerController {
         model.addAttribute("order", order);
         return "customer/individual";
     }
+
+    // For Customers to cancel accepted orders
+    @GetMapping("/Customer/dashboard/orders/cancel/{id}")
+    public String cancelOrder(@PathVariable("id") Long id) {
+        Order order = orderServiceImpementation.findOrderById(id);
+
+        order.setOrderStatus(OrderStatus.CANCELLED);
+
+        orderServiceImpementation.cancelOrder(id);
+
+        return "redirect:/customer/dashboard";
+    }
+
+    
 }
