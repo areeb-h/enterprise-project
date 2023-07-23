@@ -1,15 +1,16 @@
 package com.example.enterpriseproject.repository;
 
-import com.example.enterpriseproject.model.*;
-
-import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.enterpriseproject.model.Customer;
+import com.example.enterpriseproject.model.Driver;
+import com.example.enterpriseproject.model.Order;
+import com.example.enterpriseproject.model.OrderStatus;
 
 //repository to communicate with db
 @Repository
