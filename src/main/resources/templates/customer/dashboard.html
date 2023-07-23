@@ -50,7 +50,7 @@
               </td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
-              <td colspan="4"><p>No Accepted requests</p></td>
+              <td colspan="6"><p>No Accepted requests</p></td>
             </tr>
           </tbody>
         </table>
@@ -76,7 +76,7 @@
               <td th:text="${order.getStatus.value}"></td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(pending_orders)}">
-              <td colspan="4"><p>No pending requests</p></td>
+              <td colspan="5"><p>No pending requests</p></td>
             </tr>
           </tbody>
         </table>
@@ -111,7 +111,7 @@
               </td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(completed_orders)}">
-              <td colspan="4">
+              <td colspan="6">
                 <p>No orders found</p>
               </td>
             </tr>
@@ -139,7 +139,7 @@
               <td th:text="${order.getStatus.value}"></td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(cancelled_orders)}">
-              <td colspan="4">
+              <td colspan="6">
                 <p>No orders found</p>
               </td>
             </tr>

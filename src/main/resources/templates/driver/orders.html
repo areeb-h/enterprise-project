@@ -33,7 +33,7 @@
             </td>
           </tr>
           <tr class="no-records" th:if="${#lists.isEmpty(completed_orders)}">
-            <td colspan="4">
+            <td colspan="5">
               <p>No accepted requests</p>
             </td>
           </tr>
@@ -73,7 +73,7 @@
               </td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(accepted_orders)}">
-              <td colspan="4">
+              <td colspan="6">
                 <p>No accepted requests</p>
               </td>
             </tr>
@@ -103,7 +103,7 @@
               <!-- <td th:text="${order.getStatus}"></td> -->
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(pending_orders)}">
-              <td colspan="4">
+              <td colspan="5">
                 <p>No accepted requests</p>
               </td>
             </tr>
