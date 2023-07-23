@@ -7,9 +7,9 @@
               <h3 class="font-bold">Order ID:</h3>
               <p th:text="${order.id}"></p>
               <h3 class="font-bold">Pickup Address:</h3>
-              <p th:text="${order.pickupAddress}"></p>
+              <p id="pickup" th:text="${order.pickupAddress}"></p>
               <h3 class="font-bold">Destination Address:</h3>
-              <p th:text="${order.destinationAddress}"></p>
+              <p id="destination" th:text="${order.destinationAddress}"></p>
               <h3 class="font-bold">Date and Time:</h3>
               <p th:text="${order.time}"></p>
               <h3 class="font-bold">Cost:</h3>
@@ -21,6 +21,44 @@
             </div>
           </div>
         </div>
-      
+      <h2 class="text-xl font-bold">Route</h2>
+          <div class="rounded-md overflow-hidden">
+            <div id="map" class="h-[350px]"></div>
+          </div>
+
+      <script th:inline="javascript">
+        var pickupAddress = document.getElementById("pickup").innerHTML;
+        var destinationAddress = document.getElementById("destination").innerHTML;
+
+        // Function to initialize the map and calculate the route
+        function initMap() {
+          var directionsService = new google.maps.DirectionsService();
+          var directionsRenderer = new google.maps.DirectionsRenderer();
+          var mapOptions = {
+            zoom: 12,
+            center: { lat: 0, lng: 0 }, // Center the map at a default location
+          };
+          var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+          directionsRenderer.setMap(map);
+
+          // Calculate the route between pickup and destination addresses
+          var request = {
+            origin: pickupAddress,
+            destination: destinationAddress,
+            travelMode: google.maps.TravelMode.DRIVING,
+          };
+          directionsService.route(request, function (result, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+              directionsRenderer.setDirections(result);
+            }
+          });
+        }
+      </script>
+      <script
+              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXx_KxvBJnsfa8qqwQzMZKd1TLItwBD6M&libraries=places&callback=initMap"
+              async defer>
+
+      </script>
+      </div>
 </html>
 
