@@ -60,7 +60,7 @@
                 <a
                   class="bg-red-400/40 hover:bg-red-500/50"
                   th:href="@{/admin/dashboard/customers/lock/{id}(id=${customer.id})}"
-                  >Disable</a
+                  >Deactivate</a
                 >
               </td>
             </tr>
@@ -72,7 +72,7 @@
       </div>
 
       <div class="table-container">
-        <h1>Disabled Customers</h1>
+        <h1>Inactive Customers</h1>
         <table>
           <thead>
             <tr>
@@ -92,7 +92,7 @@
               <td>
                 <a
                   th:href="@{/admin/dashboard/customers/unlock/{id}(id=${customer.id})}"
-                  >Enable</a
+                  >Activate</a
                 >
               </td>
             </tr>

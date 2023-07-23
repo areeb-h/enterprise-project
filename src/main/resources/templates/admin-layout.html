@@ -22,7 +22,11 @@
             >Dashboard</a
           >
 
-          <a th:href="@{/admin/dashboard/users}" th:class="${title == 'users' ? 'active' : ''}">Users</a>
+          <a
+            th:href="@{/admin/dashboard/users}"
+            th:class="${title == 'users' ? 'active' : ''}"
+            >Users</a
+          >
 
           <a
             th:href="@{/admin/dashboard/customers}"

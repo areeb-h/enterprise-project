@@ -30,6 +30,12 @@
                   >Verify</a
                 >
               </td>
+              <td>
+                <a
+                  th:href="@{/admin/dashboard/users/update/{id}(id=${user.id})}"
+                  >Update Info</a
+                >
+              </td>
             </tr>
             <tr class="no-records" th:if="${#lists.isEmpty(pending_users)}">
               <td colspan="5"><p>No New Applications</p></td>
@@ -60,7 +66,13 @@
                 <a
                   class="bg-red-400/40 hover:bg-red-500/50"
                   th:href="@{/admin/dashboard/users/lock/{id}(id=${user.id})}"
-                  >Disable</a
+                  >Deactivate</a
+                >
+              </td>
+              <td>
+                <a
+                  th:href="@{/admin/dashboard/users/update/{id}(id=${user.id})}"
+                  >Update Info</a
                 >
               </td>
             </tr>
@@ -72,7 +84,7 @@
       </div>
 
       <div class="table-container">
-        <h1>Disabled Users</h1>
+        <h1>Inactive Users</h1>
         <table>
           <thead>
             <tr>
@@ -92,7 +104,13 @@
               <td>
                 <a
                   th:href="@{/admin/dashboard/users/unlock/{id}(id=${user.id})}"
-                  >Enable</a
+                  >Activate</a
+                >
+              </td>
+              <td>
+                <a
+                  th:href="@{/admin/dashboard/users/update/{id}(id=${user.id})}"
+                  >Update Info</a
                 >
               </td>
             </tr>
