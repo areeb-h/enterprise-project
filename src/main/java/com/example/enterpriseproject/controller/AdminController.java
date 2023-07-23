@@ -41,7 +41,11 @@ public class AdminController {
         List<Order> orders = orderServiceImpementation.findOrderByOrderStatus(OrderStatus.COMPLETED);
         List<User> drivers = userServiceImplementation.findAllDrivers(true);
 
+<<<<<<< Updated upstream
         model.addAttribute("title", "driver orders");
+=======
+        model.addAttribute("title", "orders");
+>>>>>>> Stashed changes
         model.addAttribute("orders", orders);
         model.addAttribute("drivers", drivers);
 
@@ -59,6 +63,12 @@ public class AdminController {
         model.addAttribute("customers", customers);
 
         return "admin/customer-orders";
+    }
+
+    @GetMapping("/admin/dashboard/users/update/{id}")
+    public String updateUserStatus(@PathVariable("id") String id) {
+
+        return "/admin/updateProfile";
     }
 
     @GetMapping("/admin/dashboard/users")
@@ -105,8 +115,11 @@ public class AdminController {
         return "admin/drivers";
     }
 
-    // could get the role parameter and combine all following three into one function, but that would cause conflicts when dealing with other pages in admin
-    // Enabling, Locking and Unlocking users by getting the required action and the user id from parameter
+    // could get the role parameter and combine all following three into one
+    // function, but that would cause conflicts when dealing with other pages in
+    // admin
+    // Enabling, Locking and Unlocking users by getting the required action and the
+    // user id from parameter
     @GetMapping("/admin/dashboard/users/{action}/{id}")
     public String updateUserStatus(@PathVariable("action") String action, @PathVariable("id") String id) {
         switch (action) {
@@ -133,7 +146,8 @@ public class AdminController {
             case "enable" -> userServiceImplementation.enableUser(id, true);
             case "lock" -> userServiceImplementation.lockUser(id, true);
             case "unlock" -> userServiceImplementation.lockUser(id, false);
-            default -> {}
+            default -> {
+            }
         }
         return "redirect:/admin/dashboard/drivers";
     }
