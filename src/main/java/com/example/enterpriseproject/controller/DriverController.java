@@ -90,4 +90,11 @@ public class DriverController {
         return "redirect:/driver/orders";
     }
 
+    @GetMapping("/driver/dashboard/orders/{id}")
+    public String updateDriverStatus(Model model, @PathVariable("id") String id) {
+        Order order = orderServiceImpementation.findOrderById(Long.parseLong((id)));
+
+        model.addAttribute("order", order);
+        return "driver/individual";
+    }
 }
