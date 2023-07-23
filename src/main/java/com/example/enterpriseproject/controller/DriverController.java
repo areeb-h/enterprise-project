@@ -123,7 +123,7 @@ public class DriverController {
         // init variables
         Long orderId = order.getId();
         String customerName = order.getCustomer().getUser().getFirstName() + " "
-                + order.getCustomer().getUser().getFirstName();
+                + order.getCustomer().getUser().getLastName();
         String pickupAddress = order.getPickupAddress();
         double distance = order.getDistance();
         String dropOffAddress = order.getDestinationAddress();
@@ -133,7 +133,7 @@ public class DriverController {
         String vehicleColor = order.getVehicle().getCarColor();
         String licenseNumber = order.getVehicle().getLicenseNumber();
         LocalDateTime dateTime = order.getTime();
-        double amount = order.getTotalCost();
+        double amount = order.getCost();
 
         // create json input
         String jsonInput = "{\n" +
